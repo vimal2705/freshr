@@ -119,29 +119,42 @@ const ServiceCard = ({
   cart,
   addCartItem,
   removeCartItem,
+  logout,
   press = null,
   active,
+  userr=false,
 }) => {
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
   const[user1,setuser1]=useState();
-  const { onLogout} = useContext(AuthContext)
-  const { loadFilters, getUser, refreshSearch, isLoading, search,  onGetOrders } = useContext(AppContext);
+  // const { onLogout} = useContext(AuthContext)
+  // const {  getUser } = useContext(AppContext);
 
+  // const { user } = await getUser();
+//   useEffect(()=>{
+// (async ()=>{
+//   const { user } = await getUser();
+//   console.log("mmmmssssssssssssssss", user);
+// })()
+//   }, [])
+
+console.log("oguserrr",userr);
   const handlePress = async() => {
-    const { user } = await getUser();
-    setuser1(user);
-    if(user1?.firstName == "Guest"){
+    // const { user } = await getUser();
+    // setuser1(user);
+
+    console.log("myyyyyy userrrrr", userr);
+    if(userr){
       Alert.alert('Authorized user requied', 'You need to signup to access the feature', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'SignUp', onPress: () => onLogout()},
+        {text: 'SignUp', onPress: () => logout()},
       ]);
     }
-    else{
+  else{
       setChecked((oldValue) => {
         if (!info) {
           if (oldValue) {
@@ -152,8 +165,8 @@ const ServiceCard = ({
         }
         return !checked;
       });
-    }
-    
+    // console.log("");
+  }
   };
 
   useEffect(() => {
@@ -165,7 +178,7 @@ const ServiceCard = ({
   return (
     <Container active={active}>
       {!info && (
-        <FloatingMoreButton onPress={onMorePress} active={active}>
+        <FloatingMoreButton onPress={()=>onMorePress()} active={active}>
           <MaterialIcons name="more-horiz" size={20} color={theme.colors.brand.primary}/>
         </FloatingMoreButton>
       )}

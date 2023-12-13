@@ -199,6 +199,7 @@ useEffect(()=>{
     try {
       setLoading(true);
       const token = await SecureStore.getItemAsync("token");
+      console.log("asdasds");
 
       const res = await axios.get(`${BASE_API_URL}/users/getMe`, {
         headers: {
@@ -208,6 +209,7 @@ useEffect(()=>{
       handleSuccess(res, setLoading, theme)
       setLoading(false);
       console.log("dddds",res.data.data.user.favorites.facilities.length);
+      console.log("user response",res.data.data);
       return res.data.data;
     } catch (e) {
       handleError(e, setLoading, setError, theme)

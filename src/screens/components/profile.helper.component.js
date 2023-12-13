@@ -28,6 +28,15 @@ export const LogoutButton = styled.TouchableOpacity`
   border-radius: 10px;
   border: 2px solid #25282b;
 `;
+export const Singupbutton = styled.TouchableOpacity`
+  flex-direction: row;
+  padding: ${({ theme }) => theme.space[3]};
+  align-items: center;
+  background-color: black;
+  border-radius: 10px;
+  border: 2px solid #25282b;
+`;
+
 
 export const ProfileButton = ({ icon, label, description = "", onPress,style }) => {
   const theme = useTheme();

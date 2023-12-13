@@ -5,6 +5,9 @@ import { Spacer } from "../spacer/spacer.component";
 import { Fontisto } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import { View } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect } from "react";
+
 
 export const PageContainer = styled.View`
   flex: 1;
@@ -43,9 +46,30 @@ export const GenderCardSelectorContainer  = styled.View`
 `
 
 export const renderGenderForm = (newGender, setNewGender, isform) => {
+
+
+ 
+  
+  const setGenderStorage=async(data)=>{
+    console.log("mnppp", data);
+    if(data=="all"){
+      setNewGender("both")
+    }
+    else{
+      setNewGender(data)
+    }
+  try {
+    await AsyncStorage.setItem(
+      "gender",
+      data
+    )
+  } catch (error) {
+    console.log("erorrrrrrrrrrrr",error);
+  }
+  }
   return (
     <GenderCardSelectorContainer>
-      <GenderCard key="male" active={newGender === 'male'} onPress={() => setNewGender('male')}>
+      <GenderCard key="male" active={newGender === 'male'} onPress={() => setGenderStorage('male')}>
         <Text
           variant="label"
           style={{
@@ -64,7 +88,7 @@ export const renderGenderForm = (newGender, setNewGender, isform) => {
         /> */}
   <Fontisto name="male"  size={60} color={newGender === 'male' ? "white" : "black"} />
       </GenderCard>
-      <GenderCard key="female" active={newGender === 'both'} onPress={() => setNewGender('both')}>
+      <GenderCard key="female" active={newGender === 'both'} onPress={() => setGenderStorage('all')}>
         <Text
           variant="label"
           style={{
@@ -83,13 +107,13 @@ export const renderGenderForm = (newGender, setNewGender, isform) => {
           color={newGender === 'female' ? "white" : "black"}
         /> */}
         <View style={{flexDirection:"row"}}>
-        <Fontisto name="female" size={30} color={newGender === 'both' ? "white" : "black"} />
+        <Fontisto name="female" size={30} color={newGender === 'all' ? "white" : "black"} />
      
-        <Fontisto name="male"  size={30} color={newGender === 'both' ? "white" : "black"} />
+        <Fontisto name="male"  size={30} color={newGender === 'all' ? "white" : "black"} />
         </View>
 
       </GenderCard>
-      <GenderCard key="female" active={newGender === 'female'} onPress={() => setNewGender('female')}>
+      <GenderCard key="female" active={newGender === 'female'} onPress={() => setGenderStorage('female')}>
         <Text
           variant="label"
           style={{
@@ -111,3 +135,5 @@ export const renderGenderForm = (newGender, setNewGender, isform) => {
     </GenderCardSelectorContainer>
   )
 }
+
+export default renderGenderForm

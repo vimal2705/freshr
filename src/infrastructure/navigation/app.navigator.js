@@ -31,6 +31,7 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "../../providers/app-provider";
 import Saloon from "../../screens/normal-app/Saloon";
 import Delivery from "../../screens/normal-app/Delivery";
+import serviceCardComponent from "../../screens/components/service-card.component";
 
 const HomeStack = createStackNavigator();
 
@@ -88,6 +89,11 @@ export const AppNavigator = (props) => {
         name="SpecialistDetails"
         // options={{ headerShown: true, headerTitle: "" }}
         component={SpecialistDetailsScreen}
+      />
+      <Stack.Screen
+        name="ServiceCard"
+        // options={{ headerShown: true, headerTitle: "" }}
+        component={serviceCardComponent}
       />
       <Stack.Screen
         name="MeetingTimeSelection"

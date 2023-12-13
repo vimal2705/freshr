@@ -139,6 +139,7 @@ const EditProfileScreen = (props) => {
     setRegion({latitude: specialist?.location.coordinates[1], longitude: specialist?.location.coordinates[0], latitudeDelta: 0.08, longitudeDelta: 0.08})
     setCurrentRadius(specialist?.distance / 1000 || 3)
     setNewFirstname(specialist?.user?.firstName || '')
+    console.log("firstname::::::::", specialist?.user);
     setNewLastname(specialist?.user?.lastName || '')
     setProfilePicture({uri: specialist?.user?.photo || ''})
     setServices(specialist?.services)

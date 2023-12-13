@@ -106,7 +106,7 @@ export const PriceRangeModal = ({
           </Text>
         </Spacer>
         <AreaRheostat
-          values={[8, 150]}
+          values={[0, 150]}
           min={0}
           max={16}
           theme={{

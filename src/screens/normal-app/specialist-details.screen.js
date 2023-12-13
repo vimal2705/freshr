@@ -152,7 +152,15 @@ const SpecialistDetailsScreen = ({
   const [cntPerCategory, setCntPerCategory] = useState(null);
   const [ReviewModal, setReviewModal] = useState(false);
   const[user1,setuser1]=useState();
+  const [pam, setpam] = useState(false)
   const { onLogout} = useContext(AuthContext)
+  // const {  getUser } = useContext(AppContext);
+  useEffect(()=>{
+if(user1?.firstName == "Guest"){
+  setpam(true)
+}
+  }, user1)
+console.log("yourrrr userrrrr", user1?.firstName == "Guest", pam);
 const {setSpecialistidd} =useContext(SpecialistContext)
 
   
@@ -261,6 +269,8 @@ loadFav()
     }
   // };
   const handleShowViewMore = (service) => {
+    console.log("againnn doneee",service);
+    setSelectedService(true);
     setSelectedService(service);
   };
   const handleCloseViewMore = () => {
@@ -476,7 +486,7 @@ onGetReviews(specialist?.id,'specialist')
                     ?.map((serviceItem) => (
                       <View key={serviceItem.id}>
                         <ServiceCard
-                          active={true}
+                          active={true} 
                           service={serviceItem}
                           onMorePress={() => handleShowViewMore(serviceItem)}
                         />
@@ -570,6 +580,8 @@ onGetReviews(specialist?.id,'specialist')
               {shownServices?.map((serviceItem) => (
                 <View key={serviceItem.id}>
                   <ServiceCard
+                  userr = {pam}
+                  logout={onLogout}
                     active={true}
                     disabled={!((specialist.isQueueing ? (specialist.queue < specialist.maxQueue) : !specialist.frontQueue))}
                     service={serviceItem}

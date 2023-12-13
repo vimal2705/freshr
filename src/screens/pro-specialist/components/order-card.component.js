@@ -270,8 +270,7 @@ export const OrderCard = ({
 
       // setAddress(`${l[0].city==null?'':l[0].city},${l[0].street==null?'':l[0].street}`)
       setAddress(
-        `${l[0].city == null ? "" : l[0].city},${
-          l[0].street == null ? "" : l[0].street
+        `${l[0].city == null ? "" : l[0].city},${l[0].street == null ? "" : l[0].street
         }`
       );
     };
@@ -366,6 +365,22 @@ export const OrderCard = ({
   };
   return (
     <Container>
+      {isClient && order?.status == 'PENDING' &&
+        <View style={{
+          backgroundColor: 'black', borderRadius: 2, padding: 4,
+          position: 'absolute',
+          zIndex: 15,
+          top: 6,
+          left: 16
+        }}>
+          <Text
+            variant="caption"
+            style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
+          >
+            Please Wait!
+          </Text>
+        </View>
+      }
       {!isClient &&
         order.position === 0 &&
         !["COMPLETED", "CANCELLED", "ONGOING", "IN_TRAFFIC"].includes(
@@ -430,16 +445,21 @@ export const OrderCard = ({
           </CloseButton>
         )}
 
+
       {order.status && (
-        <StatusContainer variant={order.status}>
-          <Text
-            variant="caption"
-            style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
-          >
-            {" "}
-            {order.status.replace("_", " ").toLowerCase()}{" "}
-          </Text>
-        </StatusContainer>
+        <>
+
+          <StatusContainer variant={order.status}>
+
+            <Text
+              variant="caption"
+              style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
+            >
+              {" "}
+              {order.status.replace("_", " ").toLowerCase()}{" "}
+            </Text>
+          </StatusContainer>
+        </>
       )}
       <View style={{ flex: 1 }}>
         {/*<MapView*/}
@@ -548,7 +568,7 @@ export const OrderCard = ({
             >
               <Text style={{ fontSize: 16 }}>id: {order?._id}</Text>
               <TouchableOpacity
-              onPress={()=>copyToClipboard(order?._id)}
+                onPress={() => copyToClipboard(order?._id)}
                 style={{
                   borderWidth: 1,
                   height: 20,
@@ -722,40 +742,40 @@ export const OrderCard = ({
                   </ExtraSmallServiceCardPrice>
                 </ExtraSmallServiceCard>
                 <>
-                <View style={{ flexDirection: "row",justifyContent:'space-between',alignItems:'center',marginVertical:10}}>
-                <View style={{ flexDirection: "row", gap: 10}}>
-                    <View
-                      style={{
-                        backgroundColor: "#000",
-                        borderRadius: 10,
-                        height: 20,
-                        width: 20,
-                        justifyContent:'center',
-                        alignItems:'center'
-                      }}
-                    >
-                      <AntDesign name="user" size={14} color="#fff" />
+                  <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                      <View
+                        style={{
+                          backgroundColor: "#000",
+                          borderRadius: 10,
+                          height: 20,
+                          width: 20,
+                          justifyContent: 'center',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <AntDesign name="user" size={14} color="#fff" />
+                      </View>
+                      <Text style={{ fontSize: 16, textAlign: 'center' }}>
+                        {order?.client?.firstName} {order?.client?.lastName}
+                      </Text>
                     </View>
-                    <Text style={{fontSize:16,textAlign:'center'}}>
-                      {order?.client?.firstName} {order?.client?.lastName}
-                    </Text>
+                    <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Entypo name="scissors" size={18} color="black" />
+                      <Text style={{ fontSize: 16 }}>
+                        {specialist?.user?.firstName
+                          ? specialist?.user?.firstName
+                          : order?.specialist?.user?.firstName}{" "}
+                        {specialist?.user?.lastName
+                          ? specialist?.user?.lastName
+                          : order?.specialist?.user?.lastName}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={{flexDirection:'row',gap:10,justifyContent:'center',alignItems:'center'}}>
-                  <Entypo name="scissors" size={18} color="black" />
-                  <Text style={{fontSize:16}}>
-                    {specialist?.user?.firstName
-                      ? specialist?.user?.firstName
-                      : order?.specialist?.user?.firstName}{" "}
-                    {specialist?.user?.lastName
-                      ? specialist?.user?.lastName
-                      : order?.specialist?.user?.lastName}
-                  </Text>
-                  </View>
-                </View>
-                 
-                  <TouchableOpacity style={{flexDirection:'row',gap:10}} onPress={() => sendMapp()}>
-                  <Entypo name="direction" size={18} color="black" />
-                    <Text style={{fontSize:16,textDecorationLine:'underline',color:'#1D6DF3'}}>{address}</Text>
+
+                  <TouchableOpacity style={{ flexDirection: 'row', gap: 10 }} onPress={() => sendMapp()}>
+                    <Entypo name="direction" size={18} color="black" />
+                    <Text style={{ fontSize: 16, textDecorationLine: 'underline', color: '#1D6DF3' }}>{address}</Text>
                     <FontAwesome5 name="directions" size={18} color="#1D6DF3" />
                   </TouchableOpacity>
                 </>
@@ -1178,8 +1198,8 @@ export const OrderCard = ({
                       isClient || isHost
                         ? setSelectedEntity("specialist")
                         : isClient || isSpecialist
-                        ? setSelectedEntity("facility")
-                        : ToastAndroid.show(
+                          ? setSelectedEntity("facility")
+                          : ToastAndroid.show(
                             "Please Select a Valid Entity to Review",
                             ToastAndroid.SHORT
                           );
@@ -1211,8 +1231,8 @@ export const OrderCard = ({
                       {isClient || isHost
                         ? `${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
                         : isSpecialist
-                        ? `${order.facility?.name}`
-                        : ``}
+                          ? `${order.facility?.name}`
+                          : ``}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -1246,8 +1266,8 @@ export const OrderCard = ({
                     isSpecialist || isHost
                       ? setSelectedEntity("client")
                       : isClient
-                      ? setSelectedEntity("facility")
-                      : ToastAndroid.show(
+                        ? setSelectedEntity("facility")
+                        : ToastAndroid.show(
                           "Please Select a Valid Entity to Review",
                           ToastAndroid.SHORT
                         );
@@ -1274,8 +1294,8 @@ export const OrderCard = ({
                     {isSpecialist || isHost
                       ? `${order.client?.firstName} ${order.client?.lastName}`
                       : isClient
-                      ? `${order.facility?.name}`
-                      : ``}
+                        ? `${order.facility?.name}`
+                        : ``}
                   </Text>
                 </TouchableOpacity>
               </>
@@ -1296,8 +1316,8 @@ export const OrderCard = ({
                   {selectedEntity == "specialist"
                     ? ` ${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
                     : selectedEntity == "facility"
-                    ? ` ${order.facility?.name}`
-                    : ` ${order?.client?.firstName}`}
+                      ? ` ${order.facility?.name}`
+                      : ` ${order?.client?.firstName}`}
                 </Text>
                 {isClient && selectedEntity == "specialist" ? (
                   <>
@@ -1420,58 +1440,58 @@ export const OrderCard = ({
                       if (isClient) {
                         selectedEntity == "specialist"
                           ? updateReviews({
-                              service: order?.services.map((item) => item._id),
-                              specialist: order?.specialist?._id,
-                              reviewType: "client",
-                              rating: reviewRatings,
-                              description: reviewDescription,
-                            })
+                            service: order?.services.map((item) => item._id),
+                            specialist: order?.specialist?._id,
+                            reviewType: "client",
+                            rating: reviewRatings,
+                            description: reviewDescription,
+                          })
                           : selectedEntity == "facility"
-                          ? updateReviews({
+                            ? updateReviews({
                               facility: order?.facility?._id,
                               rating: reviewRatings,
                               reviewType: "client",
                               description: reviewDescription,
                             })
-                          : null;
+                            : null;
                       } else if (isSpecialist) {
                         console.log("this is NOtt happening");
                         selectedEntity == "client"
                           ? updateReviews({
-                              service: order?.services.map((item) => item._id),
-                              specialist: order?.specialist?._id,
-                              rating: reviewRatings,
-                              reviewType: "specialist",
-                              description: reviewDescription,
-                            })
+                            service: order?.services.map((item) => item._id),
+                            specialist: order?.specialist?._id,
+                            rating: reviewRatings,
+                            reviewType: "specialist",
+                            description: reviewDescription,
+                          })
                           : selectedEntity == "facility"
-                          ? updateReviews({
+                            ? updateReviews({
                               facility: order?.facility?._id,
                               rating: reviewRatings,
                               reviewType: "specialist",
                               description: reviewDescription,
                             })
-                          : null;
+                            : null;
                         // updateReviews({ facility: order?.facility?._id, rating: reviewRatings, description: reviewDescription })
                       } else if (isHost) {
                         selectedEntity == "specialist"
                           ? updateReviews({
-                              service: order?.services.map((item) => item._id),
-                              facility: order?.facility?._id,
-                              specialist: order?.specialist?._id,
-                              reviewType: "facility",
-                              rating: reviewRatings,
-                              description: reviewDescription,
-                            })
+                            service: order?.services.map((item) => item._id),
+                            facility: order?.facility?._id,
+                            specialist: order?.specialist?._id,
+                            reviewType: "facility",
+                            rating: reviewRatings,
+                            description: reviewDescription,
+                          })
                           : selectedEntity == "client"
-                          ? updateReviews({
+                            ? updateReviews({
                               facility: order?.facility?._id,
                               facility: order?.facility?._id,
                               rating: reviewRatings,
                               reviewType: "facility",
                               description: reviewDescription,
                             })
-                          : null;
+                            : null;
                       }
                       if (orderCompleted) {
                         completeOrder(order.id, code);

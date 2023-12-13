@@ -66,6 +66,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
   };
 
   const updateUserInfo = async (data) => {
+    console.log("formdataaaa",data);
     try {
       setIsLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader()
@@ -78,7 +79,10 @@ export const AuthContextProvider = ({ children, navigation }) => {
             return data;
           }},
       );
+
+      
       setError(null);
+      console.log("userrrrrrrr infooooooo", res.data.data.user);
       setUser(res.data.data.user);
       setIsLoading(false);
       handleSuccess(res, setIsLoading, theme);

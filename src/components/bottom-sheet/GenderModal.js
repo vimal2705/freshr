@@ -12,6 +12,8 @@ import {
   setProGender,
   setTargetGender,
 } from "../../redux/booking/booking.actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useLayoutEffect } from "react";
 
 const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }) => {
   const [gender, setGender] = useState("");
@@ -29,11 +31,38 @@ const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }
     // setTargetGender(gen)
     setGender(gen) 
   }, [gen])
-  const applyFilter = () => {
+  const [storagegender, setstoragegender] = useState(null)
+  useEffect(()=>{
+    getDeliveryStorage();
+  },[showModal])
+  const getDeliveryStorage=async()=>{
+  
+    try {
+      const value = await AsyncStorage.getItem(
+        "gender"
+      )
+      console.log("#######################------------->", value);
+      if(value){
+        setGender(value)
+      }
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr",error);
+    }
+    }
+  const applyFilter =async () => {
     // restProps.setTargetGender(gender);
     // restProps.setProGender(genderPro);
+
     dispatch(setTargetGender(gender)) 
     toggleShowModal();
+    try {
+      await AsyncStorage.setItem(
+        "gender",
+        gender
+      )
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr",error);
+    }
   };
   return (
     <FilterModal showModal={showModal} toggleShowModal={toggleShowModal}>

@@ -1128,7 +1128,7 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
                   <FacilityCard
                     handleMorePress={() =>
                       navigation.navigate("FacilityDetails", {
-                        facility: item,
+                        id: item._id,
                       })
                     }
                     style={{ marginBottom: 18 }}

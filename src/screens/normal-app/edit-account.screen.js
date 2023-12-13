@@ -15,6 +15,7 @@ import { LoadingScreen } from "../loading.screen";
 import { GenderCard, GenderCardSelectorContainer, renderGenderForm } from "../../components/helpers/helpers.component";
 import { Alert, View } from 'react-native';
 import { sendMessage } from '../../providers/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Container = styled.View`
   flex: 1;
@@ -131,6 +132,7 @@ export const EditAccountScreen = (props) => {
   const [newFirstname, setNewFirstname] = useState(user.firstName)
   const [newLastname, setNewLastname] = useState(user.lastName)
 
+  console.log("user", user?.gender);
   useEffect(() => {
     setProfilePicture({ uri: user?.photo })
   }, [user])
@@ -138,7 +140,29 @@ export const EditAccountScreen = (props) => {
   const replaceProfile = (result) => {
     setProfilePicture(result);
   };
+  const getDeliveryStorage=async()=>{
+  
+    try {
+      const value = await AsyncStorage.getItem(
+        "gender"
+      )
+      console.log("#######################------------->", value);
+      if(value){
+        if(value=='all'){
+          setNewGender('both')
+        }
+        else{
+          setNewGender(value)
+        }
+      }
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr",error);
+    }
+    }
 
+useEffect(()=>{
+getDeliveryStorage()
+}, [])
   console.log('reduxuser===>>>',user);
   const updateInfo = () => {
     const formData = new FormData();
@@ -163,7 +187,9 @@ export const EditAccountScreen = (props) => {
     }
 
     if (newGender !== null &&newGender?.trim() !== user?.gender){
+      if(newGender?.trim() != 'both'){
       formData.append('gender', newGender.trim());
+      }
 
     }
     else{ 
@@ -183,6 +209,7 @@ export const EditAccountScreen = (props) => {
     }
     else{
       console.log('new daata seted',formData);
+      console.log(formData);
       updateUserInfo(formData)
     }
    

@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   currentService: null,
   targetGender: "all",
   proGender: "all",
-  priceRange: [8, 150],
+  priceRange: [0, 150],
   searchRadius: 20,
   searchLocation: null,
   sortBy: "",

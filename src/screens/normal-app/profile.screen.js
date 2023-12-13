@@ -16,6 +16,7 @@ import {
   LogoutButton,
   ProfileButton,
   Avatar,
+  Singupbutton,
 } from "../components/profile.helper.component";
 import { AuthContext } from "../../providers/auth/auth.context";
 import { useContext } from "react";
@@ -203,12 +204,24 @@ const ProfileScreen = (props) => {
         </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="large" />
-    {    user.firstName == "Guest"?  <></> : <LogoutButton onPress ={() => {
+    {    user.firstName == "Guest"?  <><Singupbutton 
+    onPress={()=>{changeApp('normal');
+    onLogout();}}> 
+   <Ionicons
+            name="log-in-outline"
+            size={28}
+            color={theme.colors.brand.secondary}
+          />
+    <Spacer position="left" size="medium" />  
+          <Text variant="label" style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
+            Sign Up
+          </Text>
+     </Singupbutton></> : <LogoutButton onPress ={() => {
           console.log("donee");
           changeApp('normal')
           onLogout()}}> 
           <Ionicons
-            name="log-out-sharp"
+            name="log-in-outline"
             size={28}
             color={theme.colors.brand.secondary}
           />

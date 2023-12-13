@@ -57,7 +57,7 @@ const PriceRangeModalComponent = ({
         </Spacer>
         <Rheostat
           values={curValue}
-          min={4}
+          min={0}
           max={1000}
           theme={{
             rheostat: { themeColor: theme.colors.brand.secondary, grey: "#fafafa" },
