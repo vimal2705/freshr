@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1095248180434",
+    "project_id": "freshr-44d1a",
+    "storage_bucket": "freshr-44d1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095248180434:android:451e618f50b1405e0a290b",
+        "android_client_info": {
+          "package_name": "com.freshr.freshrapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095248180434-7nm9l8ntjsb8ajmgi2hg1c1kgv4e83d1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlDxdip_BI7CSUbM09TcSqrbq1qEUuIJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095248180434-7nm9l8ntjsb8ajmgi2hg1c1kgv4e83d1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
