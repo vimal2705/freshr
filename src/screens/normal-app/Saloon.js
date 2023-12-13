@@ -1218,8 +1218,8 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
               justifyContent: "center",
               width: 60,
               position: "absolute",
-              bottom: 20,
-              right: 20,
+              bottom: 110,
+              right: 10,
               height: 60,
               backgroundColor: theme.colors.brand.primary,
               borderRadius: 100,
@@ -1230,6 +1230,7 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
             {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
           </TouchableOpacity>
         )}
+        
       </SafeArea>
     </>
   );

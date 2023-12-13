@@ -12,7 +12,7 @@ import { Spacer } from "../../components/spacer/spacer.component";
 import { Row } from "../../components/helpers/helpers.component";
 import { Text } from "../../components/typography/typography.component";
 import { rgba } from "polished";
-import { Dimensions,Share,Linking } from "react-native";
+import { Dimensions,Share,Linking, View } from "react-native";
 import { ReviewContext } from "../../providers/review.provider";
 const { width } = Dimensions.get("window");
 
@@ -97,6 +97,7 @@ const CoverImage = styled.Image.attrs((props) => ({
 const ContentContainer = styled.View`
   flex: 1;
   justify-content: center;
+  
 `;
 
 const Title = styled(Text)`
@@ -180,18 +181,20 @@ const FacilityCard = ({
           <CoverImage source={{ uri: coverImage }} />
           <Spacer position="left" size="medium" />
           <ContentContainer>
+            <View style={{bottom:10}}>
             <Title numberOfLines={1}>{name}</Title>
+            </View>
             <Spacer position="bottom" size="large" />
             <Row>
-              <Ionicons
+              {/* <Ionicons
                 name="location"
                 size={12}
                 color={theme.colors.brand.secondary}
-              />
+              /> */}
               <Spacer position="left" size="small" />
-              <Text variant="caption" style={{ fontWeight: "normal", fontSize: 10, color: "black" }}>
+              {/* <Text variant="caption" style={{ fontWeight: "normal", fontSize: 10, color: "black" }}>
                 {[facility.postcode || '', facility.city || '', facility.country || ''].join('  ')}
-              </Text>
+              </Text> */}
             </Row>
             <Spacer position="bottom" size="large" />
 

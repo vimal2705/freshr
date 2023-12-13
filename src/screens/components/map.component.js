@@ -232,6 +232,7 @@ const Map = ({
               onLayout={() => fitMapToCircle()}
               showUserLocation
               followUserLocation
+              toolbarEnabled={false}
             >
               <MapMarker
                 key={`marker-search-location`}
@@ -310,14 +311,14 @@ const Map = ({
               {/*/>*/}
             </MapContainer>
             <ExpandButtonContainer>
-                <IconButton
+                {/* <IconButton
                   active={false}
                   activeColor={theme.colors.brand.primary}
                   inactiveColor={'black'}
                   onPress={refresh}
                 >
                   {loading ? <ActivityIndicator color={theme.colors.brand.primary} /> : <Ionicons name={"refresh"} size={20} color={"white"} />}
-                </IconButton>
+                </IconButton> */}
                 <Spacer position={"bottom"} size={"small"}/>
               <IconButton
                 active={false}

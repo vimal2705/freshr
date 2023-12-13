@@ -155,7 +155,7 @@ const SpecialistCard = ({
           <SpecialistCardInfoContainer>
             
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-              <Title variant="caption" numberOfLines={1} ellipsizeMode="tail" width={140} style={{color: darkTheme ? "white" : "black"}}>
+              <Title variant="caption" numberOfLines={2} ellipsizeMode="tail" width={110} style={{color: darkTheme ? "white" : "black"}}>
                 {name}
               </Title>
               <InformationChipp darkTheme={false}>
@@ -251,9 +251,9 @@ const SpecialistCard = ({
                 </InformationChip>
                
             </InformationRow>
-            <Spacer position="right" size="medium">
+            {/* <Spacer position="right" size="medium"> */}
                
-              </Spacer>
+              {/* </Spacer> */}
             {/*<Spacer position="bottom" size="medium" />*/}
           </SpecialistCardInfoContainer>
         </SpecialistCardContainer>
