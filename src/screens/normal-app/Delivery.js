@@ -682,6 +682,7 @@ const Delivery = (props) => {
         </View>
       </Modal> */}
 
+
           {searchIsLoading ? <ActivityIndicator /> : <Map
             key={'map-full'}
             fullMap={false}
@@ -702,7 +703,8 @@ const Delivery = (props) => {
 
                   navigation.navigate("SpecialistDetails", {
                     edit: false,
-                    specialist: item
+                    specialist: item,
+                    Del:true,
                   });
                 }}
                 specialist={item}
@@ -718,6 +720,9 @@ const Delivery = (props) => {
         <PriceRangeModal
           showModal={showPriceRangeFilter}
           toggleShowModal={handleShowPriceRangeFilterChange}
+
+  
+
         />
         <GenderModal
           showModal={showGenderFilter}

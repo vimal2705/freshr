@@ -305,7 +305,7 @@ style={{ backgroundColor: "#fff", height: '90%', marginHorizontal:15}
   <ScrollView>
   {
 rejectSpecialist?.map((item, index)=>{
-  console.log("rejecteddddddddddddddddddddddddddddddddddddddd",item);
+  // console.log("rejecteddddddddddddddddddddddddddddddddddddddd",item);
 return(
 
 <View style={{justifyContent:'center',alignItems:'center',height:200}}>

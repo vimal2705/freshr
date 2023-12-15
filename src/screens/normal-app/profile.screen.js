@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import styled, { useTheme } from "styled-components/native";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { Text } from "../../components/typography/typography.component";
 import { SafeArea } from "../../components/utils/safearea.component";
@@ -16,13 +16,13 @@ import {
   LogoutButton,
   ProfileButton,
   Avatar,
+  Singupbutton,
 } from "../components/profile.helper.component";
 import { AuthContext } from "../../providers/auth/auth.context";
 import { useContext } from "react";
 import { LoadingScreen } from "../loading.screen";
 import { AppContext } from "../../providers/app-provider";
 import { useNavigation } from "@react-navigation/native";
-
 const Container = styled.ScrollView`
   flex: 1;
   padding: ${({ theme }) => theme.space[3]};
@@ -30,7 +30,6 @@ const Container = styled.ScrollView`
 const Header = styled.View`
   align-items: center;
 `;
-
 const ProfileScreen = (props) => {
   const navigation = useNavigation();
   const theme = useTheme();
@@ -40,7 +39,6 @@ const ProfileScreen = (props) => {
     "https://st2.depositphotos.com/1009634/7235/v/950/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg";
   const name = "John doe";
   const email = "johndoe@mail.com";
-
   const renderHeader = () => {
     return (
       <Header>
@@ -73,11 +71,22 @@ const ProfileScreen = (props) => {
       </Header>
     );
   };
-
   if (isLoading) {
     return <LoadingScreen/>
   }
-
+  const handleFeedbackPress = async () => {
+    // // Specify the email address you want to send the mail to
+    const emailAddress = 'sujalpatel1502@gmail.com';
+    // // Create the mailto link
+    const mailtoLink = `mailto:${emailAddress}`;
+    // // Use Linking.openURL to open the mail client with the specified email address
+    try {
+      await Linking.openURL(mailtoLink);
+    } catch (error) {
+      console.error('Error opening mail client:', error);
+    }
+    console.log("hellloooooooo");
+  };
   return (
     <SafeArea>
       <Container showsVerticalScrollIndicator={false}>
@@ -115,14 +124,11 @@ const ProfileScreen = (props) => {
         </View>
 }
         <Spacer position="bottom" size="large" />
-        
         <Spacer position="bottom" size="medium" />
-      
         <Spacer position="bottom" size="large" />
-
        {   user.firstName == "Guest" ? <></>:<SectionTitle variant="label">Pro</SectionTitle>}
         <Spacer position="bottom" size="large" />
-      {  user.firstName == "Guest"?  <Spacer position="bottom" size="small" /> : 
+      {  user.firstName == "Guest"?  <Spacer position="bottom" size="small" /> :
         <View>
           {user && user.isHost && <ProfileButton
             icon={
@@ -185,7 +191,32 @@ const ProfileScreen = (props) => {
 }
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
-        
+        <SectionTitle variant="label">Support</SectionTitle>
+        <Spacer position="bottom" size="large" />
+        <ProfileButton
+            icon={
+              <AntDesign
+                name="customerservice"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleFeedbackPress()}
+            label="Support"
+          />
+        <ProfileButton
+            icon={
+              <MaterialIcons
+                name="feedback"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleFeedbackPress()}
+            label="Feedback"
+          />
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="large" />
         <SectionTitle variant="label">Legal</SectionTitle>
         <Spacer position="bottom" size="large" />
         <View>
@@ -203,12 +234,24 @@ const ProfileScreen = (props) => {
         </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="large" />
-    {    user.firstName == "Guest"?  <></> : <LogoutButton onPress ={() => {
+    {    user.firstName == "Guest"?  <><Singupbutton
+    onPress={()=>{changeApp('normal');
+    onLogout();}}>
+   <Ionicons
+            name="log-in-outline"
+            size={28}
+            color={theme.colors.brand.secondary}
+          />
+    <Spacer position="left" size="medium" />
+          <Text variant="label" style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
+            Sign Up
+          </Text>
+     </Singupbutton></> : <LogoutButton onPress ={() => {
           console.log("donee");
           changeApp('normal')
-          onLogout()}}> 
+          onLogout()}}>
           <Ionicons
-            name="log-out-sharp"
+            name="log-in-outline"
             size={28}
             color={theme.colors.brand.secondary}
           />
@@ -218,9 +261,10 @@ const ProfileScreen = (props) => {
           </Text>
         </LogoutButton>
 }
+<Spacer position="bottom" size="large" />
+<Spacer position="bottom" size="large" />
       </Container>
     </SafeArea>
   );
 };
-
 export default connect(null, null)(ProfileScreen);
