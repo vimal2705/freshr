@@ -76,7 +76,7 @@ const HomeSpecialistScreen = (props) => {
     Context provider loading information
    */
   const {isLoading, specialist, todayProfit, totalProfit, specialistServices, loadSpecialistData } = useContext(SpecialistContext)
-  console.log("specialistttttt=[=][=][=][=][=p[]=p[][p[=][]=[[]=[[]",specialistServices);
+  // console.log("specialistttttt=[=][=][=][=][=p[]=p[][p[=][]=[[]=[[]",specialistServices);
 
   const {onLogout} = useContext(AppContext)
 //   useEffect(() => {

@@ -457,8 +457,20 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
     console.log("oooooooo", data);
   }, []);
 
-  const savefilter = () => {
-    console.log(SyncStorage.get("filters")),
+  const savefilter = async() => {
+    // try {
+    //   await AsyncStorage.setItem(
+    //     "filters", {
+    //       category: props.category,
+    //       priceRange: props.priceRange,
+    //       targetGender: props.targetGender,
+    //       sortFacilitiesBy: props.sortFacilitiesBy,
+    //       searchRadius: props.searchRadius,
+    //     })
+    // } catch (error) {
+    //   console.log("erorrrrrrrrrrrr",error);
+    // }
+    // console.log(SyncStorage.get("filters")),
       SyncStorage.set("filters", {
         category: props.category,
         priceRange: props.priceRange,
@@ -884,27 +896,29 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
     <>
       <SafeArea1>
         <View
-          style={{ height: 80, flexDirection: "row", alignItems: "center" }}
+          style={{ height: 100, flexDirection: "row", alignItems: "center",justifyContent:'center' }}
         >
           <TouchableOpacity
+          activeOpacity={1}
             style={{
               backgroundColor:
                 props.currentScreen == "SalonScreen"
                   ? "#fff"
                   : theme.colors.brand.secondary,
-              width: "50%",
-              height: 80,
+              width: "45%",
+              height: 90,
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent:"space-evenly",borderWidth:5,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0
             }}
             onPress={() => {props.changescreen("Delivery")
             props.setCurrentScreen("Delivery")
           }
           }
           >
-            <Text style={{fontWeight:"bold"}}>Delivery</Text>
-            <View style={{flex:1,flexDirection:"row",position:'absolute',bottom:-2,marginVertical:12}}>
-              <Entypo name="location-pin" size={20} color={"black"} />
+            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',right:1,top:0, }}>Where do</Text>
+            <Text style={{fontWeight:"bold",top:10}}>Delivery</Text>
+            <View style={{flexDirection:"row",paddingHorizontal:5}}>
+              <Entypo name="location-pin" size={16} color={"black"} />
 
               <Text
                 onPress={() =>
@@ -912,27 +926,29 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
                     ? props.changescreen("Delivery")
                     : props.setCurrentScreen("Delivery")
                 }
-                style={{borderWidth:1,borderRadius:10,paddingHorizontal:5}}
+                style={{borderWidth:1,borderRadius:10,paddingHorizontal:5,fontSize:12}}
               >
                 {address.length>0 ? address.length < 20 ? address : `${address.slice(0, 20)}....` : `Click here to set Location`}
               </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+          activeOpacity={1}
             style={{
               backgroundColor:
                 props.currentScreen == "Delivery"
                   ? "#fff"
                   : theme.colors.brand.secondary,
-              width: "50%",
-              height: 80,
+              width: "45%",
+              height: 90,
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent:"space-evenly",borderWidth:5,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20
             }}
             onPress={() => props.setCurrentScreen("SalonScreen")}
           >
+            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',left:1,top:0 }}>we meet?</Text>
             <MaterialIcons name="storefront" size={18} color="black" style={{top:10}} />
-            <Text style={{fontWeight:'bold',top:10}}>In Salon</Text>
+            <Text style={{fontWeight:'bold'}}>In Salon</Text>
             
           </TouchableOpacity>
         </View>
@@ -1218,8 +1234,8 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
               justifyContent: "center",
               width: 60,
               position: "absolute",
-              bottom: 20,
-              right: 20,
+              bottom: 110,
+              right: 10,
               height: 60,
               backgroundColor: theme.colors.brand.primary,
               borderRadius: 100,
@@ -1230,6 +1246,7 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
             {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
           </TouchableOpacity>
         )}
+        
       </SafeArea>
     </>
   );

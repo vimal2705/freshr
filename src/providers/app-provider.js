@@ -180,13 +180,16 @@ useEffect(()=>{
     }
   }
 
-  const payOrder = async (order) => {
+  const payOrder = async (order,delivery) => {
+    console.log("hereeeeeeeeeeeeeeeeeeeeee",delivery,order);
     try {
       setLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader();
-      const res = await axios.post(`${BASE_API_URL}/orders/pay/${order}`, null, config)
+     
+      const res= await axios.post(`${BASE_API_URL}/orders/pay/${order}`, null, config)
       setError(null);
       setLoading(false);
+      console.log("orderdataaaaaa=-=-=-=-=-=-[][-=[]==-[]=[]]=//////////djdjjdjdjdjdjdjjdjd8888*******************",res.data.data.order);
       return res.data.data.order;
     } catch (err) {
       handleError(err, setLoading, setError, theme)

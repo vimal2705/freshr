@@ -116,11 +116,14 @@ const SpecialistDetailsScreen = ({
   cart,
   route,
   navigation,
+  edit,
+  Del,
   ...restProps
 }) => {
   const editBooking = route.params.edit;
   const theme = useTheme();
   const { id,setnewspecid,setsaloonspec } = route.params;
+  console.log("deliveryyyyyyytrueeeeeeeeeorrrrrr",route.params.Del);
   
   // const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
 
@@ -637,7 +640,7 @@ onGetReviews(specialist?.id,'specialist')
     }
                 editBooking
                   ? navigation.push("BookingReview")
-                  : navigation.push("MeetingTimeSelection", { edit: false })
+                  : navigation.push("MeetingTimeSelection", { edit: false,Del:route.params.Del?route.params.Del:false })
 
                 }
               }

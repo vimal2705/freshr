@@ -422,7 +422,7 @@ export const specialistsMock = [
         {
           id: "service-28",
           category: "Beard Sculpting",
-          name: "Beard sculpting 4",
+          name: "sculpting 4",
           price: 30,
           gender: "both",
           coverImage:

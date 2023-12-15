@@ -193,7 +193,7 @@ export const OrderCard = ({
   const order2 = "Task Done";
   const order3 = isSpecialist;
   const { specialist } = useContext(SpecialistContext);
-  console.log("specialllllllllllllllllll", specialist);
+  // console.log("specialllllllllllllllllll", specialist);
 
   // const dispatch = useDispatch()
   const dispatch = useDispatch();
@@ -237,7 +237,7 @@ export const OrderCard = ({
       (specialistlocation = []),
       (clientloction = [userloc.longitude, userloc.latitude])
     );
-    console.log("apiputttttttttttttttorderrrr", orderr);
+    // console.log("apiputttttttttttttttorderrrr", orderr);
   };
 
   const [host, setHost] = useState([]);
@@ -246,7 +246,7 @@ export const OrderCard = ({
   useEffect(() => {
     if (order?.selectedLocation) {
       setHost(order?.selectedLocation);
-    } else if (h) {
+    } else if (h?.length>0) {
       setHost(h);
     } else {
       setHost(
@@ -255,18 +255,18 @@ export const OrderCard = ({
           : order.facility.location.coordinates
       );
     }
-    console.log("mmmmmmmsssssss", h);
+    // console.log("mmmmmmmsssssss",order?.selectedLocation, h, order?.facility?.location?.coordinates, order?.specialist?.location?.coordinates);
   }, [h]);
 
   useEffect(() => {
     const setadd = async () => {
-      console.log("============================================>", host);
+      // console.log("============================================>", host);
       let l = await Location.reverseGeocodeAsync({
         latitude: host[1],
         longitude: host[0],
       });
       // console.log("_________________________________________________", l);
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>", l);
+      // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>", l);
 
       // setAddress(`${l[0].city==null?'':l[0].city},${l[0].street==null?'':l[0].street}`)
       setAddress(
@@ -344,26 +344,54 @@ export const OrderCard = ({
   const [rejectedid, setRejectedid] = useState();
   useEffect(() => {
     if (!isClient) {
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", order.services[0]);
+      // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", order.services[0]);
       setServiceName(order.services[0].serviceType.name);
       setRejectedid(order.services[0].id);
     }
   }, []);
-  console.log("ordersssssssssssssssssssssssssssssssss", order.client);
+  // console.log("ordersssssssssssssssssssssssssssssssss", order.client);
   const handleLoctaion = async () => {
     const { orderr } = await fetchLiveLocation(
       order._id,
       (specialistlocation = [userloc.longitude, userloc.latitude]),
       (clientloction = [])
     );
-    console.log("apiputttttttttttttttorderrrr", orderr);
+    // console.log("apiputttttttttttttttorderrrr", orderr);
   };
 
-  // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//////////////////////////////////", order.specialist.user.searchLocation.address);
+  console.log("121212121234567890~~~~~~~~~~~~~~~~~~~~~~~~", order._id);
   const sendMapp = () => {
     Linking.openURL(`google.navigation:q=${host[1]}+${host[0]}`);
   };
   return (
+    
+<>
+<View
+              style={{
+                flexDirection: "row",
+                // justifyContent: "center",
+                gap: 10,
+                left:25,
+                
+              }}
+            >
+              <Text style={{ fontSize: 15 }}>id: {order?._id}</Text>
+              <TouchableOpacity
+              onPress={()=>copyToClipboard(order?._id)}
+                style={{
+                  borderWidth: 1,
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "#000",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 5,
+                }}
+              >
+                <AntDesign name="copy1" size={14} color="#fff" />
+              </TouchableOpacity>
+            </View>
+
     <Container>
       {isClient && order?.status == 'PENDING' &&
         <View style={{
@@ -409,6 +437,7 @@ export const OrderCard = ({
             }}
           >
             <AntDesign name="close" size={16} color="white" />
+            
             <Spacer position="left" size="medium" />
             <Text
               variant="caption"
@@ -425,6 +454,7 @@ export const OrderCard = ({
             </Text>
           </CloseButton>
         )}
+        
       {order.position !== 0 &&
         !isCheckout &&
         !["COMPLETED", "CANCELLED"].includes(order.status) && (
@@ -474,6 +504,7 @@ export const OrderCard = ({
         {/*    width: "100%"*/}
         {/*  }}*/}
         {/*/>*/}
+        
         {!["COMPLETED", "CANCELLED", "ONGOING"].includes(order.status) && (
           <MapBooking
             selectedFacility={order.facility}
@@ -545,12 +576,19 @@ export const OrderCard = ({
       <DetailsContainer style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <Spacer position="bottom" size="medium" />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          
+
+          <View style={{
+          backgroundColor: 'black', borderRadius: 2, padding: 4,
+          position: 'absolute',
+          zIndex: 15,
+          top: 6,
+          
+        }}>
+          <Text
+            variant="caption"
+            style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
           >
-            <Text style={{ fontSize: 16 }}>
-              {" "}
-              Date:
               {`${order?.createdAt?.substring(
                 8,
                 10
@@ -1588,5 +1626,6 @@ rejectSpecialist.map((item, index)=>{
       
       } */}
     </Container>
+    </>
   );
 };

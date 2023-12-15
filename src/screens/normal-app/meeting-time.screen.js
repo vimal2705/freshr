@@ -19,7 +19,7 @@ import BookingStepper from "../components/booking-stepper.component";
 import { CancelButton } from "../../components/button/button.component";
 import { View } from "react-native";
 import { MapBooking } from "../components/map-booking.component";
-import { StackActions } from "@react-navigation/native";
+import { StackActions, useRoute } from "@react-navigation/native";
 import { SafeArea } from "../../components/utils/safearea.component";
 import { NavBar } from "./components/nav-bar";
 
@@ -116,8 +116,10 @@ const TravelTime = styled.View`
 const MeetingTimeSelectionScreen = ({
   selectedFacility,
   navigation,
+  Del,
   ...restProps
 }) => {
+  const route=useRoute();
   const [travelWay, setTravelWay] = useState("foot");
   const [additionalTime, setAdditionalTime] = useState(null);
   const [specialistTravelTime, setSpecialistTravelTime] = useState(null);
@@ -132,6 +134,7 @@ const MeetingTimeSelectionScreen = ({
   },[Apiloc])
   // setApilocc()
   console.log("OGGGGGGGGGGGGGGGGGGAPIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILOCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",Apilocc);
+  console.log("Dellllll in meetinggggggggg",route.params.Del);
 
   useEffect(() => {
     console.log("finallll moxa sujal",restProps.selectedSpecialist)
@@ -318,7 +321,7 @@ const MeetingTimeSelectionScreen = ({
       >
         <ActionButton
           height={50}
-          onPress={() => navigation.push("BookingReview", {Apilocc,clientTravelTime, specialistTravelTime, clientTravelDistance, specialistTravelDistance})}
+          onPress={() => navigation.push("BookingReview", {Apilocc,clientTravelTime, specialistTravelTime, clientTravelDistance, specialistTravelDistance,Del:route.params.Del?route.params.Del:false})}
         >
           <Text
             style={{

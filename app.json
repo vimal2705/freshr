@@ -18,11 +18,17 @@
       "**/*"
     ],
     "ios": {
+      "text": {
+        "allowFontScaling": false
+      },
       "supportsTablet": true,
       "buildNumber": "1.0.1",
       "bundleIdentifier": "com.freshr.freshrapp"
     },
     "android": {
+      "text": {
+        "allowFontScaling": false
+      },
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBsKp25cTLoo0gTjNCyzaMrAMXXCfRKoMQ"
