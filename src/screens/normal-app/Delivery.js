@@ -688,11 +688,12 @@ const theme = useTheme();
               active={item.id === specialist?._id}
               onPress={() => {
                 props.setSpecialist(item);
-                console.log("theogitem",item);
+                console.log("theogitem----------->",item);
                 
                 navigation.navigate("SpecialistDetails", {
                   edit: false,
-                  specialist: item
+                  specialist: item,
+                  Del:true,
                 });
               }}
               specialist={item}

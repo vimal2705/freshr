@@ -489,9 +489,10 @@ const EditButton = styled.TouchableOpacity`
   padding: ${({ theme }) => theme.space[2]};
 `;
 
-const BookingReviewScreen = ({ Apilocc,booking, route, navigation, ...restProps }) => {
+const BookingReviewScreen = ({ Apilocc,booking, route, navigation, ...restProps}) => {
 
   console.log("APIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILOCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",route.params.Apilocc);
+  console.log("ogggggggdelllllllllllll",route.params.Del);
   const mapRef = useRef(null)
 
   const theme = useTheme();
@@ -611,7 +612,7 @@ const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
           console.log("nooooooooo");
         }
         console.log('Success', 'Your order is confirmed!');
-        const paidOrder = await payOrder(newOrder.id);
+        const paidOrder = await payOrder(newOrder.id,route.params.Del);
         setNewOrder({...paidOrder})
       }
   
@@ -642,7 +643,7 @@ console.log("beforeeeeee------------------------------");
         console.log("nooooooooo");
       }
       console.log('Success', 'Your order is confirmed!');
-      const paidOrder = await payOrder(newOrder.id);
+      const paidOrder = await payOrder(newOrder.id,route.params.Del);
       setNewOrder({...paidOrder})
     // }
 

@@ -457,8 +457,20 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
     console.log("oooooooo", data);
   }, []);
 
-  const savefilter = () => {
-    console.log(SyncStorage.get("filters")),
+  const savefilter = async() => {
+    // try {
+    //   await AsyncStorage.setItem(
+    //     "filters", {
+    //       category: props.category,
+    //       priceRange: props.priceRange,
+    //       targetGender: props.targetGender,
+    //       sortFacilitiesBy: props.sortFacilitiesBy,
+    //       searchRadius: props.searchRadius,
+    //     })
+    // } catch (error) {
+    //   console.log("erorrrrrrrrrrrr",error);
+    // }
+    // console.log(SyncStorage.get("filters")),
       SyncStorage.set("filters", {
         category: props.category,
         priceRange: props.priceRange,
