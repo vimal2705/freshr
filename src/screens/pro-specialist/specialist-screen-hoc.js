@@ -111,7 +111,7 @@ console.log("ordercheck",order);
             color={specialist?.isOnline ? "white" : "transparent"}
             onPress={() => navigation.navigate("SpecialistMenu")}
           >
-            <Feather name="menu" size={24} color={specialist?.isOnline ? "black" : "white"} />
+            <Feather name="settings" size={24} color={specialist?.isOnline ? "black" : "white"} />
           </NavButton>
         </View>
       </TopNavContainer>

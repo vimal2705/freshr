@@ -66,7 +66,7 @@ export const HeaderContainer = styled.View`
 `;
 
 export const PageTitle = styled(SectionTitle)`
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 700;
 `;
 

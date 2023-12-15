@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View,ScrollView,  Modal, TouchableOpacity,Platform ,ActivityIndicator} from 'react-native'
+import { Dimensions, StyleSheet, Text, View, ScrollView, Modal, TouchableOpacity, Platform, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styled from "styled-components/native";
 import { SafeArea, SafeArea1 } from "../../components/utils/safearea.component";
@@ -104,55 +104,55 @@ const GlassBackground = styled(BlurView)`
 `;
 
 const Delivery = (props) => {
-const { loadFilters, getUser, refreshSearch, isLoading,  searchSpecialist, onGetOrders , refreshing, onRefresh} = useContext(AppContext);
-const {address, setAddress} = props
-const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
+  const { loadFilters, getUser, refreshSearch, isLoading, searchSpecialist, onGetOrders, refreshing, onRefresh } = useContext(AppContext);
+  const { address, setAddress } = props
+  const { onGetSpecialistidd, specialistidd } = useContext(SpecialistContext)
 
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
   const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [showGenderFilter, setShowGenderFilter] = useState(false);
   const [showPriceRangeFilter, setShowPriceRangeFilter] = useState(false);
   const [showSearchRadiusFilter, setShowSearchRadiusFilter] = useState(false);
-  const [showMapModel,setShowMapFilter] =useState(false)
+  const [showMapModel, setShowMapFilter] = useState(false)
   const [showLocationFilter, setShowLocationFilter] = useState(false);
-  const[specialist,setSpecialist]=useState('')
-  const[location,setLocation] = useState()
+  const [specialist, setSpecialist] = useState('')
+  const [location, setLocation] = useState()
   const [locationData, setlocationData] = useState(null);
   const [Coordinates, setCoordinates] = useState(null);
-  const [data,setData]=useState([]);
+  const [data, setData] = useState([]);
   const { width, height } = Dimensions.get("window");
   const ASPECT_RATIO = width / height;
   const [currentScreen, setCurrentScreen] = useState('Delivery')
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   const LATITUDE_DELTA = Platform.OS === "IOS" ? 1.5 : 0.5;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-  useEffect(()=>{
-    const singldata=async()=>{
-      
-      if(props.newspecid){
-        console.log("oggggggggspecidddddddddddddddddddddddddddddddddddomjdjkdjjdjkndnd",props.newspecid);
-        await onGetSpecialistidd(props.newspecid);
-        
-      }
-    } 
-    singldata();
-    
-  },[props])
+  useEffect(() => {
+    const singldata = async () => {
 
-  useEffect(()=>{
-    if(specialistidd){
-      console.log("yoooooooiddddddd",specialistidd);
+      if (props.newspecid) {
+        console.log("oggggggggspecidddddddddddddddddddddddddddddddddddomjdjkdjjdjkndnd", props.newspecid);
+        await onGetSpecialistidd(props.newspecid);
+
+      }
+    }
+    singldata();
+
+  }, [props])
+
+  useEffect(() => {
+    if (specialistidd) {
+      console.log("yoooooooiddddddd", specialistidd);
       // setSpecialist(specialistidd)
       // dispatch(setSpecialist(specialistidd))
       props.setSpecialist(specialistidd)
       navigation.navigate("SpecialistDetails", {
         edit: false,
         specialist: specialistidd,
-        setnewspecid:props.setnewspecid
+        setnewspecid: props.setnewspecid
       });
     }
-  },[specialistidd])
-  
+  }, [specialistidd])
+
   const initialRegion = {
     latitude: 37.78825,
     longitude: -122.4324,
@@ -163,68 +163,68 @@ const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
   const refreshData = () => {
     console.log("Asddasdasdasdasdasdasd");
     searchSpecialist({
-       loadingAction: () => setSearchIsLoading(true),
-       stopLoadingAction:  () => setSearchIsLoading(false),
-       config: {
-         searchLocation: props.searchLocation,
-         searchRadius: props.searchRadius,
-         targetGender: props.targetGender,
-         proGender: props.proGender,
-         priceRange: props.priceRange,
-         currentService: props.currentService,
-         serviceType: props.category
-       },
-       setMatchingFacilities: props.setMatchingFacilities,
-       setMatchingSpecialists: props.setMatchingSpecialists
-     });
-     console.log("Asddasdasdasdasdasdasdadsasdads",props.specialists);
-   } 
-  
-
-const setDeliveryStorage=async()=>{
-  const cityy="udaipur";
-try {
-  await AsyncStorage.setItem(
-    "loc",
-    cityy
-  )
-} catch (error) {
-  console.log("erorrrrrrrrrrrr",error);
-}
-}
-
-const getDeliveryStorage=async()=>{
-  
-try {
-  const value = await AsyncStorage.getItem(
-    "loc"
-  )
-  console.log("#######################------------->", value);
-} catch (error) {
-  console.log("erorrrrrrrrrrrr",error);
-}
-}
+      loadingAction: () => setSearchIsLoading(true),
+      stopLoadingAction: () => setSearchIsLoading(false),
+      config: {
+        searchLocation: props.searchLocation,
+        searchRadius: props.searchRadius,
+        targetGender: props.targetGender,
+        proGender: props.proGender,
+        priceRange: props.priceRange,
+        currentService: props.currentService,
+        serviceType: props.category
+      },
+      setMatchingFacilities: props.setMatchingFacilities,
+      setMatchingSpecialists: props.setMatchingSpecialists
+    });
+    console.log("Asddasdasdasdasdasdasdadsasdads", props.specialists);
+  }
 
 
-const setDeliverylocation1 = async ()=>{
-  const key = "del"
-                      const coordinates = [props.searchLocation[1], props.searchLocation[0]];
-  const stringifiedCoordinates = JSON.stringify(coordinates);
-
-  await AsyncStorage.setItem(key, stringifiedCoordinates);
-  props.setSearchLocation(props.searchLocation)
-  setLocation()
-}
-useEffect(()=>{
-  (async()=>{
-    const locn = await fetchdeliverylocation()
-    console.log("^^^^^^^^^^^^^^^^^^^^", locn);
-    if(locn==null){
-       setDeliverylocation1()
-      
+  const setDeliveryStorage = async () => {
+    const cityy = "udaipur";
+    try {
+      await AsyncStorage.setItem(
+        "loc",
+        cityy
+      )
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr", error);
     }
-  })
-}, [])
+  }
+
+  const getDeliveryStorage = async () => {
+
+    try {
+      const value = await AsyncStorage.getItem(
+        "loc"
+      )
+      console.log("#######################------------->", value);
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr", error);
+    }
+  }
+
+
+  const setDeliverylocation1 = async () => {
+    const key = "del"
+    const coordinates = [props.searchLocation[1], props.searchLocation[0]];
+    const stringifiedCoordinates = JSON.stringify(coordinates);
+
+    await AsyncStorage.setItem(key, stringifiedCoordinates);
+    props.setSearchLocation(props.searchLocation)
+    setLocation()
+  }
+  useEffect(() => {
+    (async () => {
+      const locn = await fetchdeliverylocation()
+      console.log("^^^^^^^^^^^^^^^^^^^^", locn);
+      if (locn == null) {
+        setDeliverylocation1()
+
+      }
+    })
+  }, [])
 
   useEffect(() => {
 
@@ -233,18 +233,18 @@ useEffect(()=>{
 
       await setDeliveryStorage();
       await getDeliveryStorage();
-      
+
       let { status } = await Location.requestForegroundPermissionsAsync();
-     
+
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
 
 
-  
+
       let location = await Location.getCurrentPositionAsync();
-      console.log("asdasda=====11222======1221",location);
+      console.log("asdasda=====11222======1221", location);
       setLocation(location);
     })();
   }, []);
@@ -263,27 +263,27 @@ useEffect(()=>{
       props.setUser(user);
 
       console.log("delivery search loc", Coordinates == null ? user.searchLocation.coordinates : Coordinates);
-    
-      props.setSearchLocation( Coordinates == null ? user.searchLocation.coordinates : Coordinates)
-  
+
+      props.setSearchLocation(Coordinates == null ? user.searchLocation.coordinates : Coordinates)
+
       pubnub.setUUID(`${user.id}`)
       console.log('pubnub', pubnub.getUUID())
-    
-      
+
+
     };
 
 
 
-  
-   loadAndSetFilters();
-   return () => {
-     props.resetCart();
-   };
+
+    loadAndSetFilters();
+    return () => {
+      props.resetCart();
+    };
   }, [props.navigation]);
-  
+
   const [deliverylocation, setDeliverylocation] = useState()
 
-  const fetchdeliverylocation = async ()=>{
+  const fetchdeliverylocation = async () => {
     const jsonvalue = await AsyncStorage.getItem(
       'del'
     )
@@ -294,8 +294,8 @@ useEffect(()=>{
   }
 
 
-const dispatch=useDispatch()
-  const setlocation = async ()=>{
+  const dispatch = useDispatch()
+  const setlocation = async () => {
     console.log("SETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", props.searchLocation);
     // await AsyncStorage.setItem(
     //   'deliverylocation',
@@ -307,27 +307,27 @@ const dispatch=useDispatch()
 
 
     let l = await Location1.reverseGeocodeAsync({
-      "latitude" : val ?val[1] : props.searchLocation[1],
-      "longitude": val? val[0] : props.searchLocation[0]
+      "latitude": val ? val[1] : props.searchLocation[1],
+      "longitude": val ? val[0] : props.searchLocation[0]
     })
 
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>", l);
 
     // setAddress(`${l[0].city==null?'':l[0].city},${l[0].street==null?'':l[0].street}`)
-    setAddress(locationData == null? `${l[0].city==null?'':l[0].city},${l[0].street==null?'':l[0].street}`:`${locationData?.locality==null?'':locationData?.locality},${locationData?.address1==null?'':locationData?.address1}`)
+    setAddress(locationData == null ? `${l[0].city == null ? '' : l[0].city},${l[0].street == null ? '' : l[0].street}` : `${locationData?.locality == null ? '' : locationData?.locality},${locationData?.address1 == null ? '' : locationData?.address1}`)
     const result = SyncStorage.get('locationAddress');
-    const city="udaipur";
-    SyncStorage.setItem('deliveryStorage',city);
-    const resultt=SyncStorage.getItem('deliverystorage');
-    console.log("resulttttttttttttttttttttttttttttttttttttttttttt",resultt);
+    const city = "udaipur";
+    SyncStorage.setItem('deliveryStorage', city);
+    const resultt = SyncStorage.getItem('deliverystorage');
+    console.log("resulttttttttttttttttttttttttttttttttttttttttttt", resultt);
 
-    SyncStorage.set('locationAddress',locationData == null? l[0] :result)
+    SyncStorage.set('locationAddress', locationData == null ? l[0] : result)
     mapRef.current?.animateToRegion(
       {
         latitudeDelta: LATITUDE_DELTA * Number(radius / 15),
         longitudeDelta: LONGITUDE_DELTA * Number(radius / 15),
         latitude: Coordinates[1],
-        longitude:  Coordinates[0],
+        longitude: Coordinates[0],
       },
       1000
     );
@@ -357,16 +357,16 @@ const dispatch=useDispatch()
       1000
     );
   };
-   
-  useLayoutEffect( () => {
+
+  useLayoutEffect(() => {
     getCurrentLocation()
     refreshData();
     setlocation();
     console.log("bhagaaaaaaaaaaa");
-  // })
- }, [refreshSearch, location, props.targetGender, props.priceRange, props.category, props.searchLocation, props.proGender, props.currentService, props.searchRadius])
+    // })
+  }, [refreshSearch, location, props.targetGender, props.priceRange, props.category, props.searchLocation, props.proGender, props.currentService, props.searchRadius])
 
- 
+
   const handleShowCategoryFilterChange = () => {
     setShowCategoryFilter(!showCategoryFilter);
   };
@@ -377,10 +377,10 @@ const dispatch=useDispatch()
   const handleShowMapChange = () => {
     setShowMapFilter(!showMapModel);
   };
-  const handleShowGenderFilterChange= () =>{
+  const handleShowGenderFilterChange = () => {
     setShowGenderFilter(!showGenderFilter)
   }
-  
+
 
   const handleShowPriceRangeFilterChange = () => {
     setShowPriceRangeFilter(!showPriceRangeFilter);
@@ -389,7 +389,7 @@ const dispatch=useDispatch()
     setShowSearchRadiusFilter(!showSearchRadiusFilter);
   };
 
-  
+
   // console.log("propsofdeliveryyyyyy",props);
   const renderFilterButton = (
     label,
@@ -552,92 +552,102 @@ const dispatch=useDispatch()
     );
   };
 
-const theme = useTheme();
-    const mapRef = useRef(null);
-    const flatList = useRef(null);
-    const lng = -73.77249799668789
-    const lat = 45.504769529788376
+  const theme = useTheme();
+  const mapRef = useRef(null);
+  const flatList = useRef(null);
+  const lng = -73.77249799668789
+  const lat = 45.504769529788376
 
 
-    const isFocused = useIsFocused()
+  const isFocused = useIsFocused()
 
-    const selectedFacility = useSelector((state)=>state.booking.facility)
-    useEffect(() => {
-    
+  const selectedFacility = useSelector((state) => state.booking.facility)
+  useEffect(() => {
 
-      const index = props?.specialists.findIndex(
-        (item) => item.id === specialist?._id
-      );
-      flatList.current?.snapToItem(index);
-      fitMapToCircle()
-  
-    }, [specialist]);
-    
-    const fitMapToCircle = (node) =>  {
-        mapRef.current?.fitToCoordinates([...props.specialists.map(item => {
-            const coordinates = item.location.coordinates
-            return {latitude: coordinates[1], longitude: coordinates[0]}
-          }),  {
-            latitude: selectedFacility?.location.coordinates[1],
-            longitude: selectedFacility?.location.coordinates[0],
-          }],
-          {
-            edgePadding: {
-              top: 35,
-              right: 10,
-              bottom: 5,
-              left: 10,
-            },
-          })
-      }
-      const gradients = [
-        [rgba(theme.colors.brand.primary, 0.9), rgba("#92FE9D", 0.9)],
-        [
-          rgba(theme.colors.brand.secondary, 0.9),
-          rgba(theme.colors.brand.tertiary, 0.9),
-        ],
-        [rgba("#06beb6", 0.9), rgba("#48b1bf", 0.9)],
-        [rgba(theme.colors.brand.primary, 0.9), rgba(theme.colors.ui.primary, 0.9)],
-      ];
-      console.log("changing specialistsss",locationData);
-    return (
+
+    const index = props?.specialists.findIndex(
+      (item) => item.id === specialist?._id
+    );
+    flatList.current?.snapToItem(index);
+    fitMapToCircle()
+
+  }, [specialist]);
+
+  const fitMapToCircle = (node) => {
+    mapRef.current?.fitToCoordinates([...props.specialists.map(item => {
+      const coordinates = item.location.coordinates
+      return { latitude: coordinates[1], longitude: coordinates[0] }
+    }), {
+      latitude: selectedFacility?.location.coordinates[1],
+      longitude: selectedFacility?.location.coordinates[0],
+    }],
+      {
+        edgePadding: {
+          top: 35,
+          right: 10,
+          bottom: 5,
+          left: 10,
+        },
+      })
+  }
+  const gradients = [
+    [rgba(theme.colors.brand.primary, 0.9), rgba("#92FE9D", 0.9)],
+    [
+      rgba(theme.colors.brand.secondary, 0.9),
+      rgba(theme.colors.brand.tertiary, 0.9),
+    ],
+    [rgba("#06beb6", 0.9), rgba("#48b1bf", 0.9)],
+    [rgba(theme.colors.brand.primary, 0.9), rgba(theme.colors.ui.primary, 0.9)],
+  ];
+  console.log("changing specialistsss", locationData);
+  return (
     <>
       <SafeArea1>
-      <View style={{height:80,flexDirection:'row',alignItems:'center'}}>
-      <TouchableOpacity style={{backgroundColor:currentScreen=='SalonScreen'?'#fff': theme.colors.brand.secondary,width:'50%',height:80,alignItems:'center',justifyContent:'center'}} onPress={()=>setCurrentScreen('Delivery')}>
-     
-        <Text style={{fontWeight:'bold'}}>Delivery</Text>
-     <View style={{flex:1,flexDirection:"row",position:'absolute',bottom:-2,marginVertical:12}}> 
-      
-     <Entypo
-              name="location-pin"
-              size={16}
-              color={"black"}
-            />
-            <Text onPress={()=>  currentScreen=='Delivery' ? setShowMapFilter(true):setCurrentScreen('Delivery')} style={{borderWidth:1,borderRadius:10,paddingHorizontal:5}}>{address.length<20 ? address:`${address.slice(0,20)}....`}</Text>
+        <View style={{ height: 100, flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
+
+          <TouchableOpacity
+          activeOpacity={1}
+          style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent:'space-evenly',borderWidth:5,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0 }} onPress={() => setCurrentScreen('Delivery')}>
+            
+            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',right:1,top:0 }}>Where do</Text>
+            <Text style={{ fontWeight: 'bold',top:10 }}>Delivery</Text>
+            <View style={{ paddingHorizontal:5,flexDirection: "row"}}>
+
+              <Entypo
+                name="location-pin"
+                size={16}
+                color={"black"}
+              />
+              <Text onPress={() => currentScreen == 'Delivery' ? setShowMapFilter(true) : setCurrentScreen('Delivery')} style={{ borderWidth: 1, borderRadius: 10, paddingHorizontal: 5,fontSize:12 }}>{address.length < 20 ? address : `${address.slice(0, 20)}....`}</Text>
             </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor:currentScreen=='Delivery'?'#fff': theme.colors.brand.secondary,width:'50%',height:80,alignItems:'center',justifyContent:'center'}} onPress={()=>props.changescreen('SalonScreen')} ><MaterialIcons name="storefront" size={18} color="black"  style={{top:10}} /><Text style={{fontWeight:'bold',top:10}}>In Salon</Text>
-     
-      </TouchableOpacity>
-      </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+          activeOpacity={1}
+          style={{ backgroundColor: currentScreen == 'Delivery' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly',borderWidth:5,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20 }} onPress={() => props.changescreen('SalonScreen')} >
+          <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',left:1,top:0 }}>we meet?</Text>
+            <MaterialIcons name="storefront" size={18} color="black" style={{ top: 10 }} />
+            <Text style={{ fontWeight: 'bold'}}>In Salon</Text>
+
+          </TouchableOpacity>
+        </View>
       </SafeArea1>
-      <SafeArea style={{backgroundColor: theme.colors.brand.white}}>
-      <PageContainer  style={{position: 'relative', backgroundColor: theme.colors.brand.white}}>
-      
-     <View
-              style={{
-                backgroundColor: rgba(theme.colors.brand.quaternary, 0),
-              }}
-            >
-              {/* <Spacer position="bottom" size="medium" /> */}
-              {renderFilters()}
-              <Spacer position="bottom" size="medium" />
-              <Spacer position="bottom" size="medium" />
-            </View>
-         
-     
-{/* <Modal
+      <SafeArea style={{ backgroundColor: theme.colors.brand.white }}>
+        <PageContainer style={{ position: 'relative', backgroundColor: theme.colors.brand.white }}>
+
+          <View
+            style={{
+              backgroundColor: rgba(theme.colors.brand.quaternary, 0),
+            }}
+          >
+            {/* <Spacer position="bottom" size="medium" /> */}
+            {renderFilters()}
+            <Spacer position="bottom" size="medium" />
+            <Spacer position="bottom" size="medium" />
+          </View>
+
+
+          {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -671,129 +681,129 @@ const theme = useTheme();
           </View>
         </View>
       </Modal> */}
-  
-  {searchIsLoading ? <ActivityIndicator /> :  <Map
-          key={'map-full'}
-          fullMap={false}
-          carouselBottom={true}
-          loading={isLoading}
-          data={props.specialists}
-          delivery={true}
-       
-          // resizeMap={toggleFullMap}
-          renderItem={({ item, index }) => (
-            <SpecialistCard 
-              navigation={navigation}
-              darkTheme={true}
-              active={item.id === specialist?._id}
-              onPress={() => {
-                props.setSpecialist(item);
-                console.log("theogitem",item);
-                
-                navigation.navigate("SpecialistDetails", {
-                  edit: false,
-                  specialist: item
-                });
-              }}
-              specialist={item}
-              locationData={locationData}
-              sharelinkdata={specialistidd}
-            />
-          )}
-        
+
+          {searchIsLoading ? <ActivityIndicator /> : <Map
+            key={'map-full'}
+            fullMap={false}
+            carouselBottom={true}
+            loading={isLoading}
+            data={props.specialists}
+            delivery={true}
+
+            // resizeMap={toggleFullMap}
+            renderItem={({ item, index }) => (
+              <SpecialistCard
+                navigation={navigation}
+                darkTheme={true}
+                active={item.id === specialist?._id}
+                onPress={() => {
+                  props.setSpecialist(item);
+                  console.log("theogitem", item);
+
+                  navigation.navigate("SpecialistDetails", {
+                    edit: false,
+                    specialist: item
+                  });
+                }}
+                specialist={item}
+                locationData={locationData}
+                sharelinkdata={specialistidd}
+              />
+            )}
+
+          />
+          }
+        </PageContainer>
+
+        <PriceRangeModal
+          showModal={showPriceRangeFilter}
+          toggleShowModal={handleShowPriceRangeFilterChange}
         />
-            }
-</PageContainer>
+        <GenderModal
+          showModal={showGenderFilter}
+          toggleShowModal={handleShowGenderFilterChange}
+          data={data}
+        />
+        <LocationModal
+          showModal={showLocationFilter}
+          toggleShowModal={handleShowLocationFilterChange}
 
-    <PriceRangeModal
-        showModal={showPriceRangeFilter}
-        toggleShowModal={handleShowPriceRangeFilterChange}
-      />
-      <GenderModal
-        showModal={showGenderFilter}
-        toggleShowModal={handleShowGenderFilterChange}
-        data = {data}
-      />
-      <LocationModal
-        showModal={showLocationFilter}
-        toggleShowModal={handleShowLocationFilterChange}
-
-      />
-            <MapModal
-        showModal={showMapModel}
-        toggleShowModal={handleShowMapChange}
-        SetLoctiondata={setlocationData}
-        setCoordinates={setCoordinates}
-      />
-      {/* <SortFacilityModal
+        />
+        <MapModal
+          showModal={showMapModel}
+          toggleShowModal={handleShowMapChange}
+          SetLoctiondata={setlocationData}
+          setCoordinates={setCoordinates}
+        />
+        {/* <SortFacilityModal
         showModal={showSortFacilityFilter}
         toggleShowModal={handleShowSortFacilityFilterChange}
       /> */}
-      <CategoryModal
-        showModal={showCategoryFilter}
-        toggleShowModal={handleShowCategoryFilterChange}
-        data={data}
-      />
-      <SearchRadiusModal
-        showModal={showSearchRadiusFilter}
-        toggleShowModal={handleShowSearchRadiusFilterChange}
-      />
-      {
-<TouchableOpacity 
-          style={{ 
-              borderWidth: 1, 
-              borderColor: 'white', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              width: 60, 
-              position: 'absolute', 
-              top: 650, 
-              right: 20, 
-              height: 60, 
-              backgroundColor: theme.colors.brand.primary, 
-              borderRadius: 100, 
-          }} 
-          onPress={() => refreshData()} 
-      > 
-      <Ionicons name={"refresh"} size={30} color={"white"} />
-          {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
-      </TouchableOpacity> 
-      }
-       </SafeArea> 
-       </> )
+        <CategoryModal
+          showModal={showCategoryFilter}
+          toggleShowModal={handleShowCategoryFilterChange}
+          data={data}
+        />
+        <SearchRadiusModal
+          showModal={showSearchRadiusFilter}
+          toggleShowModal={handleShowSearchRadiusFilterChange}
+        />
+        {
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              borderColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 60,
+              position: 'absolute',
+              top: 650,
+              right: 20,
+              height: 60,
+              backgroundColor: theme.colors.brand.primary,
+              borderRadius: 100,
+            }}
+            onPress={() => refreshData()}
+          >
+            <Ionicons name={"refresh"} size={30} color={"white"} />
+            {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
+          </TouchableOpacity>
+        }
+      </SafeArea>
+    </>)
 }
 
 const mapStateToProps = (state) => ({
-    selectedFacility: state.booking.facility,
-    facilities: state.facilities.facilities,
-    specialists: state.specialists.specialists,
-    targetGender: state.booking.targetGender,
-    priceRange: state.booking.priceRange,
-    category: state.booking.currentCategory,
-    currentService: state.booking.currentService,
-    sortFacilitiesBy: state.booking.sortFacilitiesBy,
-    searchRadius: state.booking.searchRadius,
-    searchLocation: state.booking.searchLocation,
-  });
-  
-  const mapDispatchToProps = (dispatch) => ({
-    setTargetGender: (gender) => dispatch(setTargetGender(gender)),
-    setSearchRadius: (radius) => dispatch(setSearchRadius(radius)),
-    setProGender: (gender) => dispatch(setProGender(gender)),
-    setUser: (user) => dispatch(setUser(user)),
-    setSearchLocation: (location) => dispatch(setSearchLocation(location)),
-  
-    
-    setMatchingFacilities: (facilities) =>
-      dispatch(setMatchingFacilities(facilities)),
-    setMatchSpecialists: (specialists) =>
-      dispatch(setMatchSpecialists(specialists)),
-    setFacility: (facility) => dispatch(selectFacility(facility)),
-    setSpecialist: (specialist) => dispatch(setSpecialist(specialist)),
-    resetCart: () => dispatch(clearCart()),
-    setCurrentCategory: (category) => dispatch(setCurrentCategory(category)),
-  });
-  
+  selectedFacility: state.booking.facility,
+  facilities: state.facilities.facilities,
+  specialists: state.specialists.specialists,
+  targetGender: state.booking.targetGender,
+  priceRange: state.booking.priceRange,
+  category: state.booking.currentCategory,
+  currentService: state.booking.currentService,
+  sortFacilitiesBy: state.booking.sortFacilitiesBy,
+  searchRadius: state.booking.searchRadius,
+  searchLocation: state.booking.searchLocation,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setTargetGender: (gender) => dispatch(setTargetGender(gender)),
+  setSearchRadius: (radius) => dispatch(setSearchRadius(radius)),
+  setProGender: (gender) => dispatch(setProGender(gender)),
+  setUser: (user) => dispatch(setUser(user)),
+  setSearchLocation: (location) => dispatch(setSearchLocation(location)),
+
+
+  setMatchingFacilities: (facilities) =>
+    dispatch(setMatchingFacilities(facilities)),
+  setMatchSpecialists: (specialists) =>
+    dispatch(setMatchSpecialists(specialists)),
+  setFacility: (facility) => dispatch(selectFacility(facility)),
+  setSpecialist: (specialist) => dispatch(setSpecialist(specialist)),
+  resetCart: () => dispatch(clearCart()),
+  setCurrentCategory: (category) => dispatch(setCurrentCategory(category)),
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Delivery)
 
