@@ -5,6 +5,6 @@ export const setMatchingSpecialists = (specialists) => ({
   payload: specialists,
 });
 export const setMatchSpecialists = (specialists) => ({
-  type: SpecialistsActionTypes.SET_MATCHING_SPECIALISTS,
+  type: SpecialistsActionTypes.SET_MATCHING_SPECIALISTS_DEL,
   payload: specialists,
 });

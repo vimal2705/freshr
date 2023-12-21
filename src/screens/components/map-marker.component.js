@@ -30,7 +30,7 @@ export const MapMarker = ({ gender,setSearchLocation= null, active=false, data= 
   }
   let icon = null
   if (isFacility) {
-    icon = <View style={{...style, width: 28 }}><FontAwesome name="home" size={18} color={isSelected ?gender == "male"?  "blue" :gender == "female"?"#FA8072": theme.colors.brand.secondary :gender == "male"?  "blue" :gender == "female"?"#FA8072":"white" } /></View>
+    icon = <View style={{...style, width: 28 }}><FontAwesome name="home" size={18} color={isSelected && gender == "female"?"#FA8073" : isSelected && gender == "Both"? "#fff" : isSelected && gender == "male" ? '#0096FF' :  gender == "male"?  "blue" :gender == "female"?"#FA8072":gender == "Both" ? "white" : theme.colors.brand.secondary } /></View>
   }
   if (isBarber) {
     icon = <View style={{...style, width: 28 }}><Feather name="scissors" size={18} color={isSelected ? theme.colors.brand.secondary : 'white'} /></View>

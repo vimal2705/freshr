@@ -8,7 +8,7 @@ import {
   SectionTitle,
 } from "../components/details-screen.component";
 import { Spacer } from "../../components/spacer/spacer.component";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import {
   LogoutButton,
   ProfileButton,
@@ -48,6 +48,26 @@ const FacilityMenuScreen = (props) => {
       </HeaderContainer>
     );
   };
+  const handleFeedbackPress = async () => {
+    const feedbackFormLink = 'https://forms.gle/Trh7EeJgAhE3roiX8';
+    try {
+      await Linking.openURL(feedbackFormLink);
+    } catch (error) {
+      console.error('Error opening link:', error);
+    }
+  };
+  const handleSupportPress=async()=>{
+    const emailAddress = 'support.fac@freshr.me';
+   
+    const mailtoLink = `mailto:${emailAddress}`;
+    
+    try {
+      await Linking.openURL(mailtoLink);
+    } catch (error) {
+      console.error('Error opening mail client:', error);
+    }
+    console.log("hellloooooooo");
+  }
 
   const renderButtons = () => {
     return (
@@ -113,6 +133,34 @@ const FacilityMenuScreen = (props) => {
         </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="medium" />
+        <SectionTitle variant="label">Support</SectionTitle>
+        <Spacer position="bottom" size="large" />
+        <ProfileButton
+            icon={
+              <AntDesign
+                name="customerservice"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleSupportPress()}
+            label="Support"
+          />
+        <ProfileButton
+            icon={
+              <MaterialIcons
+                name="feedback"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleFeedbackPress()}
+            label="Feedback"
+          />
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="large" />
         <SectionTitle variant="label">Legal</SectionTitle>
         <Spacer position="bottom" size="large" />
         <View>

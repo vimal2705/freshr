@@ -160,6 +160,7 @@ const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
     <Spacer position={"bottom"} size={"large"}/>
 
     {isFocused && <MapView
+      
       ref={mapRef}
       onLayout={() => fitMapToCircle()}
       customMapStyle={mapStyles}
@@ -167,6 +168,7 @@ const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
         height: 250,
         width: "100%",
       }}
+      toolbarEnabled={false}
     >
       <MapMarker
         key={`marker-search-location`}

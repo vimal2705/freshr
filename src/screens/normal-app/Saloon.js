@@ -167,12 +167,12 @@ const Saloon = (props) => {
       if(props.specid){
         console.log("specidddddddddddddddddddddddddddddddddddomjdjkdjjdjkndnd",props.specid);
         await singlefacility(props.specid);
-        console.log("singledetaulsskslskslkssoeccccccccccccoppp",singleFacilityy);
+        // console.log("singledetaulsskslskslkssoeccccccccccccoppp",singleFacilityy);
       }
 
       if(props.facid){
         await singlefacility(props.facid);
-        console.log("singledetaulsskslskslks",singleFacilityy);
+        // console.log("singledetaulsskslskslks",singleFacilityy);
     
    }
 
@@ -182,7 +182,7 @@ const Saloon = (props) => {
     singldata();
     
   },[props])
- console.log("singledetaulsskslskslks",singleFacilityy);
+//  console.log("singledetaulsskslskslks",singleFacilityy);
  useEffect(()=>{
   if(singleFacilityy){
     setShowSpecialistList(true)
@@ -190,7 +190,7 @@ const Saloon = (props) => {
  },[singleFacilityy])
  
   
-  console.log("salonnnnnnnnnnnnnidddddddddddddddd",props.facid);
+  // console.log("salonnnnnnnnnnnnnidddddddddddddddd",props.facid);
   
   const navigation = useNavigation();
   const theme = useTheme();
@@ -205,7 +205,7 @@ const Saloon = (props) => {
     onRefresh,
     getUser,
   } = useContext(AppContext);
-console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecialist);
+// console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecialist);
 // const {singlefacility} =useContext(HostContext)
 
   const [fullMap, setFullMap] = useState(false);
@@ -1234,7 +1234,7 @@ console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecia
               justifyContent: "center",
               width: 60,
               position: "absolute",
-              bottom: 110,
+              bottom: 90,
               right: 10,
               height: 60,
               backgroundColor: theme.colors.brand.primary,

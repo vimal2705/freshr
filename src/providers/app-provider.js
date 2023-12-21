@@ -135,7 +135,7 @@ useEffect(()=>{
   }
   
   const fetchPaymentSheetParams = async (services, facility, maxTime, data) => {
-   
+   console.log("fetching dataaaaaa", services, facility, maxTime, data);
     
     try  {
       setLoading(true);
@@ -143,7 +143,7 @@ useEffect(()=>{
       const res = await axios.post(`${BASE_API_URL}/orders/checkout-session/${services.join(',')}/${facility}/${maxTime}`,data, config)
       setError(null);
       setLoading(false);
-      console.log("check---232323333333333",res.data);
+      console.log("check---232323333333333",res);
       SyncStorage.remove('locationAddress');
       return res.data;
     } catch (err) {
@@ -265,6 +265,35 @@ useEffect(()=>{
     refreshMessages();
   })
 
+  // const search = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
+  //   try {
+  //     loadingAction()
+  //     const [lng, lat] = config.searchLocation
+  //     console.log(lat,"1check",lng);
+  //     const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
+  //   //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/all/all/all/all/8/150`
+  //     // console.log("insideapicallingggggggggggggggggg");
+  //     const configHeader = await getTokenAndCreateAuthorizationHeader();
+  //     const res = await axios.get(
+  //       searchURL,configHeader
+  //     );
+  //     // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
+  //     setMatchingFacilities(res.data.data.facilities);
+  //     console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
+  //     // console.log("ssssssssssssssss",config.targetGender,config.proGender);
+  //     if (res.data.data.facilities.length > 0) {
+  //       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res);
+  //       setMatchingSpecialists(res.data.data.facilities[0].specialists);
+  //       // console.log("genderrrrrrrrrrrrrrrrr",setMatchingFacilities);
+
+  //     }
+  //     await onGetOrders();
+  //     stopLoadingAction();
+  //   } catch(err) {
+  //     console.log(err)
+  //     stopLoadingAction();
+  //   }
+  // }
   const search = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
     try {
       loadingAction()
@@ -278,14 +307,20 @@ useEffect(()=>{
         searchURL,configHeader
       );
       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
-      setMatchingFacilities(res.data.data.facilities);
+      const tempData = res.data.data.facilities
       console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
+      if(config.targetGender=='male' || config.targetGender=='female'){
+        const filteredData = tempData.filter((item)=>item?.user?.gender == config.targetGender)
+        setMatchingFacilities(filteredData)
+      }
+      else{
+      setMatchingFacilities(res.data.data.facilities);
+      }
       // console.log("ssssssssssssssss",config.targetGender,config.proGender);
       if (res.data.data.facilities.length > 0) {
         // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res);
         setMatchingSpecialists(res.data.data.facilities[0].specialists);
         // console.log("genderrrrrrrrrrrrrrrrr",setMatchingFacilities);
-
       }
       await onGetOrders();
       stopLoadingAction();
@@ -306,7 +341,7 @@ useEffect(()=>{
 
       const [lng, lat] = config.searchLocation
       console.log(lat,"2check",lng);
-      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
+      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
     //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
       const configHeader = await getTokenAndCreateAuthorizationHeader();
  

@@ -178,6 +178,8 @@ const [user1, setUser1] = useState()
 
 
 useEffect(async ()=>{
+
+
   socketServices.initializeSocket();
  
   socketServices.on('Send_complete_Busy',(dataa)=>{
@@ -422,7 +424,8 @@ else{
 
   useEffect(()=>{
     let data = {}; 
-    data = SyncStorage.get('filters'); 
+    data = SyncStorage.get('filters');
+    console.log("dataaaa of filtersssssssssss",data); 
     if(data!=undefined && Object.keys(data).length > 0){
       setChecked(true)
       setData(data) 

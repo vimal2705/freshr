@@ -250,6 +250,7 @@ useEffect(()=>{
         width: "100%",
         flex: 1
       }}
+      toolbarEnabled={false}
       onLayout={() => centerMap()}
     >
       <MapMarker

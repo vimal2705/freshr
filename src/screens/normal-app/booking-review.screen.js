@@ -642,7 +642,7 @@ console.log("beforeeeeee------------------------------");
       catch{
         console.log("nooooooooo");
       }
-      console.log('Success', 'Your order is confirmed!');
+      console.log('Success', 'Your order is confirmed!',newOrder);
       const paidOrder = await payOrder(newOrder.id,route.params.Del);
       setNewOrder({...paidOrder})
     // }

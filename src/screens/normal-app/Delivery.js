@@ -175,7 +175,7 @@ const Delivery = (props) => {
         serviceType: props.category
       },
       setMatchingFacilities: props.setMatchingFacilities,
-      setMatchingSpecialists: props.setMatchingSpecialists
+      setMatchSpecialists: props.setMatchSpecialists
     });
     console.log("Asddasdasdasdasdasdasdadsasdads", props.specialists);
   }
@@ -215,10 +215,13 @@ const Delivery = (props) => {
     props.setSearchLocation(props.searchLocation)
     setLocation()
   }
+
   useEffect(() => {
+   
     (async () => {
       const locn = await fetchdeliverylocation()
       console.log("^^^^^^^^^^^^^^^^^^^^", locn);
+      
       if (locn == null) {
         setDeliverylocation1()
 
@@ -292,6 +295,14 @@ const Delivery = (props) => {
     setDeliverylocation(value)
     return value;
   }
+  const fetchauthdata=async()=>{
+    const jsondata=await AsyncStorage.getItem("authh");
+    const value=JSON.parse(jsondata);
+    console.log("AUTHHHHHHHHHH-=-=-=-=--=-",value);
+  }
+  useEffect(()=>{
+    fetchauthdata();
+  },[])
 
 
   const dispatch = useDispatch()
@@ -781,7 +792,8 @@ const Delivery = (props) => {
 const mapStateToProps = (state) => ({
   selectedFacility: state.booking.facility,
   facilities: state.facilities.facilities,
-  specialists: state.specialists.specialists,
+  specialists: state.specialists.delspecialist,
+  delspecialist : state.specialists.delspecialist,
   targetGender: state.booking.targetGender,
   priceRange: state.booking.priceRange,
   category: state.booking.currentCategory,

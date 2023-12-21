@@ -7,5 +7,5 @@ export const SafeArea = styled(SafeAreaView)`
 `;
 export const SafeArea1 = styled(SafeAreaView)`
 
-  background-color:red;
+  
 `;

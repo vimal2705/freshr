@@ -31,6 +31,7 @@ import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import * as Device from "expo-device";
 import { ReviewProvider } from "./src/providers/review.provider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const completeTheme = {
   ...DefaultTheme,
@@ -126,6 +127,8 @@ export const App = (props) => {
     subscribeKey: 'sub-c-1fe9d660-01f0-4170-a99a-55d6837f0694',
     uuid: "none"
   })
+
+
 
   return (
     <>

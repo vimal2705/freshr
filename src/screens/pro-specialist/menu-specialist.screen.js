@@ -8,7 +8,7 @@ import {
   SectionTitle,
 } from "../components/details-screen.component";
 import { Spacer } from "../../components/spacer/spacer.component";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import {
   LogoutButton,
   ProfileButton,
@@ -61,6 +61,26 @@ const MenuSpecialistScreen = (props) => {
       </HeaderContainer>
     );
   };
+  const handleFeedbackPress = async () => {
+    const feedbackFormLink = 'https://forms.gle/Trh7EeJgAhE3roiX8';
+    try {
+      await Linking.openURL(feedbackFormLink);
+    } catch (error) {
+      console.error('Error opening link:', error);
+    }
+  };
+  const handleSupportPress=async()=>{
+    const emailAddress = 'support.pro@freshr.me';
+   
+    const mailtoLink = `mailto:${emailAddress}`;
+    
+    try {
+      await Linking.openURL(mailtoLink);
+    } catch (error) {
+      console.error('Error opening mail client:', error);
+    }
+    console.log("hellloooooooo");
+  }
   const renderButtons = () => {
     return (
       <>
@@ -76,6 +96,18 @@ const MenuSpecialistScreen = (props) => {
             style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
             onPress={() => props.navigation.navigate("Profile")}
             label="Personal information"
+          />
+          <ProfileButton
+            icon={
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                size={28}
+                color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
+              />
+            }
+            style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
+            onPress={() => props.navigation.navigate("Payment")}
+            label="Payment information"
           />
           {/*<ProfileButton*/}
           {/*  icon={*/}
@@ -159,6 +191,34 @@ const MenuSpecialistScreen = (props) => {
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
         {/* <SectionTitle variant="label">Legal</SectionTitle> */}
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="medium" />
+        <SectionTitle variant="label">Support</SectionTitle>
+        <Spacer position="bottom" size="large" />
+        <ProfileButton
+            icon={
+              <AntDesign
+                name="customerservice"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleSupportPress()}
+            label="Support"
+          />
+        <ProfileButton
+            icon={
+              <MaterialIcons
+                name="feedback"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleFeedbackPress()}
+            label="Feedback"
+          />
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="large" />
         <Text style={{color:specialist?.isOnline?"black" : "white",fontSize:16,fontWeight:'bold'}}>Legal</Text>
         <Spacer position="bottom" size="large" />
         <View>

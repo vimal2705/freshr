@@ -24,6 +24,7 @@ import ReservedSpecialist from "../../screens/pro-specialist/reserved-specialist
 import facilityDetailsScreen from "../../screens/normal-app/facility-details.screen";
 import reviewScreen from "../../screens/normal-app/review.screen";
 import { useSelector } from "react-redux";
+import Payment from "../../screens/pro-specialist/components/Payment";
 
 
 const HomStack = createStackNavigator();
@@ -63,6 +64,10 @@ export const ProAppServiceTabNavigator = () => {
         name="Profile"
         component={SpecialistProfileSocialScreen}
       />
+      {/* <ProTabService.Screen
+        name="payment"
+        component={Payment}
+      /> */}
     </ProTabService.Navigator>
   );
 };
@@ -123,6 +128,10 @@ export const SpecialistNavigator = () => {
     <Stack.Screen
       name="SpecialistStory"
       component={SpecialistStoryScreen}
+    />
+    <Stack.Screen
+      name="Payment"
+      component={Payment}
     />
     <Stack.Screen
       name="HostVerificationSpecialist"

@@ -1,5 +1,5 @@
 import { Platform, StatusBar, View } from "react-native";
-import { useContext, useEffect, useRef,useCallback } from "react";
+import { useContext, useEffect, useRef,useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { NavigationContainer,useFocusEffect, useLinking } from "@react-navigation/native";
 import { setServices } from "../../redux/services/services.action";
@@ -12,10 +12,12 @@ import { AppContext } from "../../providers/app-provider";
 import { AppNavigator} from "./app.navigator";
 import socketServices from "../../screens/normal-app/components/Socket";
 import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Navigation = (props) => {
   const navigationRef = useRef();
-  const { isAuthenticated, hasOnboarded, skipAuth } = useContext(AuthContext);
+  const { isAuthenticated, hasOnboarded, skipAuth,setuserfromstorage } = useContext(AuthContext);
+  const[authdata,setauthdata]=useState();
   const {currentApp} = useContext(AppContext);
   //  const {getInitialState}=useLinking(navigationRef)
   const linking = {
@@ -30,6 +32,14 @@ const Navigation = (props) => {
         },
       },
     };
+
+    const needThisFUnction = async ()=>{
+      const keyy= await AsyncStorage.getAllKeys();
+      console.log("keysssss",keyy);
+    }
+    useEffect(()=>{
+      needThisFUnction()
+    },[])
   useEffect(() => {
     console.log(currentApp)
     Platform.OS === "android" && StatusBar.setTranslucent(true);
@@ -39,7 +49,12 @@ const Navigation = (props) => {
       StatusBar.setBarStyle("default");
     };
   }, []);
-
+  const olduser = async () =>{
+    await setuserfromstorage()
+  }
+  useEffect(()=>{
+    olduser()
+  }, [])
   const _pickApp = () => {
     switch(currentApp) {
       case 'normal' :
@@ -50,13 +65,26 @@ const Navigation = (props) => {
         return <SpecialistNavigator/>
     }
   }
-
+  // const fetchauthdata=async()=>{
+  //   const jsondata=await AsyncStorage.getItem("authh");
+  //   const value=JSON.parse(jsondata);
+  //   setauthdata(value);
+  //   console.log("AUTHHHHHHHHHH-=-=-=-=--=-",value);
+  // }
+  // useEffect(()=>{
+  //   fetchauthdata();
+  // },[])
   const pickApp = () => {
     if (skipAuth) {
+      console.log("skippeddddauth");
       return _pickApp()
-    } else if (isAuthenticated) {
+    }
+    //  else if (authdata=="true" || isAuthenticated) {
+      else if(isAuthenticated){
+      console.log("skippeddddddsdd");
       return hasOnboarded ? _pickApp() : <OnboardingNavigator/>
     } else {
+      console.log("nothing skippedddddd");
       return <AccountNavigator/>
     }
   }

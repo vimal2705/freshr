@@ -359,7 +359,7 @@ export const OrderCard = ({
     // console.log("apiputttttttttttttttorderrrr", orderr);
   };
 
-  console.log("121212121234567890~~~~~~~~~~~~~~~~~~~~~~~~", order._id);
+  console.log("121212121234567890~~~~~~~~~~~~~~~~~~~~~~~~", order.status);
   const sendMapp = () => {
     Linking.openURL(`google.navigation:q=${host[1]}+${host[0]}`);
   };
@@ -372,20 +372,21 @@ export const OrderCard = ({
                 // justifyContent: "center",
                 gap: 10,
                 left:25,
-                
+                 
               }}
             >
-              <Text style={{ fontSize: 15 }}>id: {order?._id}</Text>
+                
+              <Text style={{ fontSize: 15, color: 'white', backgroundColor: '#25282b', padding: 4,borderRadius: 5}}>id: {order?._id}</Text>
               <TouchableOpacity
               onPress={()=>copyToClipboard(order?._id)}
                 style={{
                   borderWidth: 1,
-                  height: 20,
-                  width: 20,
+                  
                   backgroundColor: "#000",
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: 5,
+                  padding: 4
                 }}
               >
                 <AntDesign name="copy1" size={14} color="#fff" />
@@ -395,7 +396,7 @@ export const OrderCard = ({
     <Container>
       {isClient && order?.status == 'PENDING' &&
         <View style={{
-          backgroundColor: 'black', borderRadius: 2, padding: 4,
+          backgroundColor: '#25282b', borderRadius: 2, padding: 4,
           position: 'absolute',
           zIndex: 15,
           top: 6,
@@ -579,7 +580,7 @@ export const OrderCard = ({
           
 
           <View style={{
-          backgroundColor: 'black', borderRadius: 2, padding: 4,
+          backgroundColor: '#25282b', borderRadius: 4, padding: 4,
           position: 'absolute',
           zIndex: 15,
           top: 6,
@@ -597,30 +598,8 @@ export const OrderCard = ({
                 7
               )}/${order?.createdAt?.substring(0, 4)}`}
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: 10,
-              }}
-            >
-              <Text style={{ fontSize: 16 }}>id: {order?._id}</Text>
-              <TouchableOpacity
-                onPress={() => copyToClipboard(order?._id)}
-                style={{
-                  borderWidth: 1,
-                  height: 20,
-                  width: 20,
-                  backgroundColor: "#000",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 5,
-                }}
-              >
-                <AntDesign name="copy1" size={14} color="#fff" />
-              </TouchableOpacity>
-            </View>
           </View>
+          <Spacer position="bottom" size="large" />
 
           {/* {order.address == undefined ? <View><Text></Text></View> : <TouchableOpacity onPress={copyToClipboard(order?.address?.address1 + order?.address?.apartment + order?.address?.locality + order?.address?.State + order?.address?.postcode + order?.address?.country)}><Text>{order?.address?.address1} {order?.address?.apartment} {order?.address?.locality} {order?.address?.State} {order?.address?.postcode} {order?.address?.country}</Text></TouchableOpacity>} */}
           {order.address == undefined ? (

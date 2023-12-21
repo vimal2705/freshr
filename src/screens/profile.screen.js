@@ -133,7 +133,7 @@ const ProfileScreen = (props) => {
                 color="black"
               />
             }
-            label="Personal information"
+            label="Personal informationnn"
           />
           <ProfileButton
             icon={<MaterialIcons name="payments" size={28} color="black" />}

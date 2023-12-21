@@ -75,18 +75,27 @@ const ProfileScreen = (props) => {
     return <LoadingScreen/>
   }
   const handleFeedbackPress = async () => {
-    // // Specify the email address you want to send the mail to
-    const emailAddress = 'sujalpatel1502@gmail.com';
-    // // Create the mailto link
+      const feedbackFormLink = 'https://forms.gle/Trh7EeJgAhE3roiX8';
+      try {
+        await Linking.openURL(feedbackFormLink);
+      } catch (error) {
+        console.error('Error opening link:', error);
+      }
+    };
+    console.log("hellloooooooo");
+  
+  const handleSupportPress=async()=>{
+    const emailAddress = 'support@freshr.me';
+   
     const mailtoLink = `mailto:${emailAddress}`;
-    // // Use Linking.openURL to open the mail client with the specified email address
+    
     try {
       await Linking.openURL(mailtoLink);
     } catch (error) {
       console.error('Error opening mail client:', error);
     }
     console.log("hellloooooooo");
-  };
+  }
   return (
     <SafeArea>
       <Container showsVerticalScrollIndicator={false}>
@@ -201,7 +210,7 @@ const ProfileScreen = (props) => {
                 color={"black"}
               />
             }
-            onPress={()=>handleFeedbackPress()}
+            onPress={()=>handleSupportPress()}
             label="Support"
           />
         <ProfileButton
