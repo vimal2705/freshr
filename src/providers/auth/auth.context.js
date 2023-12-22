@@ -378,7 +378,6 @@
 //   );
 // };
 
-
 import { useTheme } from "styled-components/native";
 import { useState, createContext, useContext, useRef, useEffect } from "react";
 import axios from "axios";
@@ -386,6 +385,7 @@ import { BASE_API_URL } from "../../constants";
 import * as Device from 'expo-device';
 import * as SecureStore from "expo-secure-store";
 import * as Notifications from 'expo-notifications';
+
 import FlashMessage, {
   hideMessage,
   showMessage,
@@ -401,7 +401,9 @@ import { Platform } from "react-native";
 import { usePubNub } from "pubnub-react";
 import { AppContext } from "../app-provider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const AuthContext = createContext();
+
 export const AuthContextProvider = ({ children, navigation }) => {
   const theme = useTheme();
   const flashRef = useRef();
@@ -414,7 +416,10 @@ export const AuthContextProvider = ({ children, navigation }) => {
   const [host, setHost] = useState(null);
   const [error, setError] = useState(null);
   const [expoPushToken, setExpoPushToken] = useState(null);
+  const [showinstruction, setShowinstruction] = useState(false)
   const changeApp = useContext(AppContext);
+
+
   useEffect(() => {
     setError(null);
     registerForPushNotificationsAsync();
@@ -423,6 +428,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       setError(null);
     };
   }, []);
+
   // useEffect(() => {
   //   if (user) {
   //     pubnub.setUUID(`${user.id}`)
@@ -430,8 +436,10 @@ export const AuthContextProvider = ({ children, navigation }) => {
   //     console.log('pubnub', pubnub)
   //   }
   // }, [user])
+
   const onLogout = () => {
     SecureStore.deleteItemAsync("token").then(() => {
+      
       setSpecialist(null);
       setHost(null);
       setUser(null);
@@ -439,6 +447,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       changeApp('normal');
     });
   };
+
   const updateuserstorage = async (user) =>{
     try {
       const temp = JSON.stringify(user)
@@ -450,6 +459,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       console.log("user storage error",error);
     }
   }
+
   const setuserfromstorage = async () => {
     try {
       const jsonvalue = await AsyncStorage.getItem("user");
@@ -478,6 +488,8 @@ export const AuthContextProvider = ({ children, navigation }) => {
             return data;
           }},
       );
+
+      
       setError(null);
       console.log("userrrrrrrr infooooooo", res.data.data.user);
       setUser(res.data.data.user);
@@ -490,6 +502,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       handleError(e, setIsLoading, setError, theme)
     }
   }
+
   const registerForPushNotificationsAsync = async () => {
     let token;
     console.log("Device.isDevice",Device.isDevice);
@@ -511,6 +524,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
     } else {
       console.log('Must use physical device for Push Notifications');
     }
+
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -521,9 +535,11 @@ export const AuthContextProvider = ({ children, navigation }) => {
     }
     return token;
   };
+
   const onOnboarding = () => {
     setHasOnboarded(true);
   };
+
   const onLogin = (email, password) => {
     setIsLoading(true);
     axios
@@ -535,6 +551,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
         ).then(() => {
           setUser(res.data.data.user);
       updateuserstorage(res.data.data.user)
+
           setIsLoading(false);
           showMessage({
             message: "Welcome back",
@@ -569,6 +586,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
         ).then(() => {
           setUser(res.data.data.user);
       updateuserstorage(res.data.data.user)
+
           setIsLoading(false);
           showMessage({
             message: "Welcome back",
@@ -597,8 +615,9 @@ export const AuthContextProvider = ({ children, navigation }) => {
     try {
       setIsLoading(true);
       const newUser = {...data}
-      console.log("Sss",newUser);
+      console.log("Sssmmm",newUser);
       let pushToken = expoPushToken;
+      console.log("mmm", pushToken);
       if (!pushToken) {
         pushToken = await registerForPushNotificationsAsync()
         console.log("Sss");
@@ -606,6 +625,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       console.log("Sssss");
       console.warn(pushToken);
       newUser.pushToken = pushToken;
+      console.log("called");
       const res = await axios.post(`${BASE_API_URL}/users/signup`, newUser)
       console.log("responseeeeee",res);
       await SecureStore.setItemAsync(
@@ -616,6 +636,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       updateuserstorage(res.data.data.user)
       console.log("userrrrrrr",user);
       setHasOnboarded(false);
+      setShowinstruction(true)
       // showMessage({
       //   message: "Login successfully",
       //   description: res.data.message,
@@ -638,12 +659,15 @@ export const AuthContextProvider = ({ children, navigation }) => {
       console.log(e);
     }
   };
+
   const skipAuthentication = () => {
     setSkipAuth(true);
   };
+
   const signInAsGuest=()=>{
     setGuest(true);
   }
+
   const onBecomeHost = async () => {
     try {
       setIsLoading(true);
@@ -654,7 +678,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
         config,
       );
       setUser(res.data.data.host.user);
-      updateuserstorage(res.data.data.user)
+      updateuserstorage(res.data.data.host.user)
       sendMessage(
         "Updated",
         res.data.message,
@@ -681,14 +705,15 @@ export const AuthContextProvider = ({ children, navigation }) => {
     try {
       setIsLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader()
+      console.log("confg", config);
       const res = await axios.post(
         `${BASE_API_URL}/users/becomeSpecialist`,
         null,
         config,
       );
-      console.log("sssss",res);
+      console.log("sssss---> become spe",res.data);
       setUser(res.data.data.specialist.user);
-      updateuserstorage(res.data.data.user)
+      updateuserstorage(res.data.data.specialist.user)
       sendMessage(
         "Updated",
         res.data.message,
@@ -712,6 +737,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       setIsLoading(false);
     }
   }
+
   return (
     <AuthContext.Provider
       value={{
@@ -737,7 +763,9 @@ export const AuthContextProvider = ({ children, navigation }) => {
         onBecomeHost,
         updateUserInfo,
         setuserfromstorage,
-        updateuserstorage
+        updateuserstorage,
+        showinstruction,
+        setShowinstruction
       }}
     >
       <FlashMessage ref={flashRef} />

@@ -133,7 +133,7 @@ const ProfileScreen = (props) => {
                 color="black"
               />
             }
-            label="Personal informationnn"
+            label="Personal information"
           />
           <ProfileButton
             icon={<MaterialIcons name="payments" size={28} color="black" />}
@@ -158,8 +158,10 @@ const ProfileScreen = (props) => {
           />
           <ProfileButton
             icon={<AntDesign name="swap" size={28} color="black" />}
-            onPress={() =>
+            onPress={() => {
               changeApp('specialist')
+              navigation.navigate('facilityApp')
+            }
               // props.navigation.reset({
               //   index: 0,
               //   routes: [{ name: "proAppService" }],

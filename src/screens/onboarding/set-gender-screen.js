@@ -205,9 +205,11 @@ const createGenderScreen = ({
               onPress={() => {
                 if (method === "styles") {
                   updateGenderPreference(gender).then(() => {
+                    console.log("insideee");
                     if (step === "last") {
                       return onOnboarding();
                     } else {
+                      console.log("navigationnnnnnnn");
                       return !error ? navigation.navigate(navigateTo) : null;
                     }
                   });
@@ -216,7 +218,8 @@ const createGenderScreen = ({
                     if (step === "last") {
                       return onOnboarding();
                     } else {
-                      return !error ? navigation.navigate(navigateTo) : null;
+                      console.log("yesss navigationnnnnnnn");
+                      return !error ? navigation.navigate(navigateTo, {type:'client'}) : null;
                     }
                   });
                 }
@@ -277,6 +280,6 @@ export const SetProGenderScreen = createGenderScreen({
     },
   ],
   method: "pro",
-  navigateTo: "app",
-  step: "last",
+  navigateTo: "instruction",
+  // step: "last",
 });

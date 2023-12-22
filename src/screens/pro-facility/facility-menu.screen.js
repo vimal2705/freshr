@@ -8,7 +8,7 @@ import {
   SectionTitle,
 } from "../components/details-screen.component";
 import { Spacer } from "../../components/spacer/spacer.component";
-import { Linking, View } from "react-native";
+import { View } from "react-native";
 import {
   LogoutButton,
   ProfileButton,
@@ -48,26 +48,6 @@ const FacilityMenuScreen = (props) => {
       </HeaderContainer>
     );
   };
-  const handleFeedbackPress = async () => {
-    const feedbackFormLink = 'https://forms.gle/Trh7EeJgAhE3roiX8';
-    try {
-      await Linking.openURL(feedbackFormLink);
-    } catch (error) {
-      console.error('Error opening link:', error);
-    }
-  };
-  const handleSupportPress=async()=>{
-    const emailAddress = 'support.fac@freshr.me';
-   
-    const mailtoLink = `mailto:${emailAddress}`;
-    
-    try {
-      await Linking.openURL(mailtoLink);
-    } catch (error) {
-      console.error('Error opening mail client:', error);
-    }
-    console.log("hellloooooooo");
-  }
 
   const renderButtons = () => {
     return (
@@ -84,6 +64,17 @@ const FacilityMenuScreen = (props) => {
             }
             label="Personal information"
           />
+          <ProfileButton
+            onPress={() => navigation.navigate('instruction', {type: 'host', back: true})}
+            icon={
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                size={28}
+                color="black"
+              />
+            }
+            label="How to use?"
+          />
           <Separator />
         </View>
         <Spacer position="bottom" size="large" />
@@ -93,7 +84,10 @@ const FacilityMenuScreen = (props) => {
         <View>
           <ProfileButton
             icon={<AntDesign name="swap" size={28} color="black" />}
-            onPress={() => changeApp('normal')
+            onPress={async () =>{
+              await changeApp('normal')
+               navigation.navigate('normalApp')
+            } 
               // props.navigation.reset({
               //   index: 0,
               //   routes: [{ name: "ProAppFacility" }],
@@ -109,12 +103,14 @@ const FacilityMenuScreen = (props) => {
                 color={theme.colors.brand.primary}
               />
             }
-            onPress={() =>
-              changeApp('specialist')
+            onPress={async () =>{
+              await changeApp('specialist')
+              navigation.navigate('specialistApp')
               // props.navigation.reset({
               //   index: 0,
               //   routes: [{ name: "ProAppSpecialist" }],
               // })
+            }
             }
             label="Switch service provider account"
           />}
@@ -133,34 +129,6 @@ const FacilityMenuScreen = (props) => {
         </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
-        <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="medium" />
-        <SectionTitle variant="label">Support</SectionTitle>
-        <Spacer position="bottom" size="large" />
-        <ProfileButton
-            icon={
-              <AntDesign
-                name="customerservice"
-                size={28}
-                color={"black"}
-              />
-            }
-            onPress={()=>handleSupportPress()}
-            label="Support"
-          />
-        <ProfileButton
-            icon={
-              <MaterialIcons
-                name="feedback"
-                size={28}
-                color={"black"}
-              />
-            }
-            onPress={()=>handleFeedbackPress()}
-            label="Feedback"
-          />
-        <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="large" />
         <SectionTitle variant="label">Legal</SectionTitle>
         <Spacer position="bottom" size="large" />
         <View>

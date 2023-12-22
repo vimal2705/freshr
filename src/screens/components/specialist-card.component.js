@@ -74,6 +74,8 @@ const InformationChip = styled.View`
     darkTheme ? theme.colors.brand.primary : `${rgba(theme.colors.brand.secondary, 0.9)}`};
   color: white;
   border-radius: 30px;
+  margin-bottom:5px;
+
 `;
 const InformationChipp = styled.View`
   padding: 6px 8px;
@@ -154,10 +156,12 @@ const SpecialistCard = ({
           </SpecialistCardImage>
           <SpecialistCardInfoContainer>
             
-              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
+                <View style={{marginTop:10}}>
               <Title variant="caption" numberOfLines={2} ellipsizeMode="tail" width={110} style={{color: darkTheme ? "white" : "black"}}>
                 {name}
               </Title>
+              </View>
               <InformationChipp darkTheme={false}>
                   <Text
                     variant="caption"

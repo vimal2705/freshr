@@ -32,6 +32,7 @@ import { AppContext } from "../../providers/app-provider";
 import Saloon from "../../screens/normal-app/Saloon";
 import Delivery from "../../screens/normal-app/Delivery";
 import serviceCardComponent from "../../screens/components/service-card.component";
+import Instruction from "../../screens/onboarding/instruction";
 
 const HomeStack = createStackNavigator();
 
@@ -192,7 +193,10 @@ export const AppNavigator = (props) => {
       <Stack.Screen
        name="saloon" component={Saloon}
       />
-     
+     <Stack.Screen
+        name="instruction"
+        component={Instruction}
+      />
     </Stack.Navigator>
   )
 }

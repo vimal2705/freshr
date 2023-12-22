@@ -26,6 +26,7 @@ import { HostVerificationScreen } from "../../screens/normal-app/host-verificati
 import { EditAccountScreen } from "../../screens/normal-app/edit-account.screen";
 import { FacilityFacilitiesScreen } from "../../screens/pro-facility/facility-facilities.screen";
 import reviewScreen from "../../screens/normal-app/review.screen";
+import Instruction from "../../screens/onboarding/instruction";
 
 const HomeProFacilityStack = createStackNavigator();
 
@@ -109,6 +110,10 @@ export const FacilityNavigator = () => {
     <HomeProFacilityStack.Screen
       name="SetFacilityHours"
       component={FacilityHoursScreen}
+    />
+    <HomeProFacilityStack.Screen
+      name="instruction"
+      component={Instruction}
     />
     <Stack.Screen
       name="SpecialistVerificationHost"

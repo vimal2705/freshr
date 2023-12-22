@@ -4,6 +4,7 @@ import {
   SetGenderScreen,
   SetProGenderScreen,
 } from "../../screens/onboarding/set-gender-screen";
+import Instruction from "../../screens/onboarding/instruction";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,8 @@ export const OnboardingNavigator = () => {
       <Stack.Screen name="setSearchLocation" component={SetLocationScreen} />
       <Stack.Screen name="setSearchGender" component={SetGenderScreen} />
       <Stack.Screen name="setSearchProGender" component={SetProGenderScreen} />
+      <Stack.Screen name="instruction" component={Instruction} />
+
     </Stack.Navigator>
   );
 };

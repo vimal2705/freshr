@@ -25,6 +25,7 @@ import facilityDetailsScreen from "../../screens/normal-app/facility-details.scr
 import reviewScreen from "../../screens/normal-app/review.screen";
 import { useSelector } from "react-redux";
 import Payment from "../../screens/pro-specialist/components/Payment";
+import Instruction from "../../screens/onboarding/instruction";
 
 
 const HomStack = createStackNavigator();
@@ -133,6 +134,11 @@ export const SpecialistNavigator = () => {
       name="Payment"
       component={Payment}
     />
+
+{/* <Stack.Screen
+      name="instruction"
+      component={Instruction}
+    /> */}
     <Stack.Screen
       name="HostVerificationSpecialist"
       options={({ route }) => ({

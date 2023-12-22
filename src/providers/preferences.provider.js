@@ -33,6 +33,7 @@ export const PreferencesProvider = ({ children, ...restProps }) => {
         theme.colors.brand.primary
       );
       setIsLoading(false);
+      console.log("nowwww navigateeee");
     } catch (e) {
       setError(getError(e));
       sendMessage(
@@ -48,6 +49,7 @@ export const PreferencesProvider = ({ children, ...restProps }) => {
   };
 
   const updateProGenderPreference = async (gender) => {
+    console.log("here");
     try {
       setIsLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader(true)
@@ -75,7 +77,7 @@ export const PreferencesProvider = ({ children, ...restProps }) => {
         2500,
         theme.colors.ui.warning
       );
-      console.log(e);
+      console.log("update error",e);
       setIsLoading(false);
     }
   };

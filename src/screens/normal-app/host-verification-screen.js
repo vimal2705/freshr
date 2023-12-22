@@ -113,10 +113,11 @@ export const HostVerificationScreen = ({navigation}) => {
         <ActionButton
           height={55}
           onPress={() => {
-            onBecomeHost().then(res => {
-              console.log(res);
-              setHost(res);
-            });
+            // onBecomeHost().then(res => {
+            //   console.log(res);
+            //   setHost(res);
+            // });
+            navigation.navigate('instruction', {type:'host'})
           }}
           disabled={!allConditionsChecked}
         >

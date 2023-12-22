@@ -60,6 +60,32 @@ useEffect(()=>{
     
   },[])
  
+  const loadinstruction = async (type) => {
+    console.log("loading instruction of", type);
+    try {
+      const inst = await axios.get(
+        `${BASE_API_URL}/cms/${type}`
+      );
+      console.log("instructions------->", inst.data.data[0].url);
+      return inst.data.data[0].url
+    } catch (error) {
+      console.log("instruction fetching failed", error);
+      // return error
+    }
+  }
+
+  const bankDetails = async () => {
+    try {
+      const bank = await axios.get(
+        `${BASE_API_URL}/cms/bankinfo`
+      );
+      console.log("bankkkk instructions------->", bank.data);
+      return bank.data
+    } catch (error) {
+      console.log("instruction fetching failed", error);
+      // return error
+    }
+  }
   
   
 
@@ -135,7 +161,7 @@ useEffect(()=>{
   }
   
   const fetchPaymentSheetParams = async (services, facility, maxTime, data) => {
-   console.log("fetching dataaaaaa", services, facility, maxTime, data);
+   
     
     try  {
       setLoading(true);
@@ -143,7 +169,7 @@ useEffect(()=>{
       const res = await axios.post(`${BASE_API_URL}/orders/checkout-session/${services.join(',')}/${facility}/${maxTime}`,data, config)
       setError(null);
       setLoading(false);
-      console.log("check---232323333333333",res);
+      console.log("check---232323333333333",res.data);
       SyncStorage.remove('locationAddress');
       return res.data;
     } catch (err) {
@@ -265,35 +291,6 @@ useEffect(()=>{
     refreshMessages();
   })
 
-  // const search = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
-  //   try {
-  //     loadingAction()
-  //     const [lng, lat] = config.searchLocation
-  //     console.log(lat,"1check",lng);
-  //     const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
-  //   //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/all/all/all/all/8/150`
-  //     // console.log("insideapicallingggggggggggggggggg");
-  //     const configHeader = await getTokenAndCreateAuthorizationHeader();
-  //     const res = await axios.get(
-  //       searchURL,configHeader
-  //     );
-  //     // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
-  //     setMatchingFacilities(res.data.data.facilities);
-  //     console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
-  //     // console.log("ssssssssssssssss",config.targetGender,config.proGender);
-  //     if (res.data.data.facilities.length > 0) {
-  //       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res);
-  //       setMatchingSpecialists(res.data.data.facilities[0].specialists);
-  //       // console.log("genderrrrrrrrrrrrrrrrr",setMatchingFacilities);
-
-  //     }
-  //     await onGetOrders();
-  //     stopLoadingAction();
-  //   } catch(err) {
-  //     console.log(err)
-  //     stopLoadingAction();
-  //   }
-  // }
   const search = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
     try {
       loadingAction()
@@ -309,6 +306,7 @@ useEffect(()=>{
       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
       const tempData = res.data.data.facilities
       console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
+
       if(config.targetGender=='male' || config.targetGender=='female'){
         const filteredData = tempData.filter((item)=>item?.user?.gender == config.targetGender)
         setMatchingFacilities(filteredData)
@@ -321,6 +319,7 @@ useEffect(()=>{
         // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res);
         setMatchingSpecialists(res.data.data.facilities[0].specialists);
         // console.log("genderrrrrrrrrrrrrrrrr",setMatchingFacilities);
+
       }
       await onGetOrders();
       stopLoadingAction();
@@ -341,7 +340,7 @@ useEffect(()=>{
 
       const [lng, lat] = config.searchLocation
       console.log(lat,"2check",lng);
-      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
+      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
     //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
       const configHeader = await getTokenAndCreateAuthorizationHeader();
  
@@ -366,8 +365,10 @@ useEffect(()=>{
       console.log(err)
       stopLoadingAction();
     }
-  }
+  } 
+  
 
+  
 
 
   return (
@@ -400,7 +401,9 @@ useEffect(()=>{
         payOrder,
         onGetOrders,
         getUnreadMessage,
-        UnreadMessage
+        UnreadMessage,
+        loadinstruction,
+        bankDetails,
       }}
     >
 

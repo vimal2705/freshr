@@ -440,6 +440,21 @@ const Saloon = (props) => {
     })();
   }, []);
 
+  const getDeliveryStorage=async()=>{
+  
+    try {
+      const value = await AsyncStorage.getItem(
+        "gender"
+      )
+      // console.log("#######################------------->", value);
+      if(value){
+        // setGender(value)
+        props.setTargetGender(value)
+      }
+    } catch (error) {
+      console.log("erorrrrrrrrrrrr",error);
+    }
+    }
   useEffect(() => {
     let data = {};
     data = SyncStorage.get("filters");
@@ -455,7 +470,8 @@ const Saloon = (props) => {
       dispatch(setSearchRadius(data.searchRadius));
     }
     console.log("oooooooo", data);
-  }, []);
+    getDeliveryStorage()
+  }, [props]);
 
   const savefilter = async() => {
     // try {

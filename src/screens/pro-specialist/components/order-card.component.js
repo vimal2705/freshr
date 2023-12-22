@@ -789,12 +789,13 @@ export const OrderCard = ({
                       </Text>
                     </View>
                   </View>
-
+              
                   <TouchableOpacity style={{ flexDirection: 'row', gap: 10 }} onPress={() => sendMapp()}>
                     <Entypo name="direction" size={18} color="black" />
                     <Text style={{ fontSize: 16, textDecorationLine: 'underline', color: '#1D6DF3' }}>{address}</Text>
                     <FontAwesome5 name="directions" size={18} color="#1D6DF3" />
                   </TouchableOpacity>
+                  
                 </>
               </>
             )}

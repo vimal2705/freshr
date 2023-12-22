@@ -35,6 +35,7 @@ const ProfileScreen = (props) => {
   const theme = useTheme();
   const { changeApp }= useContext(AppContext);
   const {isLoading, user, onLogout} = useContext(AuthContext)
+  console.log("userrrr", user);
   const coverImage =
     "https://st2.depositphotos.com/1009634/7235/v/950/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg";
   const name = "John doe";
@@ -75,27 +76,18 @@ const ProfileScreen = (props) => {
     return <LoadingScreen/>
   }
   const handleFeedbackPress = async () => {
-      const feedbackFormLink = 'https://forms.gle/Trh7EeJgAhE3roiX8';
-      try {
-        await Linking.openURL(feedbackFormLink);
-      } catch (error) {
-        console.error('Error opening link:', error);
-      }
-    };
-    console.log("hellloooooooo");
-  
-  const handleSupportPress=async()=>{
-    const emailAddress = 'support@freshr.me';
-   
+    // // Specify the email address you want to send the mail to
+    const emailAddress = 'sujalpatel1502@gmail.com';
+    // // Create the mailto link
     const mailtoLink = `mailto:${emailAddress}`;
-    
+    // // Use Linking.openURL to open the mail client with the specified email address
     try {
       await Linking.openURL(mailtoLink);
     } catch (error) {
       console.error('Error opening mail client:', error);
     }
     console.log("hellloooooooo");
-  }
+  };
   return (
     <SafeArea>
       <Container showsVerticalScrollIndicator={false}>
@@ -131,7 +123,33 @@ const ProfileScreen = (props) => {
           {/*/>*/}
           {/*<Separator />*/}
         </View>
+
 }
+
+<View>
+          <ProfileButton
+            onPress={() => navigation.navigate('instruction', {type: 'client'})}
+            icon={
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                size={28}
+                color={"black"}
+              />
+            }
+            label="How to use?"
+          />
+          {/*<ProfileButton*/}
+          {/*  icon={*/}
+          {/*    <MaterialIcons*/}
+          {/*      name="payments"*/}
+          {/*      size={28}*/}
+          {/*      color={"white}*/}
+          {/*    />*/}
+          {/*  }*/}
+          {/*  label="Payment methods"*/}
+          {/*/>*/}
+          {/*<Separator />*/}
+        </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
         <Spacer position="bottom" size="large" />
@@ -147,8 +165,10 @@ const ProfileScreen = (props) => {
                 color={"black"}
               />
             }
-            onPress={() =>
+            onPress={() => {
               changeApp('host')
+              navigation.navigate('facilityApp')
+            }
               // props.navigation.reset({
               //   index: 0,
               //   routes: [{ name: "ProAppFacility" }],
@@ -175,12 +195,14 @@ const ProfileScreen = (props) => {
                 color={"black"}
               />
             }
-            onPress={() =>
+            onPress={() =>{
               changeApp('specialist')
+              navigation.navigate('facilityApp')
               // props.navigation.reset({
               //   index: 0,
               //   routes: [{ name: "ProAppSpecialist" }],
               // })
+            }
             }
             label="Switch service provider account"
           />}
@@ -210,7 +232,7 @@ const ProfileScreen = (props) => {
                 color={"black"}
               />
             }
-            onPress={()=>handleSupportPress()}
+            onPress={()=>handleFeedbackPress()}
             label="Support"
           />
         <ProfileButton

@@ -114,10 +114,11 @@ export const SpecialistVerificationScreen = ({navigation, ...restProps}) => {
         <ActionButton
           height={55}
           onPress={() => {
-            onBecomeSpecialist().then(res => {
-              console.log(res);
-              setSpecialist(res);
-            });
+            // onBecomeSpecialist().then(res => {
+            //   console.log(res);
+            //   setSpecialist(res);
+            // });
+            navigation.navigate('instruction', {type:'specialist'})
           }}
           disabled={!allConditionsChecked}
         >

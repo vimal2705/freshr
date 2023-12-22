@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, Modal } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from "styled-components/native";
+import { AppContext } from '../../../providers/app-provider';
+import SelectDropdown from 'react-native-select-dropdown'
 
 
 export const BackButton = styled.TouchableOpacity`
@@ -24,6 +26,9 @@ const Payment = () => {
   const [accountHolderName, setAccountHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
+  const { bankDetails} = useContext(AppContext);
+
+  // const
 
   const accountTypes = ['Savings', 'Current'];
   const banks = ['Royal Bank of Canada','Toronto-Dominion Bank','bank of Nova Scotia','Bank of Montreal','Canadian Imperial Bank of Commerce','National Bank of Canada','Desjardins Group','HSBC Bank Canada','Laurentian Bank of Canada','ATB Financial']; // Replace with your actual list of banks
@@ -59,14 +64,21 @@ const Payment = () => {
     console.log('Sending data:', data);
   };
 
+  useEffect(()=>{
+    const bank = bankDetails()
+    console.log("bankdetailsss--->", bank);
+  }, [])
  
 
   return (
     <>
-        <BackButton onPress={() => navigation.goBack()} elevation={2}
+        {/* <BackButton onPress={() => navigation.goBack()} elevation={2}
                        style={{ backgroundColor: "black", marginRight: 20 }}>
             <Ionicons name="arrow-back" size={20} color={"white"} />
-          </BackButton>
+          </BackButton> */}
+          <TouchableOpacity onPress={()=>navigation.goBack()} style={{height:50,width:50,justifyContent:'center',alignItems:'center',backgroundColor:'#000',borderRadius:50,marginTop:40,marginHorizontal:15}}>
+       <Ionicons name="arrow-back" size={20} color={"white"} />
+       </TouchableOpacity>
     <View style={styles.container}>
   
       <Text style={styles.title}>Payment</Text>
@@ -92,7 +104,7 @@ const Payment = () => {
       </View>
 
 
-      <TouchableOpacity style={styles.input} onPress={handleBankPress}>
+      {/* <TouchableOpacity style={styles.input} onPress={handleBankPress}>
         <Text>{selectedBank || 'Select Bank'}</Text>
       </TouchableOpacity>
 
@@ -110,8 +122,23 @@ const Payment = () => {
           keyExtractor={(item) => item}
         />
         </View>
-      )}
-
+      )} */}
+<SelectDropdown
+	data={banks}
+	onSelect={(selectedItem, index) => {
+		console.log(selectedItem, index)
+	}}
+	buttonTextAfterSelection={(selectedItem, index) => {
+		// text represented after item is selected
+		// if data array is an array of objects then return selectedItem.property to render after item is selected
+		return selectedItem
+	}}
+	rowTextForSelection={(item, index) => {
+		// text represented for each item in dropdown
+		// if data array is an array of objects then return item.property to represent item in dropdown
+		return item
+	}}
+/>
       <TextInput style={styles.input} placeholder='Account holder name' onChangeText={(val)=>setAccountHolderName(val)}/>
      
       {/* <TextInput style={styles.input} placeholder='List of the bank' /> */}
@@ -143,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     marginBottom: 10,
     borderRadius: 10,
     width: '80%',
