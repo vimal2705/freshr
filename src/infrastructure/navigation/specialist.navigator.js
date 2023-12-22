@@ -135,10 +135,10 @@ export const SpecialistNavigator = () => {
       component={Payment}
     />
 
-{/* <Stack.Screen
+<Stack.Screen
       name="instruction"
       component={Instruction}
-    /> */}
+    />
     <Stack.Screen
       name="HostVerificationSpecialist"
       options={({ route }) => ({

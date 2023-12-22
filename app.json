@@ -80,6 +80,7 @@
           "MicrophoneUsageDescription": "Allow app XYZ to access your microphone"
         }
       ]
+      
     ],
     "extra": {
       "eas": {

@@ -275,23 +275,42 @@ export const SpecialistProvider = ({children}) => {
     }
   }
 
-  const updateSpecialistInfo = async (data) => {
+  const updateSpecialistInfo = async (data,param) => {
+    const config = await getTokenAndCreateAuthorizationHeader()
+      console.log("-----------> data2------------->", data);
     try {
-      setIsLoading(true);
-      const config = await getTokenAndCreateAuthorizationHeader()
-      const res = await axios.patch(
+      if(param){
+        const res = await axios.patch(
+          `${BASE_API_URL}/specialists/specialist`,
+           data,
+           {
+            ...config,
+            transformRequest: (data, headers) => {
+              return data;
+            }},
+          )
+          console.log("response form paymengtttyuh======",res.data.data);
+      }
+      else{
+        setIsLoading(true);
+        const config = await getTokenAndCreateAuthorizationHeader()
+        const res = await axios.patch(
         `${BASE_API_URL}/specialists/specialist`,
-        data,
-        {
-          ...config,
-          transformRequest: (data, headers) => {
-            return data;
-          }},
-      );
-      setError(null);
-      setSpecialist(res.data.data.specialist);
-      handleSuccess(res, setIsLoading, theme);
+         data,
+          {
+            ...config,
+            transformRequest: (data, headers) => {
+              return data;
+            }},
+        )
+        console.log("dataofpaymenttttt----------------------",res.data.data);
+        setError(null);
+        setSpecialist(res.data.data.specialist);
+        handleSuccess(res, setIsLoading, theme);
+      }
+     
     } catch (e) {
+      console.log("errorrr in paymentttttt-=-=====");
       console.log(e.request);
       handleError(e, setIsLoading, setError, theme)
     }

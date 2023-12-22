@@ -187,7 +187,7 @@ const Map = ({
      const coord = {latitude: delivery && deliverylocation? deliverylocation[1] : restProps.searchLocation[1], longitude:delivery && deliverylocation? deliverylocation[0]: restProps.searchLocation[0]};
      console.log("zooming");
      const radiusBoundaries = getBoundsOfDistance(coord, restProps.searchRadius * 1000);
-     map.current?.fitToCoordinates([...data.map(item => {
+     map.current?.fitToCoordinates([...data?.map(item => {
          const coordinates = item.location.coordinates
          return {latitude: coordinates[1], longitude: coordinates[0]}
        }), ...radiusBoundaries],
@@ -275,7 +275,7 @@ const Map = ({
              
               />
 
-              {data.map((item) => (
+              {data?.map((item) => (
                 <MapMarker
                   data={item}
          

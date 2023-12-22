@@ -332,18 +332,14 @@ useEffect(()=>{
 
   
   const searchSpecialist = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchSpecialists } ) => {
-    
     try {
       loadingAction()
-      
       console.log("config.searchLocation",config.searchLocation);
-
       const [lng, lat] = config.searchLocation
       console.log(lat,"2check",lng);
-      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
+      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
     //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
       const configHeader = await getTokenAndCreateAuthorizationHeader();
- 
       const res = await axios.get(
         searchURL,configHeader
       );
@@ -351,13 +347,11 @@ useEffect(()=>{
   // const searchSpecialist = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
     setMatchSpecialists (res.data.data.specialists);
     console.log("res.data.data.specialists",res.data.data.specialists);
-
       // setMatchingFacilities(res.data.data.facilities);
       // console.log("ssssssssssssssss",config.targetGender,config.proGender);
       // if (res.data.data.facilities.length > 0) {
       //   setMatchingSpecialists(res.data.data.facilities[0].specialists);
       //   // console.log("genderrrrrrrrrrrrrrrrr",setMatchingFacilities);
-
       // }
       await onGetOrders();
       stopLoadingAction();
@@ -366,7 +360,6 @@ useEffect(()=>{
       stopLoadingAction();
     }
   } 
-  
 
   
 

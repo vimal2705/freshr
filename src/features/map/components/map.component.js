@@ -58,7 +58,7 @@ const Map = ({
           longitudeDelta: 0.8,
         }}
       >
-        {data.map((item) => (
+        {data?.map((item) => (
           <MapMarker
             key={`marker-${item.id}`}
             coordinate={{

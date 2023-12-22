@@ -169,7 +169,7 @@ const Map = ({
      const coord = {latitude: restProps.searchLocation[1], longitude: restProps.searchLocation[0]};
      console.log("zooming");
      const radiusBoundaries = getBoundsOfDistance(coord, restProps.searchRadius * 1000);
-     map.current?.fitToCoordinates([...data.map(item => {
+     map.current?.fitToCoordinates([...data?.map(item => {
          const coordinates = item.location.coordinates
          return {latitude: coordinates[1], longitude: coordinates[0]}
        }), ...radiusBoundaries],
@@ -244,7 +244,7 @@ const Map = ({
                 isSelected={false}
               />
 
-              {data.map((item) => (
+              {data?.map((item) => (
                 <MapMarker
                   data={item}
                   key={`marker-${item._id}`}

@@ -209,7 +209,7 @@ const handleFavButtonPress = async (id)=>{
         <Spacer position="top" size="large" />
         {/* <Text>{firstName}</Text> */}
         {
-       storiesdata.map((item,i)=>{
+       storiesdata?.map((item,i)=>{
             
             return(
               

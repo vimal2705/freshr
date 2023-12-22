@@ -1,5 +1,6 @@
 const HOST_PROTOCOL = "https";
 const API_SUFFIX = "api/v1";
+
 const API_HOST = "secret-caverns-70396-e6c5c94cfdfb.herokuapp.com" 
 // const API_HOST = "seriously-hardy-stinkbug.ngrok-free.app" 
 // const API_HOST = 'c6d2-123-136-150-183.ngrok-free.app'

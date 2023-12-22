@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import mapStyles from "../components/mapStyles.json";
 import { useTheme } from 'styled-components';
-
+import * as Notifications from 'expo-notifications';
 import MapView, { Circle } from 'react-native-maps';
 import SyncStorage from "sync-storage"
 import Map from "../components/specil.component";
@@ -104,7 +104,8 @@ const GlassBackground = styled(BlurView)`
 `;
 
 const Delivery = (props) => {
-  const { loadFilters, getUser, refreshSearch, isLoading, searchSpecialist, onGetOrders, refreshing, onRefresh } = useContext(AppContext);
+  // console.log("propssssssssssssssssssssssss",props);
+  const { loadFilters, getUser, refreshSearch, isLoading, searchSpecialist, search, onGetOrders, refreshing, onRefresh } = useContext(AppContext);
   const { address, setAddress } = props
   const { onGetSpecialistidd, specialistidd } = useContext(SpecialistContext)
 
@@ -126,6 +127,13 @@ const Delivery = (props) => {
   const navigation = useNavigation();
   const LATITUDE_DELTA = Platform.OS === "IOS" ? 1.5 : 0.5;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+
+
+  
+  
+
+
   useEffect(() => {
     const singldata = async () => {
 
@@ -152,6 +160,7 @@ const Delivery = (props) => {
       });
     }
   }, [specialistidd])
+
 
   const initialRegion = {
     latitude: 37.78825,
@@ -611,6 +620,7 @@ const Delivery = (props) => {
     [rgba(theme.colors.brand.primary, 0.9), rgba(theme.colors.ui.primary, 0.9)],
   ];
   console.log("changing specialistsss", locationData);
+ 
   return (
     <>
       <SafeArea1>
@@ -641,6 +651,7 @@ const Delivery = (props) => {
             <Text style={{ fontWeight: 'bold'}}>In Salon</Text>
 
           </TouchableOpacity>
+         
         </View>
       </SafeArea1>
       <SafeArea style={{ backgroundColor: theme.colors.brand.white }}>
