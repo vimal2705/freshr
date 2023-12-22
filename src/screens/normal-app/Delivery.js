@@ -623,8 +623,8 @@ const Delivery = (props) => {
  
   return (
     <>
-      <SafeArea1>
-        <View style={{ height: 100, flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
+      {/* <SafeArea1> */}
+        <View style={{ height: 100, flexDirection: 'row', alignItems: 'center',justifyContent:'center',marginTop:50 }}>
 
           <TouchableOpacity
           activeOpacity={1}
@@ -653,8 +653,8 @@ const Delivery = (props) => {
           </TouchableOpacity>
          
         </View>
-      </SafeArea1>
-      <SafeArea style={{ backgroundColor: theme.colors.brand.white }}>
+      {/* </SafeArea1> */}
+      {/* <SafeArea style={{ backgroundColor: theme.colors.brand.white }}> */}
         <PageContainer style={{ position: 'relative', backgroundColor: theme.colors.brand.white }}>
 
           <View
@@ -665,7 +665,7 @@ const Delivery = (props) => {
             {/* <Spacer position="bottom" size="medium" /> */}
             {renderFilters()}
             <Spacer position="bottom" size="medium" />
-            <Spacer position="bottom" size="medium" />
+            {/* <Spacer position="bottom" size="medium" /> */}
           </View>
 
 
@@ -782,11 +782,11 @@ const Delivery = (props) => {
               borderColor: 'white',
               alignItems: 'center',
               justifyContent: 'center',
-              width: 60,
+              width: 50,
               position: 'absolute',
-              top: 650,
-              right: 20,
-              height: 60,
+              bottom:120,
+              right: 5,
+              height: 50,
               backgroundColor: theme.colors.brand.primary,
               borderRadius: 100,
             }}
@@ -796,7 +796,7 @@ const Delivery = (props) => {
             {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
           </TouchableOpacity>
         }
-      </SafeArea>
+      {/* </SafeArea> */}
     </>)
 }
 

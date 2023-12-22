@@ -334,7 +334,7 @@ const Map = ({
                 <View style={{width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: theme.colors.brand.primary, ...theme.shadows.default}} />
                 <Text variant={"caption"} style={{fontSize: 10, color: "white"}}>to change search location</Text>
               </InfoContainer> */}
-              <Spacer position={"bottom"} size={"small"}/>
+              {/* <Spacer position={"bottom"} size={"small"}/> */}
 
               {/* <InfoContainer>
               <Text variant={"caption"} style={{fontSize: 10, color: "white"}}>Barber shop</Text>
@@ -415,7 +415,7 @@ const Map = ({
               onSnapToItem={(index) => restProps.setFacility(data[index])}
             />:
             
-            <View style={{justifyContent:"center",alignItems:"center"}}>
+            <View style={{justifyContent:'flex-start',alignItems:'center'}}>
             <Carousel
           ref={flatList}
           data={data}

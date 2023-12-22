@@ -57,6 +57,7 @@ import {
   SafeAreaView,
   Alert,
   BackHandler,
+  Platform,
 } from "react-native";
 import Map from "../components/map.component";
 import FacilityCard from "../components/facility-card.component";
@@ -135,12 +136,9 @@ const InfoContainer = styled.View`
   background-color: black;
   padding: 8px 12px;
   border-radius: 10;
-  //position: absolute;
-  //bottom: 8px;
-  //left: 4px;
   flex-direction: row;
   align-items: center;
-  width:180
+  width:190
 `
 const ContainerGradient = styled(LinearGradient)`
   position: absolute;
@@ -160,38 +158,38 @@ const GlassBackground = styled(BlurView)`
 `;
 
 const Saloon = (props) => {
-  const {singlefacility,singleFacilityy,setSingleFacilityy} =useContext(HostContext);
+  const { singlefacility, singleFacilityy, setSingleFacilityy } = useContext(HostContext);
 
-  useEffect(()=>{
-    const singldata=async()=>{
-      if(props.specid){
-        console.log("specidddddddddddddddddddddddddddddddddddomjdjkdjjdjkndnd",props.specid);
+  useEffect(() => {
+    const singldata = async () => {
+      if (props.specid) {
+        console.log("specidddddddddddddddddddddddddddddddddddomjdjkdjjdjkndnd", props.specid);
         await singlefacility(props.specid);
         // console.log("singledetaulsskslskslkssoeccccccccccccoppp",singleFacilityy);
       }
 
-      if(props.facid){
+      if (props.facid) {
         await singlefacility(props.facid);
         // console.log("singledetaulsskslskslks",singleFacilityy);
-    
-   }
+
+      }
 
     }
 
-    
+
     singldata();
-    
-  },[props])
-//  console.log("singledetaulsskslskslks",singleFacilityy);
- useEffect(()=>{
-  if(singleFacilityy){
-    setShowSpecialistList(true)
-   }
- },[singleFacilityy])
- 
-  
+
+  }, [props])
+  //  console.log("singledetaulsskslskslks",singleFacilityy);
+  useEffect(() => {
+    if (singleFacilityy) {
+      setShowSpecialistList(true)
+    }
+  }, [singleFacilityy])
+
+
   // console.log("salonnnnnnnnnnnnnidddddddddddddddd",props.facid);
-  
+
   const navigation = useNavigation();
   const theme = useTheme();
   const [searchIsLoading, setSearchIsLoading] = useState(false);
@@ -205,8 +203,8 @@ const Saloon = (props) => {
     onRefresh,
     getUser,
   } = useContext(AppContext);
-// console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecialist);
-// const {singlefacility} =useContext(HostContext)
+  // console.log("propsssssssdsdsdsdsdsdsddsdsdddsdssddssdddsddsdsds",props.setSpecialist);
+  // const {singlefacility} =useContext(HostContext)
 
   const [fullMap, setFullMap] = useState(false);
   const [showSortFacilityFilter, setShowSortFacilityFilter] = useState(false);
@@ -440,21 +438,21 @@ const Saloon = (props) => {
     })();
   }, []);
 
-  const getDeliveryStorage=async()=>{
-  
+  const getDeliveryStorage = async () => {
+
     try {
       const value = await AsyncStorage.getItem(
         "gender"
       )
       // console.log("#######################------------->", value);
-      if(value){
+      if (value) {
         // setGender(value)
         props.setTargetGender(value)
       }
     } catch (error) {
-      console.log("erorrrrrrrrrrrr",error);
+      console.log("erorrrrrrrrrrrr", error);
     }
-    }
+  }
   useEffect(() => {
     let data = {};
     data = SyncStorage.get("filters");
@@ -473,7 +471,7 @@ const Saloon = (props) => {
     getDeliveryStorage()
   }, [props]);
 
-  const savefilter = async() => {
+  const savefilter = async () => {
     // try {
     //   await AsyncStorage.setItem(
     //     "filters", {
@@ -487,20 +485,20 @@ const Saloon = (props) => {
     //   console.log("erorrrrrrrrrrrr",error);
     // }
     // console.log(SyncStorage.get("filters")),
-      SyncStorage.set("filters", {
-        category: props.category,
-        priceRange: props.priceRange,
-        targetGender: props.targetGender,
-        sortFacilitiesBy: props.sortFacilitiesBy,
-        searchRadius: props.searchRadius,
+    SyncStorage.set("filters", {
+      category: props.category,
+      priceRange: props.priceRange,
+      targetGender: props.targetGender,
+      sortFacilitiesBy: props.sortFacilitiesBy,
+      searchRadius: props.searchRadius,
+    })
+      .then(() => {
+        setData(SyncStorage.get("filters"));
+        setChecked(!check);
       })
-        .then(() => {
-          setData(SyncStorage.get("filters"));
-          setChecked(!check);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const renderAddress = () => {
@@ -873,49 +871,48 @@ const Saloon = (props) => {
     setlocation();
   };
   const fetchDeliveryLocationProcess = async () => {
-      const locn = await fetchdeliverylocation();
+    const locn = await fetchdeliverylocation();
 
 
-      if (locn == null) {
-        setDeliverylocation1();
-      }
+    if (locn == null) {
+      setDeliverylocation1();
     }
+  }
   useEffect(() => {
-  
-    return ;
+
+    return;
   }, []);
 
   const setlocation = async () => {
 
     const val = await fetchdeliverylocation();
-   
+
     const lati = val != null ? val[1] : props.searchLocation[1];
     const longi = val != null ? val[0] : props.searchLocation[0];
-   
+
     let l = await Location1.reverseGeocodeAsync({
       latitude: lati,
       longitude: longi,
     });
-  
+
     setAddress(
-      `${l[0].city == null ? "" : l[0].city},${
-        l[0].street == null ? "" : l[0].street
+      `${l[0].city == null ? "" : l[0].city},${l[0].street == null ? "" : l[0].street
       }`
     );
   };
   useEffect(() => {
-  
+
     setlocation();
   }, [props.searchLocation]);
 
   return (
     <>
-      <SafeArea1>
+      {/* <SafeArea1> */}
         <View
-          style={{ height: 100, flexDirection: "row", alignItems: "center",justifyContent:'center' }}
+          style={{ height: 100, flexDirection: "row", alignItems: "center", justifyContent: 'center',marginTop:50}}
         >
           <TouchableOpacity
-          activeOpacity={1}
+            activeOpacity={1}
             style={{
               backgroundColor:
                 props.currentScreen == "SalonScreen"
@@ -924,16 +921,17 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent:"space-evenly",borderWidth:5,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0
+              justifyContent: "space-evenly", borderWidth: 5, borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
             }}
-            onPress={() => {props.changescreen("Delivery")
-            props.setCurrentScreen("Delivery")
-          }
-          }
+            onPress={() => {
+              props.changescreen("Delivery")
+              props.setCurrentScreen("Delivery")
+            }
+            }
           >
-            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',right:1,top:0, }}>Where do</Text>
-            <Text style={{fontWeight:"bold",top:10}}>Delivery</Text>
-            <View style={{flexDirection:"row",paddingHorizontal:5}}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'absolute', right: 1, top: 0, }}>Where do</Text>
+            <Text style={{ fontWeight: "bold", top: 10 }}>Delivery</Text>
+            <View style={{ flexDirection: "row", paddingHorizontal: 5 }}>
               <Entypo name="location-pin" size={16} color={"black"} />
 
               <Text
@@ -942,14 +940,14 @@ const Saloon = (props) => {
                     ? props.changescreen("Delivery")
                     : props.setCurrentScreen("Delivery")
                 }
-                style={{borderWidth:1,borderRadius:10,paddingHorizontal:5,fontSize:12}}
+                style={{ borderWidth: 1, borderRadius: 10, paddingHorizontal: 5, fontSize: 12 }}
               >
-                {address.length>0 ? address.length < 20 ? address : `${address.slice(0, 20)}....` : `Click here to set Location`}
+                {address.length > 0 ? address.length < 20 ? address : `${address.slice(0, 20)}....` : `Click here to set Location`}
               </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          activeOpacity={1}
+            activeOpacity={1}
             style={{
               backgroundColor:
                 props.currentScreen == "Delivery"
@@ -958,41 +956,42 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent:"space-evenly",borderWidth:5,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20
+              justifyContent: "space-evenly", borderWidth: 5, borderBottomLeftRadius: 0, borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20
             }}
             onPress={() => props.setCurrentScreen("SalonScreen")}
           >
-            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',left:1,top:0 }}>we meet?</Text>
-            <MaterialIcons name="storefront" size={18} color="black" style={{top:10}} />
-            <Text style={{fontWeight:'bold'}}>In Salon</Text>
-            
+            <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'absolute', left: 1, top: 0 }}>we meet?</Text>
+            <MaterialIcons name="storefront" size={18} color="black" style={{ top: 10 }} />
+            <Text style={{ fontWeight: 'bold' }}>In Salon</Text>
+
           </TouchableOpacity>
         </View>
-      </SafeArea1>
-      <SafeArea style={{ backgroundColor: theme.colors.brand.white }}>
-        <PageContainer
-          style={{
-            position: "relative",
-            backgroundColor: theme.colors.brand.white,
-          }}
-        >
-          <View>
-            <View
-              style={{
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {/*<ContainerGradient*/}
-              {/*  colors={[*/}
-              {/*    "black",*/}
-              {/*    "black",*/}
-              {/*  ]}*/}
-              {/*  start={[0, 1]}*/}
-              {/*  end={[1, 0]}*/}
-              {/*/>*/}
-              {/*{!fullMap && renderAddress()}*/}
-              {/* <PaddedContainer
+      {/* </SafeArea1> */}
+      {/* <SafeArea style={{ backgroundColor: theme.colors.brand.white }}> */}
+      <PageContainer
+        style={{
+          position: "relative",
+          backgroundColor: theme.colors.brand.white,
+        }}
+      >
+        <View>
+          <View
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              marginVertical: 10
+            }}
+          >
+            {/*<ContainerGradient*/}
+            {/*  colors={[*/}
+            {/*    "black",*/}
+            {/*    "black",*/}
+            {/*  ]}*/}
+            {/*  start={[0, 1]}*/}
+            {/*  end={[1, 0]}*/}
+            {/*/>*/}
+            {/*{!fullMap && renderAddress()}*/}
+            {/* <PaddedContainer
         style={{
           backgroundColor: rgba(theme.colors.brand.quaternary, 0),
         }}
@@ -1001,269 +1000,269 @@ const Saloon = (props) => {
         {/* <Spacer position="bottom" size="medium" />
         {renderSearchBar()}
         <Spacer position="bottom" size="medium" /> */}
-              {/* </PaddedContainer> */}
-              <View
+            {/* </PaddedContainer> */}
+            {/* <View
                 style={{
                   backgroundColor: rgba(theme.colors.brand.quaternary, 0),
                 }}
-              >
-                {/* <Spacer position="bottom" size="medium" /> */}
-                {renderFilters()}
-                <Spacer position="bottom" size="medium" />
-                <Spacer position="bottom" size="medium" />
-              </View>
-              <Spacer position="bottom" size="medium" />
+              > */}
+            {/* <Spacer position="bottom" size="medium" /> */}
+            {renderFilters()}
+            {/* <Spacer position="bottom" size="medium" /> */}
+            {/* <Spacer position="bottom" size="medium" /> */}
+            {/* </View> */}
+            {/* <Spacer position="bottom" size="medium" /> */}
 
-              {/*<PaddedContainer style={{ backgroundColor: "transparent" }}>*/}
-              {/*  <Spacer position="bottom" size="medium" />*/}
-              {/*  {renderAds()}*/}
-              {/*  <Spacer position="bottom" size="small" />*/}
-              {/*</PaddedContainer>*/}
-              <Spacer position="bottom" size="medium" />
-            </View>
+            {/*<PaddedContainer style={{ backgroundColor: "transparent" }}>*/}
+            {/*  <Spacer position="bottom" size="medium" />*/}
+            {/*  {renderAds()}*/}
+            {/*  <Spacer position="bottom" size="small" />*/}
+            {/*</PaddedContainer>*/}
+            {/* <Spacer position="bottom" size="medium" /> */}
           </View>
-          {!fullMap && props.facilities && (
-            <ScrollView
-              style={{ flex: 1 }}
-              scrollEnabled={false}
-              // refreshControl={
-              //   <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
-              // }
-              showsVerticalScrollIndicator={false}
-            >
-              <View>
-                <PaddedContainer>
-                  {/*<Spacer position="bottom" size="large" />*/}
-                  {/*<Spacer position="bottom" size="medium" />*/}
-                  {/*<Text variant="caption" style={{ fontSize: 16 }}>*/}
-                  {/*  Filter facilities & professionals by preference*/}
-                  {/*</Text>*/}
+        </View>
+        {!fullMap && props.facilities && (
+          <ScrollView
+            style={{ flex: 1 }}
+            scrollEnabled={false}
+            // refreshControl={
+            //   <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+            // }
+            showsVerticalScrollIndicator={false}
+          >
+            <View>
+              <PaddedContainer>
+                {/*<Spacer position="bottom" size="large" />*/}
+                {/*<Spacer position="bottom" size="medium" />*/}
+                {/*<Text variant="caption" style={{ fontSize: 16 }}>*/}
+                {/*  Filter facilities & professionals by preference*/}
+                {/*</Text>*/}
 
-                  {/*<Spacer position="bottom" size="medium" />*/}
-                  {/*<Spacer position="bottom" size="large" />*/}
-                  {/*{renderWelcome()}*/}
+                {/*<Spacer position="bottom" size="medium" />*/}
+                {/*<Spacer position="bottom" size="large" />*/}
+                {/*{renderWelcome()}*/}
 
-                  {/*<Spacer position="bottom" size="medium" />*/}
+                {/* <Spacer position="bottom" size="medium" /> */}
 
-                  {/*<FlatGrid*/}
-                  {/*  data={props.serviceCategories}*/}
-                  {/*  spacing={4}*/}
-                  {/*  renderItem={({ item, index }) =>*/}
-                  {/*    renderCategoryButton(gradients[index], item)*/}
-                  {/*  }*/}
-                  {/*/>*/}
+                {/*<FlatGrid*/}
+                {/*  data={props.serviceCategories}*/}
+                {/*  spacing={4}*/}
+                {/*  renderItem={({ item, index }) =>*/}
+                {/*    renderCategoryButton(gradients[index], item)*/}
+                {/*  }*/}
+                {/*/>*/}
 
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <SectionTitle style={{ color: "black" }}>
+                    Select a facility near you
+                  </SectionTitle>
+                  <TouchableOpacity
+                    onPress={() => savefilter()}
+                    style={{ flexDirection: "row", borderRadius: 10, justifyContent: 'center', alignItems: 'center', gap: 10 }}
                   >
+                    <MaterialCommunityIcons
+                      name={check ? "checkbox-blank-outline" : "checkbox-marked"}
+                      size={20}
+                      color={"black"}
+                      style={{}}
+                    />
+
                     <SectionTitle style={{ color: "black" }}>
-                      Select a facility near you
+                      Save Filters
                     </SectionTitle>
-                    <TouchableOpacity
-                      onPress={() => savefilter()}
-                      style={{ flexDirection: "row",borderRadius:10,justifyContent:'center',alignItems:'center',gap:10}}
-                    >
-                      <MaterialCommunityIcons
-                        name={check ? "checkbox-blank-outline": "checkbox-marked" }
-                        size={20}
-                        color={"black"}
-                        style={{ }}
-                      />
-
-                      <SectionTitle style={{ color: "black", marginTop: 2 }}>
-                        Save Filters
-                      </SectionTitle>
-                    </TouchableOpacity>
-                  </View>
+                  </TouchableOpacity>
+                </View>
 
 
-                  <Spacer position="bottom" size="large" />
-                  <InfoContainer>
-              <Text variant={"caption"} style={{fontSize: 10, color: "white"}}>Barber shop</Text>
-              <View style={{width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#0096FF"}} />
+                <Spacer position="bottom" size="medium" />
+                <InfoContainer>
+                  <Text variant={"caption"} style={{ fontSize: 10, color: "white" }}>Barber shop</Text>
+                  <View style={{ width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#0096FF" }} />
 
-              <Text variant={"caption"} style={{fontSize: 10, color: "white"}}>Salon</Text>
-              <View style={{width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#FA8072"}} />
+                  <Text variant={"caption"} style={{ fontSize: 10, color: "white" }}>Salon</Text>
+                  <View style={{ width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#FA8072" }} />
 
-              <Text variant={"caption"} style={{fontSize: 10, color: "white"}}>Both</Text>
-              <View style={{width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#fff"}} />
+                  <Text variant={"caption"} style={{ fontSize: 10, color: "white" }}>Both</Text>
+                  <View style={{ width: 12, height: 12, borderRadius: 12, marginHorizontal: 4, backgroundColor: "#fff" }} />
 
 
-              </InfoContainer>
-                </PaddedContainer>
-                <View>
-                  {searchIsLoading ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <Map
-                      key={"map-full"}
-                      fullMap={false}
-                      refresh={() => refreshData()}
-                      carouselBottom={false}
-                      loading={isLoading}
-                      data={props.facilities}
-                      bottomMargin={0}
-                      resizeMap={toggleFullMap}
-                      renderItem={({ item }) => (
-                        <FacilityCard
-                          handleMorePress={() =>
-                            navigation.navigate("FacilityDetails", {
-                              id: item._id,
-                            })
-                          }
-                          facility={item}
-                          handleViewResultPress={() => {
-                            if (item.specialists.length <= 0) {
+                </InfoContainer>
+              </PaddedContainer>
+              <View>
+                {searchIsLoading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Map
+                    key={"map-full"}
+                    fullMap={false}
+                    refresh={() => refreshData()}
+                    carouselBottom={false}
+                    loading={isLoading}
+                    data={props.facilities}
+                    bottomMargin={0}
+                    resizeMap={toggleFullMap}
+                    renderItem={({ item }) => (
+                      <FacilityCard
+                        handleMorePress={() =>
+                          navigation.navigate("FacilityDetails", {
+                            id: item._id,
+                          })
+                        }
+                        facility={item}
+                        handleViewResultPress={() => {
+                          if (item.specialists.length <= 0) {
+                            sendMessage(
+                              "Specialist unavailable",
+                              "No Specialist Available or Specialist do not match your Selected Filters",
+                              "error",
+                              2000,
+                              theme.colors.ui.warning
+                            );
+                          } else {
+                            if (item.availableSeats == 0) {
                               sendMessage(
-                                "Specialist unavailable",
-                                "No Specialist Available or Specialist do not match your Selected Filters",
+                                "No Seats",
+                                "Selected Facility has no Seats Available",
                                 "error",
                                 2000,
                                 theme.colors.ui.warning
                               );
                             } else {
-                              if (item.availableSeats == 0) {
-                                sendMessage(
-                                  "No Seats",
-                                  "Selected Facility has no Seats Available",
-                                  "error",
-                                  2000,
-                                  theme.colors.ui.warning
-                                );
-                              } else { 
-                                props.setFacility(item);
-                                setShowSpecialistList(true);
-                              }
+                              props.setFacility(item);
+                              setShowSpecialistList(true);
                             }
-                          }}
-                        />
-                      )}
-                    />
-                  )}
-                </View>
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                )}
               </View>
-            </ScrollView>
-          )}
-          {fullMap && props.facilities && (
-            <View style={{ flex: 1 }}>
-              <Map
-                key={"map-small"}
-                fullMap={true}
-                carouselBottom={true}
-                data={props.facilities}
-                bottomMargin={30}
-                resizeMap={toggleFullMap}
-                renderItem={({ item }) => (
-                  <FacilityCard
-                    handleMorePress={() =>
-                      navigation.navigate("FacilityDetails", {
-                        id: item._id,
-                      })
-                    }
-                    style={{ marginBottom: 18 }}
-                    facility={item}
-                    handleViewResultPress={() => {
-                      if (item.specialists.length <= 0) {
+            </View>
+          </ScrollView>
+        )}
+        {fullMap && props.facilities && (
+          <View style={{ flex: 1 }}>
+            <Map
+              key={"map-small"}
+              fullMap={true}
+              carouselBottom={true}
+              data={props.facilities}
+              // bottomMargin={30}
+              resizeMap={toggleFullMap}
+              renderItem={({ item }) => (
+                <FacilityCard
+                  handleMorePress={() =>
+                    navigation.navigate("FacilityDetails", {
+                      id: item._id,
+                    })
+                  }
+                  // style={{ marginBottom: 18 }}
+                  facility={item}
+                  handleViewResultPress={() => {
+                    if (item.specialists.length <= 0) {
+                      sendMessage(
+                        "Specialist unavailable",
+                        "No Specialist Available or Specialist do not match your Selected Filters",
+                        "error",
+                        2000,
+                        theme.colors.ui.warning
+                      );
+                    } else {
+                      if (item.availableSeats == 0) {
                         sendMessage(
-                          "Specialist unavailable",
-                          "No Specialist Available or Specialist do not match your Selected Filters",
+                          "No Seats",
+                          "Selected Facility has no Seats Available",
                           "error",
                           2000,
                           theme.colors.ui.warning
                         );
                       } else {
-                        if (item.availableSeats == 0) {
-                          sendMessage(
-                            "No Seats",
-                            "Selected Facility has no Seats Available",
-                            "error",
-                            2000,
-                            theme.colors.ui.warning
-                          );
-                        } else {
-                          props.setFacility(item);
-                          setShowSpecialistList(true);
-                        }
+                        props.setFacility(item);
+                        setShowSpecialistList(true);
                       }
-                    }}
-                  />
-                )}
-              />
-            </View>
-          )}
-
-          {/*{renderOrderClient({pendingOrders, navigation: props.navigation})}*/}
-          {showSpecialistList && (
-            <SpecialistListModal
-              handleClose={() => {
-                setShowSpecialistList(false);
-                setSingleFacilityy(null)
-                props.setfacid(null);
-                props.setspecid(null);
-                props.setsaloonspec(null);
-
-              }}
-              singleFacilityy={singleFacilityy}
-              setSpecialist={props.setSpecialist}
-              saloonspec={props.saloonspec}
-              setsaloonspec={props.setsaloonspec}
+                    }
+                  }}
+                />
+              )}
             />
-          )}
-        </PageContainer>
+          </View>
+        )}
 
-        <PriceRangeModal
-          showModal={showPriceRangeFilter}
-          toggleShowModal={handleShowPriceRangeFilterChange}
-        />
-        <GenderModal
-          showModal={showGenderFilter}
-          toggleShowModal={handleShowGenderFilterChange}
-          data={data}
-        />
-        <LocationModal
-          showModal={showLocationFilter}
-          toggleShowModal={handleShowLocationFilterChange}
-        />
-        {/* <SortFacilityModal
+        {/*{renderOrderClient({pendingOrders, navigation: props.navigation})}*/}
+        {showSpecialistList && (
+          <SpecialistListModal
+            handleClose={() => {
+              setShowSpecialistList(false);
+              setSingleFacilityy(null)
+              props.setfacid(null);
+              props.setspecid(null);
+              props.setsaloonspec(null);
+
+            }}
+            singleFacilityy={singleFacilityy}
+            setSpecialist={props.setSpecialist}
+            saloonspec={props.saloonspec}
+            setsaloonspec={props.setsaloonspec}
+          />
+        )}
+      </PageContainer>
+
+      <PriceRangeModal
+        showModal={showPriceRangeFilter}
+        toggleShowModal={handleShowPriceRangeFilterChange}
+      />
+      <GenderModal
+        showModal={showGenderFilter}
+        toggleShowModal={handleShowGenderFilterChange}
+        data={data}
+      />
+      <LocationModal
+        showModal={showLocationFilter}
+        toggleShowModal={handleShowLocationFilterChange}
+      />
+      {/* <SortFacilityModal
   showModal={showSortFacilityFilter}
   toggleShowModal={handleShowSortFacilityFilterChange}
 /> */}
-        <CategoryModal
-          showModal={showCategoryFilter}
-          toggleShowModal={handleShowCategoryFilterChange}
-          data={data}
-        />
-        <SearchRadiusModal
-          showModal={showSearchRadiusFilter}
-          toggleShowModal={handleShowSearchRadiusFilterChange}
-        />
-        {/* <Text>hiiii</Text> */}
-        {!showSpecialistList && (
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: "white",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              position: "absolute",
-              bottom: 90,
-              right: 10,
-              height: 60,
-              backgroundColor: theme.colors.brand.primary,
-              borderRadius: 100,
-            }}
-            onPress={() => refreshData()}
-          >
-            <Ionicons name={"refresh"} size={30} color={"white"} />
-            {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
-          </TouchableOpacity>
-        )}
-        
-      </SafeArea>
+      <CategoryModal
+        showModal={showCategoryFilter}
+        toggleShowModal={handleShowCategoryFilterChange}
+        data={data}
+      />
+      <SearchRadiusModal
+        showModal={showSearchRadiusFilter}
+        toggleShowModal={handleShowSearchRadiusFilterChange}
+      />
+      {/* <Text>hiiii</Text> */}
+      {!showSpecialistList && (
+        <TouchableOpacity
+          style={{
+            borderWidth: 1,
+            borderColor: "white",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 50,
+            position: "absolute",
+            bottom:120,
+            right: 5,
+            height: 50,
+            backgroundColor: theme.colors.brand.primary,
+            borderRadius: 100,
+          }}
+          onPress={() => refreshData()}
+        >
+          <Ionicons name={"refresh"} size={30} color={"white"} />
+          {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
+        </TouchableOpacity>
+      )}
+
+      {/* </SafeArea> */}
     </>
   );
 };
@@ -1290,7 +1289,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setServicesCategories(serviceCategories)),
   setServicesTypes: (servicesTypes) =>
     dispatch(setServicesTypes(servicesTypes)),
-    setMatchingFacilities: (facilities) =>
+  setMatchingFacilities: (facilities) =>
     dispatch(setMatchingFacilities(facilities)),
   setMatchingSpecialists: (specialists) =>
     dispatch(setMatchingSpecialists(specialists)),

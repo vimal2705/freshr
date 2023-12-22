@@ -171,7 +171,7 @@ const specialist = useSelector((state) => state?.specialists?.specialists)
     // console.log("<<<<>>>>>", specialist[0]?.services[0].serviceType.name);
   }, [specialist])
   return (
-    <SafeArea>
+    // <SafeArea>
       <View style={{ flex: 1, paddingVertical: 16, paddingHorizontal: 12 }}>
         <Spacer position={"bottom"} size={"large"} />
         <Spacer position={"bottom"} size={"large"} />
@@ -336,7 +336,7 @@ return(
 {/* // </View>
  }  */}
       </View>
-    </SafeArea>
+    // </SafeArea>
   );
 };
 const mapStateToProps = (state) => ({});

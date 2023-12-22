@@ -1,6 +1,6 @@
 import { Feather, FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { AppContext } from "../../providers/app-provider";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -151,7 +151,7 @@ export const getStyledScreenOptions = (icons, theme, num) => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: theme.colors.brand.primary,
-        height: 60,
+        height: Platform.OS == 'ios' ?100:60,
         zIndex: 4,
         marginTop: 0,
         padding: 5,
