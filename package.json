@@ -33,7 +33,7 @@
     "d3-shape": "^3.1.0",
     "deprecated-react-native-prop-types": "^4.1.0",
     "eslint-plugin-react-native": "^4.0.0",
-    "expo": "~48.0.18",
+    "expo": "~48.0.21",
     "expo-av": "~13.2.1",
     "expo-blur": "~12.2.2",
     "expo-build-properties": "~0.6.0",
