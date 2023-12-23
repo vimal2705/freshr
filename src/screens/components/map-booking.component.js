@@ -35,7 +35,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
   const [host, setHost] = useState([])
   const [userloc, setUserloc] = useState({})
   const [livespecialist, setLivespecialist] = useState(null)
-  const [liveclient, setLiveclient] = useState(null)
+  const [liveclient, setLiveclient] = useState(null) 
   useEffect(()=>{
 
     socketServices.initializeSocket()
@@ -44,7 +44,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
       if(isClient){
       console.log("SOcket Location",(dataa.loc.coords));
       setLivespecialist(dataa.loc.coords)
-  console.log("liveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeloccccccccccccccccccccccccccccccccccccccccccccccc",livespecialist);
+  // console.log("liveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeloccccccccccccccccccccccccccccccccccccccccccccccc",livespecialist);
 }
       
     })
@@ -53,7 +53,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
     
     socketServices.on('Send_Location_ChangeCLI',(dataa)=>{
       if(!isClient){
-      console.log("SOcket Location CLI",(dataa.loc.coords));
+      // console.log("SOcket Location CLI",(dataa.loc.coords));
       setLiveclient(dataa.loc.coords)
   console.log("client liveeee",liveclient);
 }

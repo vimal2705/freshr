@@ -12,7 +12,8 @@ import socketServices from './components/Socket';
 import SpecialistCard from '../components/specialist-card.component';
 import { Modal } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Paymentsheet } from '../../components/bottom-sheet/payment-sheet';
 const TabButton = styled.TouchableOpacity`
   padding: 0px 16px;
   position: relative;
@@ -39,7 +40,27 @@ const CountContainer = styled.View`
 const OrdersScreen = (props) => {
   // const fromcheckout = false
   // const {fromcheckout} = props.route.params
-  const fromcheckout = props.route.params?.fromcheckout ? true : false
+  // const route = useRoute()
+  // const {paymentIntent1,
+  //   ephemeralKey1,
+  //   customer1} = props.route.params
+
+  //   console.log("frommmmm routeeeeeeee||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", paymentIntent1,
+  //   ephemeralKey1,
+  //   customer1);
+  const [showPaymentsheet, setshowPaymentsheet] = useState(false);
+  const fromcheckout = false
+  // const open=props.route.params?.open?true:false;
+  const handleshowPaymentsheet = () => {
+    setshowPaymentsheet(!showPaymentsheet);
+  };
+
+  // useEffect(()=>{
+  //   if(open){
+  //     console.log("insidepaymentsheet");
+  //   handleshowPaymentsheet();
+  //   }
+  // },[props.route.params])
   console.log("-------------------------------------------------->", fromcheckout);
   const navigation = useNavigation()
   useEffect(()=>{
@@ -99,6 +120,11 @@ setCurrentTab('ongoing');
     setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
       }, 5000)
     }
+    })
+
+    socketServices.on('Send_Request',(dataa)=>{
+      console.log("paymentdataaaaa=========================",dataa);
+      handleshowPaymentsheet();
     })
   },[])
   const getUserLoc=async()=>{
@@ -335,6 +361,12 @@ return(
 </Modal>
 {/* // </View>
  }  */}
+ {/* 5147586982 */}
+  <Paymentsheet
+        showModal={showPaymentsheet}
+        toggleShowModal={handleshowPaymentsheet}
+        ongoingOrder={ongoingOrder}
+      />
       </View>
     // </SafeArea>
   );

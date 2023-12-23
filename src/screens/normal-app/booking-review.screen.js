@@ -432,6 +432,7 @@ import { NavBar } from "./components/nav-bar";
 import SyncStorage from "sync-storage"
 import { StackActions } from '@react-navigation/native';
 import socketServices from "./components/Socket";
+import { Paymentsheet } from "../../components/bottom-sheet/payment-sheet";
 
 
 
@@ -490,6 +491,7 @@ const EditButton = styled.TouchableOpacity`
 `;
 
 const BookingReviewScreen = ({ Apilocc,booking, route, navigation, ...restProps}) => {
+ 
 
   console.log("APIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILOCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",route.params.Apilocc);
   console.log("ogggggggdelllllllllllll",route.params.Del);
@@ -498,9 +500,10 @@ const BookingReviewScreen = ({ Apilocc,booking, route, navigation, ...restProps}
   const theme = useTheme();
   const [selectedService, setSelectedService] = useState(null);
 const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
+const [showPaymentsheet, setshowPaymentsheet] = useState(false);
 
   const [newOrder, setNewOrder] = useState(null);
-  const {fetchPaymentSheetParams,setRefreshSearch,  search, loading, setLoading, payOrder} = useContext(AppContext);
+  const {fetchPaymentSheetParams,setRefreshSearch,  search, loading, setLoading, payOrder, setPaymentData, paydata} = useContext(AppContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [address,setAddress] = useState(SyncStorage.get('locationAddress'))
   const [selectedLocation,setSelectedLocation] = useState([])
@@ -543,6 +546,10 @@ const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
 //   return () => clearTimeout(timer);
 // }, [selectedLocation]);
 
+const [customer1, setCustomer1] = useState(null)
+const [ephemeralKey1, setephemeralKey1] = useState(null)
+const [paymentIntent1, setpaymentIntent1] = useState(null)
+
   const initializePaymentSheet = async () => {
     
     console.log("newwwwww bwforeeeeee",SyncStorage.get('locationAddress'));
@@ -556,6 +563,12 @@ const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
       order
     } = await fetchPaymentSheetParams(booking.services.map(service => service.id), booking.facility ==null ? null :booking.facility._id, 40, {...route.params,address:booking.facility ==null ?address :null,selectedLocation:booking.facility == null ?route.params.Apilocc:null, }); 
     console.log("newwwww afterrrrrr");
+    setpaymentIntent1(paymentIntent)
+    setephemeralKey1(ephemeralKey)
+    setCustomer1(customer) 
+
+    console.log("staticccccccccc dataaaaaaaaaaaaa===============----------------------------++++++++++++++++++++++++++++++", paymentIntent, ephemeralKey, customer);
+    setPaymentData({paymentIntent: paymentIntent, ephemeralKey: ephemeralKey, customer: customer})
     if (!paymentIntent) {
       // Handle the case when paymentIntent is undefined, e.g., show an error message or return.
       console.error('--------Payment intent is undefined-----');
@@ -590,30 +603,21 @@ const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
  
   useEffect(()=>{
     socketServices.on('Send_Request',async (dataa)=>{
-      // console.log("startcodeeeecalled",dataa);
-      // onGetOrders();
-      const { error, paymentOption } = await presentPaymentSheet();
-      console.log("DDd",paymentOption);
+      
 
       if (error) {
         console.log(`Error code: ${error.code}`, error.message);
       } else {
-      // socketServices.on('Complete_payment',(dataa)=>{
-        //     console.log("doneeeeeeeeepaymenttttttt",dataa);
-        // })
+      
         try{
-          navigation.navigate('Orders')
-          // socketServices.emit('Complete_payment', {
-          //   paym,
-          // })
+          navigation.navigate('Orders', {customer1: customer1, ephemeralKey1: ephemeralKey1, paymentIntent1: paymentIntent1} )
+         
           console.log("yessssssssss");
         }
         catch{
           console.log("nooooooooo");
         }
-        console.log('Success', 'Your order is confirmed!');
-        const paidOrder = await payOrder(newOrder.id,route.params.Del);
-        setNewOrder({...paidOrder})
+       
       }
   
      
@@ -621,8 +625,14 @@ const [delayedSelectedLocation, setDelayedSelectedLocation] = useState([]);
   }, [])
   
 
+  const handleshowPaymentsheet = () => {
+    setshowPaymentsheet(!showPaymentsheet);
+  };
+
+  // pi_3OQLjcCnZhSvaL8u1Zlx8Q82_secret_iE7qN08WVMvx1ZXw2bcMbOtSd ek_test_YWNjdF8xTTUxSzFDblpoU3ZhTDh1LDBpRDh5NHRJeHQybVZaREhndjRvcFJTSlBIV3ZxZGk_00RDdaGziv undefined
+
   const openPaymentSheet = async () => {
-console.log("beforeeeeee------------------------------");
+// console.log("beforeeeeee------------------------------");
     // const { error, paymentOption } = await presentPaymentSheet();
 // console.log("DDd",paymentOption);
 
@@ -633,7 +643,7 @@ console.log("beforeeeeee------------------------------");
       //     console.log("doneeeeeeeeepaymenttttttt",dataa);
       // })
       try{
-        navigation.navigate('Orders', {fromcheckout:true})
+        navigation.navigate('Orders', {fromcheckout:true, customer1: customer1, ephemeralKey1: ephemeralKey1, paymentIntent1: paymentIntent1})
         socketServices.emit('Complete_payment', {
           paym,
         })
@@ -654,6 +664,12 @@ console.log("beforeeeeee------------------------------");
     initializePaymentSheet();
   }, []);
 
+
+
+  // useEffect(()=>{
+  //   console.log("insidepaymentsheet");
+  //   handleshowPaymentsheet();
+  // },[])
   useEffect(() => {
     setTotalPrice(
       booking.services.reduce(
@@ -864,6 +880,10 @@ console.log("beforeeeeee------------------------------");
         {/*  </CancelButton>*/}
         {/*</Content>*/}
       </Container>
+      <Paymentsheet
+        showModal={showPaymentsheet}
+        toggleShowModal={handleshowPaymentsheet}
+      />
 
     </SafeArea>
   );

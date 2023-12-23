@@ -37,7 +37,8 @@ export const AppProvider = ({ children, ...restProps }) => {
   const [refreshSearch, setRefreshSearch] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
   const [UnreadMessage,setUnreadMessages] =useState(0)
-  const [address,setAddress] = useState()
+  const [address,setAddress] = useState() 
+  const [paydata, setPaydata] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -290,7 +291,9 @@ useEffect(()=>{
     }
     refreshMessages();
   })
-
+const setPaymentData=(data)=>{
+setPaydata(data)
+}
   const search = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
     try {
       loadingAction()
@@ -397,6 +400,9 @@ useEffect(()=>{
         UnreadMessage,
         loadinstruction,
         bankDetails,
+        paydata,
+        setPaydata,
+        setPaymentData,
       }}
     >
 

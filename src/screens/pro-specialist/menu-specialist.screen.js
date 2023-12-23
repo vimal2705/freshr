@@ -80,11 +80,12 @@ const MenuSpecialistScreen = (props) => {
           />
           <ProfileButton
             icon={
-              <MaterialCommunityIcons
-                name="account-circle-outline"
-                size={28}
-                color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
-              />
+              // <MaterialCommunityIcons
+              //   name="account-circle-outline"
+              //   size={28}
+              //   color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
+              // />
+              <MaterialIcons name="payment" size={28} color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}/>
             }
             style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
             onPress={() => props.navigation.navigate("Payment")}
@@ -93,11 +94,13 @@ const MenuSpecialistScreen = (props) => {
           <ProfileButton
             onPress={() => props.navigation.navigate('instruction', {type: 'specialist', back: true})}
             icon={
-              <MaterialCommunityIcons
-                name="account-circle-outline"
-                size={28}
-                color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
-              />
+              // <MaterialCommunityIcons
+              //   name="account-circle-outline"
+              //   size={28}
+              //   color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
+              // />
+              <Feather name="help-circle" size={28}
+              color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"} />
             }
             style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
             label="How to use?"

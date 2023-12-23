@@ -19,7 +19,7 @@ export const BackButton = styled.TouchableOpacity`
   border: 2px solid #25282b; 
 `;
 const Payment = () => {
-  
+
   // const[formdataa,setformdataa]={{}}
   const [selectedAccountType, setSelectedAccountType] = useState('');
   const [bankListVisible, setBankListVisible] = useState(false);
@@ -27,70 +27,71 @@ const Payment = () => {
   const [accountHolderName, setAccountHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [mobileNumber, setMobileNumber] = useState(null);
-  const { bankDetails} = useContext(AppContext);
-const {setSpecialistidd,onGetSpecialistidd,specialist,specialistidd} =useContext(SpecialistContext)
-console.log("-----------909090909090", mobileNumber);
-  useEffect(async()=>{
+  const { bankDetails } = useContext(AppContext);
+  const { setSpecialistidd, onGetSpecialistidd, specialist, specialistidd } = useContext(SpecialistContext)
+  console.log("-----------909090909090", mobileNumber);
+  useEffect(async () => {
     await onGetSpecialistidd(specialist._id)
-  },[])
+  }, [])
 
-  useEffect(()=>{
-    if(specialistidd){
-      console.log("specialistttdataaaaaaaaaaaaaaajhahahjahkjahkjakj",specialistidd);
+  useEffect(() => {
+    if (specialistidd) {
+      console.log("specialistttdataaaaaaaaaaaaaaajhahahjahkjahkjakj", specialistidd);
     }
-    if(specialistidd?.bankAccountHolderName){
+    if (specialistidd?.bankAccountHolderName) {
       setAccountHolderName(specialistidd.bankAccountHolderName)
     }
-    if(specialistidd?.bankAccountNumber){
+    if (specialistidd?.bankAccountNumber) {
       setAccountNumber(specialistidd.bankAccountNumber)
     }
-    if(specialistidd?.bankMobile){
-      console.log("mobileeeee^^^^^^^^^^^^^^^^^^^^^^^^^",specialistidd.bankMobile);
+    if (specialistidd?.bankMobile) {
+      console.log("mobileeeee^^^^^^^^^^^^^^^^^^^^^^^^^", specialistidd.bankMobile);
       setMobileNumber(specialistidd.bankMobile.toString())
     }
-    if(specialistidd?.bankName){
+    if (specialistidd?.bankName) {
       console.log("bank nameeeeeeeeeeeeeee", specialistidd?.bankName);
-      setSelectedBank('hiiiiii')
+      // setSelectedBank('hiiiiii')
+      setSelectedBank(specialistidd?.bankName)
     }
-    if(specialistidd?.accountType){
+    if (specialistidd?.accountType) {
       setSelectedAccountType(specialistidd?.accountType);
     }
-  },[specialistidd])
-console.log("specilisttttttttttfrom paymentttt",specialist);
-  const accountTypes = ['saving', 'Current'];
-  const {updateSpecialistInfo} = useContext(SpecialistContext);
+  }, [specialistidd])
+  console.log("specilisttttttttttfrom paymentttt", specialist);
+  const accountTypes = ['Saving', 'Checking'];
+  const { updateSpecialistInfo } = useContext(SpecialistContext);
 
-  const banks = ['Royal Bank of Canada','Toronto-Dominion Bank','bank of Nova Scotia','Bank of Montreal','Canadian Imperial Bank of Commerce','National Bank of Canada','Desjardins Group','HSBC Bank Canada','Laurentian Bank of Canada','ATB Financial']; // Replace with your actual list of banks
+  const banks = ['Royal Bank of Canada', 'Toronto-Dominion Bank', 'bank of Nova Scotia', 'Bank of Montreal', 'Canadian Imperial Bank of Commerce', 'National Bank of Canada', 'Desjardins Group', 'HSBC Bank Canada', 'Laurentian Bank of Canada', 'ATB Financial']; // Replace with your actual list of banks
 
   const handleAccountTypeChange = (type) => {
     // formData.append('accountType',type)
-    console.log("typeeeee",type);
-   
+    console.log("typeeeee", type);
+
     setSelectedAccountType(type);
-    
+
   };
 
   const handleBankPress = () => {
     setBankListVisible(!bankListVisible);
   };
-  const navigation=useNavigation();
+  const navigation = useNavigation();
 
-  
+
   const handleBankSelect = (bank) => {
-   
+
     setSelectedBank(bank);
     setBankListVisible(false);
   };
 
-  const sendDataa = async() => {
-  const formData = new FormData();
+  const sendDataa = async () => {
+    const formData = new FormData();
     // selectedAccountType
-    formData.append("accountType",selectedAccountType)
-    formData.append("bankAccountHolderName",accountHolderName)
+    formData.append("accountType", selectedAccountType)
+    formData.append("bankAccountHolderName", accountHolderName)
     formData.append("bankAccountNumber", Number(accountNumber))
-    formData.append("bankMobile",Number(mobileNumber))
-    formData.append("bankName",selectedBank)
-console.log("formdataaaaa",formData);
+    formData.append("bankMobile", Number(mobileNumber))
+    formData.append("bankName", selectedBank)
+    console.log("formdataaaaa", formData);
 
     // const data = {
     //   accountType: selectedAccountType,
@@ -99,41 +100,40 @@ console.log("formdataaaaa",formData);
     //   bankMobile:Number(mobileNumber),
     //   bankName: selectedBank,
     // };
-    const param="true";
-    await updateSpecialistInfo(formData,param)
+    const param = "true";
+    await updateSpecialistInfo(formData, param)
     navigation.goBack()
 
-    
+
     // console.log('Sending data:', data);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const bank = bankDetails()
     console.log("bankdetailsss--->", bank);
   }, [])
- 
+
 
   return (
-    <>
-        {/* <BackButton onPress={() => navigation.goBack()} elevation={2}
-                       style={{ backgroundColor: "black", marginRight: 20 }}>
-            <Ionicons name="arrow-back" size={20} color={"white"} />
-          </BackButton> */}
-          <TouchableOpacity onPress={()=>navigation.goBack()} style={{height:50,width:50,justifyContent:'center',alignItems:'center',backgroundColor:'#000',borderRadius:50,marginTop:40,marginHorizontal:15}}>
-       <Ionicons name="arrow-back" size={20} color={"white"} />
-       </TouchableOpacity>
     <View style={styles.container}>
-  
-      <Text style={styles.title}>Payment</Text>
 
+      <View style={{ flexDirection: 'row', marginTop: 60, alignItems: 'center', paddingHorizontal: 20, gap: 30 }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ height: 50, width: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000', borderRadius: 50 }}>
+          <Ionicons name="arrow-back" size={20} color={"white"} />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 30 }}>Payment Information</Text>
+      </View>
+      <View style={styles.Innercontainer}>
+
+     
       <View style={styles.radioContainer}>
-        <Text>Account Type</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Account Type</Text>
         {accountTypes.map((type) => (
           <TouchableOpacity
             key={type}
             style={styles.radioButton}
             onPress={() => handleAccountTypeChange(type)}
-            
+
           >
             {selectedAccountType == type && (
               <MaterialIcons name="radio-button-checked" size={24} color="black" />
@@ -141,7 +141,7 @@ console.log("formdataaaaa",formData);
             {selectedAccountType != type && (
               <MaterialIcons name="radio-button-unchecked" size={24} color="black" />
             )}
-            <Text style={{ color: '#000' }}>{type}</Text>
+            <Text style={{ color: '#000', fontSize: 18, fontWeight: '500' }}>{type}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -166,46 +166,52 @@ console.log("formdataaaaa",formData);
         />
         </View>
       )} */}
-<SelectDropdown
-	data={banks}
-  buttonStyle={styles.input2}
-  defaultButtonText={ selectedBank }
-  rowTextStyle={{fontSize:14}}
-  buttonTextStyle={{fontSize:13, color: 'grey',}}
-	onSelect={(selectedItem, index) => {
-		console.log(selectedItem, index)
-	}}
-	buttonTextAfterSelection={(selectedItem, index) => {
-		// text represented after item is selected
-		// if data array is an array of objects then return selectedItem.property to render after item is selected
-  setSelectedBank(selectedItem);
+      <SelectDropdown
+        data={banks}
+        buttonStyle={styles.input2}
+        defaultButtonText={selectedBank}
+        rowTextStyle={{ fontSize: 14 }}
+        buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000', }}
+        label="Categories"
+        onSelect={(selectedItem, index) => {
+          console.log(selectedItem, index)
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          // text represented after item is selected
+          // if data array is an array of objects then return selectedItem.property to render after item is selected
+          setSelectedBank(selectedItem);
 
-		return selectedItem
-	}}
-	rowTextForSelection={(item, index) => {
-		// text represented for each item in dropdown
-		// if data array is an array of objects then return item.property to represent item in dropdown
-		return item
-	}}
-/>
-      <TextInput style={styles.input} value={accountHolderName} placeholder='Account holder name' onChangeText={(val)=>setAccountHolderName(val)}/>
-     
+          return selectedItem
+        }}
+        rowTextForSelection={(item, index) => {
+          // text represented for each item in dropdown
+          // if data array is an array of objects then return item.property to represent item in dropdown
+          return item
+        }}
+      />
+      <TextInput style={styles.input} value={accountHolderName} placeholder='Account holder name'  placeholderTextColor={'gray'} onChangeText={(val) => setAccountHolderName(val)} />
+
       {/* <TextInput style={styles.input} placeholder='List of the bank' /> */}
-      <TextInput style={styles.input} value={accountNumber} placeholder='Account number' keyboardType='numeric' onChangeText={(val)=>setAccountNumber(val)}/>
-      <TextInput style={styles.input} value={mobileNumber}  placeholder='Mobile number' keyboardType='phone-pad' onChangeText={(val)=>setMobileNumber(val)} />
-      <TouchableOpacity style={styles.button} activeOpacity={1} onPress={()=>sendDataa()}>
-        <Text style={{ color: '#fff' }}>Submit</Text>
+      <TextInput style={styles.input} value={accountNumber} placeholder='Account number' placeholderTextColor={'gray'} keyboardType='numeric' onChangeText={(val) => setAccountNumber(val)} />
+      <TextInput style={styles.input} value={mobileNumber} placeholder='Mobile number'  placeholderTextColor={'gray'} keyboardType='phone-pad' onChangeText={(val) => setMobileNumber(val)} />
+      <TouchableOpacity style={styles.button} activeOpacity={1} onPress={() => sendDataa()}>
+        <Text style={{ color: '#fff',fontSize:18 }}>Submit</Text>
       </TouchableOpacity>
+      </View>
 
-     
-    
+
     </View>
-    </>
+
+
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  Innercontainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -213,14 +219,14 @@ const styles = StyleSheet.create({
   title: {
     color: '#000',
     fontSize: 30,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   radioContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 10,
-    marginBottom: 10,
+    marginVertical:10,
     borderRadius: 10,
     width: '80%',
   },
@@ -238,33 +244,33 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     width: '80%',
-    height: 50,
+    height: 60,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    marginBottom: 10,
+    marginVertical:10,
     borderRadius: 10,
   },
   input2: {
     borderWidth: 1,
     width: '80%',
-    height: 50,
-    
+    height: 60,
+
     paddingHorizontal: 20,
     marginBottom: 10,
     borderRadius: 10,
     backgroundColor: '#fff',
   },
   button: {
-    height: 50,
+    height: 60,
     width: '80%',
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
   },
-  
 
-  
+
+
 });
 
 export default Payment;

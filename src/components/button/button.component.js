@@ -47,6 +47,19 @@ export const ModalButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+export const ModalButton1 = styled.TouchableOpacity`
+  background-color: ${({ variant, theme }) =>
+    variant === "primary"
+      ? theme.colors.ui.primary
+      : theme.colors.ui.quaternary};
+  padding: 10px 8px;
+  width:300px
+  border-radius: 5px;
+  border: 2px solid #25282b;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const LargeButton = styled.TouchableOpacity.attrs((props) => ({
   shadowColor: props.theme.colors.ui.border,
