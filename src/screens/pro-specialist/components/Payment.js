@@ -58,7 +58,7 @@ const Payment = () => {
     }
   }, [specialistidd])
   console.log("specilisttttttttttfrom paymentttt", specialist);
-  const accountTypes = ['Saving', 'Checking'];
+  const accountTypes = ['Saving','Checking'];
   const { updateSpecialistInfo } = useContext(SpecialistContext);
 
   const banks = ['Royal Bank of Canada', 'Toronto-Dominion Bank', 'bank of Nova Scotia', 'Bank of Montreal', 'Canadian Imperial Bank of Commerce', 'National Bank of Canada', 'Desjardins Group', 'HSBC Bank Canada', 'Laurentian Bank of Canada', 'ATB Financial']; // Replace with your actual list of banks
@@ -117,17 +117,17 @@ const Payment = () => {
   return (
     <View style={styles.container}>
 
-      <View style={{ flexDirection: 'row', marginTop: 60, alignItems: 'center', paddingHorizontal: 20, gap: 30 }}>
+      <View style={{ flexDirection: 'row', marginTop: 60, alignItems: 'center', paddingHorizontal: 10, gap: 30 }}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ height: 50, width: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000', borderRadius: 50 }}>
           <Ionicons name="arrow-back" size={20} color={"white"} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 30 }}>Payment Information</Text>
+        <Text style={{ fontSize: 24 }}>Payment Information</Text>
       </View>
       <View style={styles.Innercontainer}>
 
      
       <View style={styles.radioContainer}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Account Type</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' ,marginRight:24}}>Account Type</Text>
         {accountTypes.map((type) => (
           <TouchableOpacity
             key={type}
@@ -169,9 +169,9 @@ const Payment = () => {
       <SelectDropdown
         data={banks}
         buttonStyle={styles.input2}
-        defaultButtonText={selectedBank}
+        defaultButtonText={selectedBank ? selectedBank : "Select a Bank"}
         rowTextStyle={{ fontSize: 14 }}
-        buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000', }}
+        buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000',alignSelf:"center" }}
         label="Categories"
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index)
