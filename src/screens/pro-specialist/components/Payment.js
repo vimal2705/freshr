@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, Modal, ScrollView } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from "styled-components/native";
@@ -58,7 +58,7 @@ const Payment = () => {
     }
   }, [specialistidd])
   console.log("specilisttttttttttfrom paymentttt", specialist);
-  const accountTypes = ['Saving','Checking'];
+  const accountTypes = ['Savings','Checking'];
   const { updateSpecialistInfo } = useContext(SpecialistContext);
 
   const banks = ['Royal Bank of Canada', 'Toronto-Dominion Bank', 'bank of Nova Scotia', 'Bank of Montreal', 'Canadian Imperial Bank of Commerce', 'National Bank of Canada', 'Desjardins Group', 'HSBC Bank Canada', 'Laurentian Bank of Canada', 'ATB Financial']; // Replace with your actual list of banks
@@ -101,8 +101,9 @@ const Payment = () => {
     //   bankName: selectedBank,
     // };
     const param = "true";
-    await updateSpecialistInfo(formData, param)
-    navigation.goBack()
+    // await updateSpecialistInfo(formData, param)
+    // navigation.goBack()
+    console.log("ttypeeeeofselecteddddd",selectedAccountType);
 
 
     // console.log('Sending data:', data);
@@ -115,19 +116,20 @@ const Payment = () => {
 
 
   return (
+    <ScrollView>
     <View style={styles.container}>
 
-      <View style={{ flexDirection: 'row', marginTop: 60, alignItems: 'center', paddingHorizontal: 10, gap: 30 }}>
+      <View style={{ flexDirection: 'row', marginTop: 50, alignItems: 'center', paddingHorizontal: 10, gap: 30 }}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ height: 50, width: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000', borderRadius: 50 }}>
           <Ionicons name="arrow-back" size={20} color={"white"} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 24 }}>Payment Information</Text>
+        <Text style={{ fontSize: 24,fontWeight:'bold' }}>Payment Information</Text>
       </View>
       <View style={styles.Innercontainer}>
 
      
       <View style={styles.radioContainer}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' ,marginRight:24}}>Account Type</Text>
+        <Text style={{ fontSize: 15, fontWeight: 'bold'}}>Account Type</Text>
         {accountTypes.map((type) => (
           <TouchableOpacity
             key={type}
@@ -141,37 +143,19 @@ const Payment = () => {
             {selectedAccountType != type && (
               <MaterialIcons name="radio-button-unchecked" size={24} color="black" />
             )}
-            <Text style={{ color: '#000', fontSize: 18, fontWeight: '500' }}>{type}</Text>
+            <Text style={{ color: '#000', fontSize: 15, fontWeight: '500' }}>{type}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
 
-      {/* <TouchableOpacity style={styles.input} onPress={handleBankPress}>
-        <Text>{selectedBank || 'Select Bank'}</Text>
-      </TouchableOpacity>
-
-      {bankListVisible && (
-        <View style={{height:100,width:'80%',marginBottom:10}}>
-        <FlatList
-          data={banks}
-          renderItem={({ item }) => (
-            <View style={{marginBottom:5,height:30,borderRadius:10,backgroundColor:'#000',paddingHorizontal:20,justifyContent:'center'}}>
-            <TouchableOpacity onPress={() => handleBankSelect(item)}  >
-              <Text style={{color:'#fff'}}>{item}</Text>
-            </TouchableOpacity>
-            </View>
-          )}
-          keyExtractor={(item) => item}
-        />
-        </View>
-      )} */}
+     
       <SelectDropdown
         data={banks}
         buttonStyle={styles.input2}
         defaultButtonText={selectedBank ? selectedBank : "Select a Bank"}
         rowTextStyle={{ fontSize: 14 }}
-        buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000',alignSelf:"center" }}
+        buttonTextStyle={{ fontSize: 15,fontWeight:'500', color: '#000' }}
         label="Categories"
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index)
@@ -201,7 +185,7 @@ const Payment = () => {
 
 
     </View>
-
+    </ScrollView>
 
 
   );
@@ -213,8 +197,9 @@ const styles = StyleSheet.create({
   },
   Innercontainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    marginTop:90,
   },
   title: {
     color: '#000',
@@ -228,7 +213,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical:10,
     borderRadius: 10,
-    width: '80%',
+    width: '85%',
   },
   radioButton: {
     flexDirection: 'row',
@@ -243,7 +228,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    width: '80%',
+    width: '85%',
     height: 60,
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -252,9 +237,8 @@ const styles = StyleSheet.create({
   },
   input2: {
     borderWidth: 1,
-    width: '80%',
+    width: '85%',
     height: 60,
-
     paddingHorizontal: 20,
     marginBottom: 10,
     borderRadius: 10,
@@ -262,11 +246,12 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 60,
-    width: '80%',
+    width: '85%',
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    marginVertical:10
   },
 
 
