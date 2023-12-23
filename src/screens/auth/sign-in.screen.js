@@ -9,7 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import {
+ 
+  MaterialCommunityIcons,
+ 
+} from "@expo/vector-icons";
 import { SafeArea } from "../../components/utils/safearea.component";
 import React, { useContext, useState, useRef } from "react";
 import { Spacer } from "../../components/spacer/spacer.component";
@@ -39,6 +43,7 @@ const SignInScreen = (props) => {
     useContext(AuthContext);
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [check, setChecked] = useState(false);
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -50,11 +55,17 @@ const SignInScreen = (props) => {
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={() => setRememberMe(!rememberMe)}
         >
-          <Checkbox
+          {/* <Checkbox
             color={theme.colors.brand.primary}
             status={rememberMe ? "checked" : "unchecked"}
             onPress={() => setRememberMe(!rememberMe)}
-          />
+          /> */}
+          <MaterialCommunityIcons
+                      name={rememberMe ? "checkbox-blank-outline" : "checkbox-marked"}
+                      size={20}
+                      color={theme.colors.brand.primary}
+                      onPress={() => setRememberMe(!rememberMe)}
+                    />
           <Spacer position="left" size="medium" />
           <Text variant="caption" style={{ color: theme.colors.ui.primary }}>
             Remember me

@@ -921,7 +921,7 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 5, borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
+              justifyContent: "space-evenly", borderWidth: 5, borderColor:'#000',borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
             }}
             onPress={() => {
               props.changescreen("Delivery")
@@ -956,7 +956,7 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 5, borderBottomLeftRadius: 0, borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20
+              justifyContent: "space-evenly", borderWidth: 5, borderBottomLeftRadius: 0, borderColor:'#000',borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20
             }}
             onPress={() => props.setCurrentScreen("SalonScreen")}
           >

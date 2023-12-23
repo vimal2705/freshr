@@ -55,11 +55,12 @@ const CategoryModalComponent = ({
           {serviceCategories?.map((item, index) => (
             <View key={`${item.id}-${index}`}>
               <CheckBoxInput
-                value={category ? category.name === item.name : false}
-                handleChange={() => setCategory(item)} 
+                value={category ? category?.name === item.name : false}
+                handleChange={() => item.catchPhrase!='Coming Soon'&& item.name != category?.name ? setCategory(item) : item.name == category?.name ? setCategory(null) : console.log("noooo")} 
+                item = {item}
               >
                 <Text style={{ fontSize: 16, textTransform: "capitalize" }}>
-                  {item.name}
+                  {item.name=="Haircut" ? "Hair Service" : item.name}
                 </Text>
                 <Spacer position="bottom" size="small" />
                 <Text variant="caption">{item.catchPhrase}</Text>
