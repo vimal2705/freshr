@@ -1,6 +1,14 @@
 import { useEffect, useContext, useState } from "react";
 import styled, {useTheme} from 'styled-components/native';
-
+import {
+  Entypo,
+  Feather,
+  FontAwesome,
+  Fontisto,
+  MaterialCommunityIcons,
+  MaterialIcons,
+  Ionicons,
+} from "@expo/vector-icons";
 import { SafeArea } from "../../components/utils/safearea.component";
 import { Text } from "../../components/typography/typography.component";
 import { Spacer } from "../../components/spacer/spacer.component";
@@ -95,10 +103,11 @@ export const SpecialistVerificationScreen = ({navigation, ...restProps}) => {
         {conditions.map((condition, index) => (
           <View key={`${condition.id}-${index}`}>
             <ConditionContainer onPress={() => updateCondition(index)}>
-              <Checkbox
-                color={theme.colors.brand.primary}
-                status={condition.status ? 'checked' : 'unchecked'}
-              />
+            <MaterialCommunityIcons
+                      name={condition.status ? "checkbox-blank-outline" : "checkbox-marked"}
+                      size={20}
+                      color={theme.colors.brand.primary}
+                    />
               <Spacer position="left" size="large"/>
               <View style={{marginTop: 5}}>
                 <Text>{condition.description}</Text>

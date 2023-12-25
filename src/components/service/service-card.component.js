@@ -198,10 +198,16 @@ const ServiceCard = ({
             <Spacer position="left" size="small" />
           </PriceTag>
           {!info && (
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              color={theme.colors.brand.primary}
-            />
+             // <Checkbox
+            //   status={checked ? "checked" : "unchecked"}
+            //   color={theme.colors.brand.primary}
+            // />
+            <MaterialCommunityIcons
+                      name={checked ? "" : "checkbox-marked"}
+                      size={20}
+                      color={theme.colors.brand.primary}
+
+                    />
           )}
         </ServiceRight>
       </ServiceCardContainer>

@@ -45,7 +45,7 @@ export const ServiceDetailsModal = ({
         <Row>
           <Entypo name="clock" size={20} />
           <Spacer position="right" size="medium" />
-          <Text variant="caption">{service.time} (approx.)</Text>
+          <Text variant="caption">{service.estimatedDuration.totalMinutes} Min (approx.)</Text>
         </Row>
       </Row>
 

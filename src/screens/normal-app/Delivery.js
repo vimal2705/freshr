@@ -656,7 +656,7 @@ const Delivery = (props) => {
 
           <TouchableOpacity
           activeOpacity={1}
-          style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent:'space-evenly',borderWidth:5,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0 }} onPress={() => setCurrentScreen('Delivery')}>
+          style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent:'space-evenly',borderWidth:3,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0,borderColor:theme.colors.brand.primary }} onPress={() => setCurrentScreen('Delivery')}>
             
             <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',right:1,top:0 }}>Where do</Text>
             <Text style={{ fontWeight: 'bold',top:10 }}>Delivery</Text>
@@ -673,7 +673,7 @@ const Delivery = (props) => {
 
           <TouchableOpacity
           activeOpacity={1}
-          style={{ backgroundColor: currentScreen == 'Delivery' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly',borderWidth:5,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20 }} onPress={() => props.changescreen('SalonScreen')} >
+          style={{ backgroundColor: currentScreen == 'Delivery' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly',borderWidth:3,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20,borderColor:theme.colors.brand.primary }} onPress={() => props.changescreen('SalonScreen')} >
           <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',left:1,top:0 }}>we meet?</Text>
             <MaterialIcons name="storefront" size={18} color="black" style={{ top: 10 }} />
             <Text style={{ fontWeight: 'bold'}}>In Salon</Text>
@@ -804,25 +804,26 @@ const Delivery = (props) => {
           toggleShowModal={handleShowSearchRadiusFilterChange}
         />
         {
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: 'white',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 50,
-              position: 'absolute',
-              bottom:120,
-              right: 5,
-              height: 50,
-              backgroundColor: theme.colors.brand.primary,
-              borderRadius: 100,
-            }}
-            onPress={() => refreshData()}
-          >
-            <Ionicons name={"refresh"} size={30} color={"white"} />
-            {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
-          </TouchableOpacity>
+           <TouchableOpacity
+                 style={{
+                   alignItems: "center",
+                   justifyContent: "center",
+                   borderWidth:1,
+                   borderColor:theme.colors.brand.primary,
+                   width: 50,
+                   position: "absolute",
+                   bottom:120,
+                   right: 5,
+                   height: 50,
+                   backgroundColor:'#f8f8ff95',
+                   shadowColor:'#000',
+                   borderRadius: 100,
+                 }}
+                 onPress={() => refreshData()}
+               >
+                 <Ionicons name={"refresh"} size={30} color={theme.colors.brand.primary} />
+                 {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
+               </TouchableOpacity>
         }
       {/* </SafeArea> */}
     </>)

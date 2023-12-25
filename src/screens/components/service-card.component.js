@@ -3,7 +3,7 @@ import styled, { useTheme } from "styled-components/native";
 import { rgba } from "polished";
 import { Checkbox } from "react-native-paper";
 
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons,MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import {
   addServiceToCart,
@@ -231,10 +231,15 @@ console.log("oguserrr",userr);
             <Spacer position="left" size="small" />
           </PriceTag>
           {!info && (
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              color={theme.colors.brand.primary}
-            />
+               // <Checkbox
+            //   status={checked ? "checked" : "unchecked"}
+            //   color={theme.colors.brand.primary}
+            // />
+            <MaterialCommunityIcons
+                      name={checked ? "checkbox-blank-outline" : "checkbox-marked"}
+                      size={20}
+                      color={theme.colors.brand.primary}
+                    />
           )}
         </ServiceRight>
       </ServiceCardContainer>

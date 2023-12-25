@@ -40,12 +40,13 @@ const FavoritesScreen = (props) => {
   const isFocused = useIsFocused();
   const ProfilePictureGradient = styled(LinearGradient)`
   position: absolute;
-  width:84;
+  width::60px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   border-radius: 200px;
+  border-width:2px;
 `;
 
 
@@ -169,29 +170,27 @@ const handleFavButtonPress = async (id)=>{
         <Spacer position="top" size="large" />
        
         {
-          favfacilities.map((item,i)=>{
-            
-            return(
-              <View  style={{flexDirection:'row',alignItems:'center'}}>
-             <TouchableOpacity onPress={()=>sendFacilityyy(item._id)}>
-               <Image source={{ uri:item.coverImage}} style={{ width: 80, height: 80,borderRadius:40,borderWidth:2,borderColor:'black',margin:2}} />
+          favfacilities.map((item, i) => {
 
-             </TouchableOpacity>
+            return (
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',marginVertical: 5 }}>
+                <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center'  }}>
+                  <TouchableOpacity onPress={() => sendFacilityyy(item._id)}>
+                    <Image source={{ uri: item.coverImage }} style={{ width: 60, height: 60, borderRadius: 40}} />
 
+                  </TouchableOpacity>
+                  <Text style={{width:200, fontSize: 16, fontWeight: 'bold' }}> {item.name} </Text>
+                </View>
 
-             
-              <View style={{flex:1,flexDirection:"row",justifyContent:"space-between"}}>
-
-              <Text  style={{fontSize:20,fontWeight:'bold'}}> {item.name} </Text>
-              <FavButton onPress={()=>console.log("sdfsdf",item)}>
-                <MaterialIcons
-                  name={"favorite"}
-                  size={30}
-                  color={theme.colors.brand.primary}
-                />
-              </FavButton>
+                <FavButton onPress={() => console.log("sdfsdf", item)}>
+                  <MaterialIcons
+                    name={"favorite"}
+                    size={30}
+                    color={theme.colors.brand.primary}
+                  />
+                </FavButton>
 </View>
-              </View>
+         
             )
           })
         }
@@ -220,44 +219,40 @@ const handleFavButtonPress = async (id)=>{
               >
 
               
-              <View style={{flexDirection:'row',alignItems:'center'}}>
+<View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',marginVertical: 5 }}>
 
-              {/* <Text></Text> */}
-              {/* <Image source={require(`${item.photo}`)}/> */}
-           
-              {item.stories.length > 0 && (
-              <ProfilePictureGradient
-                colors={[theme.colors.brand.secondary, "#753a88"]}
-                start={[0, 1]}
-                end={[1, 0]}
-              />
-            )}
-            <TouchableOpacity
-              onPress={() => {
-                console.log("fff",item.stories);
-                if (item.stories.length > 0)
-
-                {props.navigation.navigate("SpecialistStory",{stories:item.stories})}
-              }
-            }
-             
-         
-            >
-             <Image source={{ uri: item.photo }} style={{ width: 80, height: 80,borderRadius:40,borderWidth:2,borderColor:'black',margin:2}} />
-            </TouchableOpacity>
-<View style={{flex:1,flexDirection:"row",justifyContent:"space-between"}}>
-<Text style={{fontSize:18,fontWeight:'bold',marginBottom:30,}}> {item.firstName} {item.lastName}</Text>
-<FavButton onPress={()=>handleFavButtonPress(favspecialists[i].id)}>
-                <MaterialIcons
-                  name={"favorite"}
-                  size={30}
-                  color={theme.colors.brand.primary}
-                />
-              </FavButton>
+{/* <Text></Text> */}
+{/* <Image source={require(`${item.photo}`)}/> */}
+<View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+{item.stories.length > 0 && (
+  <ProfilePictureGradient
+    colors={[theme.colors.brand.secondary, "#753a88"]}
+    start={[0, 1]}
+    end={[1, 0]}
+  />
+)}
+<TouchableOpacity
+  onPress={() => {
+    console.log("fff", item.stories);
+    if (item.stories.length > 0) { props.navigation.navigate("SpecialistStory", { stories: item.stories }) }
+  }
+  }
+>
+  <Image source={{ uri: item.photo }} style={{ width: 60, height: 60, borderRadius: 40,borderWidth:2 }} />
+</TouchableOpacity>
+  <Text style={{width:200,fontSize: 16, fontWeight: 'bold'}}>{item.firstName}{item.lastName}</Text>
 </View>
-            
 
-              </View>
+  <FavButton onPress={() => handleFavButtonPress(favspecialists[i].id)}>
+    <MaterialIcons
+      name={"favorite"}
+      size={30}
+      color={theme.colors.brand.primary}
+    />
+  </FavButton>
+
+
+</View>
               </TouchableOpacity>
             )
           })

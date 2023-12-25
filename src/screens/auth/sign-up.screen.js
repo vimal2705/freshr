@@ -36,11 +36,12 @@ export const FormInput = styled(TextInput).attrs((props) => ({
   textAlign: { undefined },
   theme: {
     colors:
-      { primary: props.theme.colors.brand.primary,
-        text: 'black',
-        placeholder: 'gray',
-        underlineColor: props.theme.colors.brand.primary
-      }
+    {
+      primary: props.theme.colors.brand.primary,
+      text: 'black',
+      placeholder: 'gray',
+      underlineColor: props.theme.colors.brand.primary
+    }
   }
 }))`
   width: 100%;
@@ -101,8 +102,14 @@ const SignUpScreen = (props) => {
             }}
             validationSchema={yup.object().shape({
               email: yup.string().email().required(),
-              firstName: yup.string().required(),
-              lastName: yup.string().required(),
+          firstName: yup
+              .string()
+              .matches(/^[a-zA-Z\s-]+$/, 'Invalid first name. Only letters, spaces, and hyphens are allowed.')
+              .required('First name is required'),
+              lastName: yup .string()
+              .matches(/^[a-zA-Z\s-]+$/, 'Invalid first name. Only letters, spaces, and hyphens are allowed.')
+              .required('Last name is required'),
+       
               password: yup
                 .string()
                 .min(6)

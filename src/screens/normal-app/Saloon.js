@@ -921,7 +921,7 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 5, borderColor:'#000',borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
+              justifyContent: "space-evenly", borderWidth: 3,borderColor:theme.colors.brand.primary, borderColor:'#000',borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
             }}
             onPress={() => {
               props.changescreen("Delivery")
@@ -956,7 +956,7 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 5, borderBottomLeftRadius: 0, borderColor:'#000',borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20
+              justifyContent: "space-evenly", borderWidth: 3, borderBottomLeftRadius: 0, borderColor:'#000',borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20,borderColor:theme.colors.brand.primary
             }}
             onPress={() => props.setCurrentScreen("SalonScreen")}
           >
@@ -1244,21 +1244,23 @@ const Saloon = (props) => {
       {!showSpecialistList && (
         <TouchableOpacity
           style={{
-            borderWidth: 1,
-            borderColor: "white",
+            borderWidth:1,
+            borderColor:theme.colors.brand.primary,
             alignItems: "center",
             justifyContent: "center",
             width: 50,
             position: "absolute",
-            bottom:120,
+            bottom:fullMap?60:10,
             right: 5,
             height: 50,
-            backgroundColor: theme.colors.brand.primary,
+            backgroundColor:'#f8f8ff90',
+            elevation:10,
+            shadowColor:'#000',
             borderRadius: 100,
           }}
           onPress={() => refreshData()}
         >
-          <Ionicons name={"refresh"} size={30} color={"white"} />
+          <Ionicons name={"refresh"} size={30} color={theme.colors.brand.primary} />
           {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
         </TouchableOpacity>
       )}

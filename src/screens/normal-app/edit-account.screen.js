@@ -86,7 +86,7 @@ const Content = styled.View`
 export const FormInput = styled(TextInput).attrs((props) => ({
   mode: "outlined",
   color: 'black',
-  numberOfLines: 1,
+  // numberOfLines: 1,
   textAlign: { undefined },
   theme: {
     colors:
@@ -131,6 +131,26 @@ export const EditAccountScreen = (props) => {
   const [newGender, setNewGender] = useState(user.gender);
   const [newFirstname, setNewFirstname] = useState(user.firstName)
   const [newLastname, setNewLastname] = useState(user.lastName)
+
+
+  const isValidInput = (input) => /^[a-zA-Z]+$/.test(input);
+
+const handleFirstNameChange = (text) => {
+  if (isValidInput(text) || text === '') {
+    setNewFirstname(text);
+  } else {
+    Alert.alert('Warning', 'Special characters are not allowed in the first name');
+  }
+};
+
+const handleLastNameChange = (text) => {
+  if (isValidInput(text) || text === '') {
+    setNewLastname(text);
+  } else {
+    Alert.alert('Warning', 'Special characters are not allowed in the last name');
+  }
+};
+
 
   console.log("user", user?.gender);
   useEffect(() => {
@@ -227,7 +247,7 @@ getDeliveryStorage()
           </ButtonCircleBase>
           <ButtonNormal onPress={() => editMode ? updateInfo() : setEditMode(true)}>
             <Text variant="caption" style={{ fontSize: 18, color: 'white' }}>
-              {editMode ? 'apply changes' : 'edit profile'}
+            {editMode ? 'Apply changes' : 'Edit profile'}
             </Text>
           </ButtonNormal>
         </NavContainer>
@@ -268,20 +288,18 @@ getDeliveryStorage()
               numberOfLines={5}
               style={{backgroundColor: 'white'}}
               underlineColor={theme.colors.brand.primary}
-              onChangeText={(text) => {
-                setNewFirstname(text);
-              }}
+           onChangeText={handleFirstNameChange}
+            
             />
+            
             <Spacer position="bottom" size="medium" />
             <FormInput
-              value={newLastname}
-              label="Last name"
-              numberOfLines={5}
-              style={{backgroundColor: 'white'}}
-              underlineColor={theme.colors.brand.primary}
-              onChangeText={(text) => {
-                setNewLastname(text);
-              }}
+            value={newLastname}
+            label="Last name"
+            style={{ backgroundColor: 'white' }}
+            underlineColor={theme.colors.brand.primary}
+            onChangeText={handleLastNameChange}
+          
             />
             <Spacer position="bottom" size="medium" />
           </>}
