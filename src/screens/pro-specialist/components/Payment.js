@@ -85,6 +85,11 @@ const Payment = () => {
 
   const sendDataa = async () => {
     const formData = new FormData();
+
+    if (!selectedAccountType || !accountHolderName || !accountNumber || !mobileNumber || !selectedBank) {
+      Alert.alert('Validation Error', 'Please fill in all required fields');
+      return;
+    }
     // selectedAccountType
     formData.append("accountType", selectedAccountType)
     formData.append("bankAccountHolderName", accountHolderName)
@@ -153,12 +158,20 @@ const Payment = () => {
       <SelectDropdown
         data={banks}
         buttonStyle={styles.input2}
-        defaultButtonText={selectedBank ? selectedBank : "Select a Bank"}
+        renderCustomizedButtonChild={(selectedItem, index) => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ marginRight: 8, color: 'black' }}>
+              {selectedBank ? selectedBank : "Select a Bank"}
+            </Text>
+          </View>
+        )}
+        defaultButtonText={selectedBank}
         rowTextStyle={{ fontSize: 14 }}
-        buttonTextStyle={{ fontSize: 15,fontWeight:'500', color: '#000' }}
-        label="Categories"
+        buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000', }}
+        
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index)
+          setSelectedBank(selectedItem) 
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           // text represented after item is selected

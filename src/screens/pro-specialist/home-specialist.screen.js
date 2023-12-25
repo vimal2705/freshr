@@ -136,6 +136,8 @@ useEffect(()=>{
     loadSpecialistData();
   }, [])
 
+  console.log("loadingggggggggg", isLoading);
+
   if (isLoading || !specialist || !specialistServices ) {
     return <LoadingScreen/>
   }

@@ -180,15 +180,15 @@ const EditProfileScreen = (props) => {
       formData.append('bio', bio);
     }
 
-    if (specialist?.user?.lastName !== newLastname.trim()) {
-      formData.append("lastName", newLastname.trim())
+    if (specialist?.user?.lastName !== newLastname?.trim()) {
+      formData.append("lastName", newLastname?.trim())
     }
 
-    if (specialist?.user?.firstName !== newFirstname.trim()) {
-      formData.append("firstName", newFirstname.trim())
+    if (specialist?.user?.firstName !== newFirstname?.trim()) {
+      formData.append("firstName", newFirstname?.trim())
     }
-    if (newGender.trim() !== specialist?.user?.gender) {
-      formData.append('gender', newGender.trim());
+    if (newGender?.trim() !== specialist?.user?.gender) {
+      formData.append('gender', newGender?.trim());
     }
 
     if (currentRadius !== specialist?.distance) {

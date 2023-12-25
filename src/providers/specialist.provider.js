@@ -16,7 +16,6 @@ export const SpecialistProvider = ({children}) => {
   const [error, setError] = useState(null);
   const [specialist, setSpecialist] = useState(null);
   const [specialistidd, setSpecialistidd] = useState(null);
-
   const [specialistServices, setSpecialistServices] = useState(null);
   const [specialistStories, setSpecialistStories] = useState([]);
   const [orders, setOrders] = useState([])
@@ -253,7 +252,7 @@ export const SpecialistProvider = ({children}) => {
 
   const onGetSpecialistidd = async(id) => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader()
       const res = await axios.get(
         `${BASE_API_URL}/specialists/specialist/${id}`,

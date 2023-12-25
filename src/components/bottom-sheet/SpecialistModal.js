@@ -1,5 +1,5 @@
 import styled, {useTheme} from 'styled-components/native';
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Dimensions, FlatList, View } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -22,6 +22,8 @@ import Carousel from "react-native-snap-carousel";
 import { getBoundsOfDistance } from "geolib";
 import { rgba } from "polished";
 import { SpecialistContext } from '../../providers/specialist.provider';
+import * as Location from 'expo-location'
+import { HostContext } from '../../providers/facility.provider';
 
 const SpecialistListContainer = styled.View`
   position: absolute;
@@ -54,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SpecialistList = ({selectedFacility,saloonspec,setsaloonspec, handleClose, setSpecialist, selectedSpecialist, searchLocation, searchRadius,singleFacilityy}) => {
   
-  
+  const {setSingleFacilityy} = useContext(HostContext)
   const navigation = useNavigation()
   const theme = useTheme();
   const mapRef = useRef(null);
@@ -62,6 +64,29 @@ const SpecialistList = ({selectedFacility,saloonspec,setsaloonspec, handleClose,
   const isFocused = useIsFocused()
   const [lng, lat] = searchLocation;
 const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
+
+const [currentloc, setCurrentloc] = useState(null)
+
+  const getcurrentlocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log("unka afterr", status);
+      if (status !== 'granted') {
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentloc(location.coords)
+  }
+// console.log("");
+useEffect(()=>{
+  getcurrentlocation()
+}, [])
 
   // console.log("----------------->", lat, lng);
 
@@ -150,7 +175,10 @@ const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
 
   return <SpecialistListContainer>
     <CloseButton
-      onPress={handleClose}
+      onPress={() =>{
+        setSingleFacilityy(null)
+        handleClose()
+      } }
       style={{
         backgroundColor: "white",
         shadow: theme.shadows.default,
@@ -172,7 +200,7 @@ const {onGetSpecialistidd,specialistidd} =useContext(SpecialistContext)
     >
       <MapMarker
         key={`marker-search-location`}
-        coordinate={{
+        coordinate={ currentloc ? currentloc : {
           latitude: lat,
           longitude: lng,
         }}

@@ -17,6 +17,7 @@ import { getBoundsOfDistance } from "geolib";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { ActivityIndicator } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Location from 'expo-location'
 
 const mapStyles = require("./mapStyles.json");
 const { width } = Dimensions.get("window");
@@ -151,7 +152,28 @@ const Map = ({
   const [isMounted, setIsMounted] = useState(false)
   const [isFullMap, setIsFullMap] = useState(fullMap)
   const [deliverylocation, setDeliverylocation] = useState()
+  const [currentloc, setCurrentloc] = useState(null)
 
+  const getcurrentlocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log("unka afterr", status);
+      if (status !== 'granted') {
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentloc(location.coords)
+  }
+
+  useEffect(()=>{
+    getcurrentlocation()
+  }, [])
   const fetchdeliverylocation = async ()=>{
     const jsonvalue = await AsyncStorage.getItem(
       'del'
@@ -264,7 +286,7 @@ const Map = ({
                       latitude: deliverylocation[1],
                       longitude: deliverylocation[0],
                     }
-                  :
+                  : currentloc ? currentloc : 
                   {
                   latitude: lat,
                   longitude: lng,

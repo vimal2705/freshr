@@ -182,10 +182,10 @@ const Saloon = (props) => {
   }, [props])
   //  console.log("singledetaulsskslskslks",singleFacilityy);
   useEffect(() => {
-    if (singleFacilityy) {
+    if (props.facid || props.specid) {
       setShowSpecialistList(true)
     }
-  }, [singleFacilityy])
+  }, [props.facid, props.specid])
 
 
   // console.log("salonnnnnnnnnnnnnidddddddddddddddd",props.facid);
@@ -1203,6 +1203,7 @@ const Saloon = (props) => {
               props.setfacid(null);
               props.setspecid(null);
               props.setsaloonspec(null);
+              navigation.navigate("Explore")
 
             }}
             singleFacilityy={singleFacilityy}

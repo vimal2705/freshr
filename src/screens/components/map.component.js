@@ -16,6 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { getBoundsOfDistance } from "geolib";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { ActivityIndicator } from "react-native-paper";
+import * as Location from 'expo-location'
 
 const mapStyles = require("./mapStyles.json");
 const { width } = Dimensions.get("window");
@@ -145,6 +146,30 @@ const Map = ({
   const [isFullMap, setIsFullMap] = useState(fullMap)
   const map = useRef()
 
+  const [currentloc, setCurrentloc] = useState(null)
+
+  const getcurrentlocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log("unka afterr", status);
+      if (status !== 'granted') {
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentloc(location.coords)
+      console.log("locationnnnnnnnnnnnnnnn", location.coords);
+  }
+
+  useEffect(()=>{
+    getcurrentlocation()
+  }, [])
+
 
   const CenteredCarouselContainer = styled.View`
    flex: 1;
@@ -236,7 +261,7 @@ const Map = ({
             >
               <MapMarker
                 key={`marker-search-location`}
-                coordinate={{
+                coordinate={ currentloc ? currentloc : {
                   latitude: lat,
                   longitude: lng,
                 }}

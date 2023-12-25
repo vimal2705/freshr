@@ -107,7 +107,7 @@ const Delivery = (props) => {
   // console.log("propssssssssssssssssssssssss",props);
   const { loadFilters, getUser, refreshSearch, isLoading, searchSpecialist, search, onGetOrders, refreshing, onRefresh } = useContext(AppContext);
   const { address, setAddress } = props
-  const { onGetSpecialistidd, specialistidd } = useContext(SpecialistContext)
+  const { onGetSpecialistidd, specialistidd, setSpecialistidd } = useContext(SpecialistContext)
 
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
   const [searchIsLoading, setSearchIsLoading] = useState(false);
@@ -148,7 +148,7 @@ const Delivery = (props) => {
   }, [props])
 
   useEffect(() => {
-    if (specialistidd) {
+    if (specialistidd && props.newspecid) {
       console.log("yoooooooiddddddd", specialistidd);
       // setSpecialist(specialistidd)
       // dispatch(setSpecialist(specialistidd))
@@ -159,7 +159,7 @@ const Delivery = (props) => {
         setnewspecid: props.setnewspecid
       });
     }
-  }, [specialistidd])
+  }, [props.newspecid])
 
 
   const initialRegion = {

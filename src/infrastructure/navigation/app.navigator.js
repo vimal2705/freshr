@@ -188,7 +188,7 @@ export const AppNavigator = (props) => {
         component={HostVerificationCompletedScreen}
       />
       <Stack.Screen
-       name="Home" component={HomeScreen}
+       name="newHome" component={HomeScreen}
       />
       <Stack.Screen
        name="saloon" component={Saloon}
