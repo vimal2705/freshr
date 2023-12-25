@@ -145,16 +145,26 @@ const FacilityDetailsScreen = ({ route, isFavorite = false, ...restProps }) => {
   const { onLogout} = useContext(AuthContext)
   // const {rating} =facility;
   const theme = useTheme();
+  console.log("facilityyyyychairrrrr--------------------------------",facility);
 
   const flatListPro = useRef();
   const [isFav, setIsFav] = useState(false);
   // const [ReviewModal, setReviewModal] = useState(false);
 
-const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
+const {reviews,ratings,onGetReviews,onGetRatings} =useContext(ReviewContext)
   // const ratingArray = Array.from(new Array(Math.floor(rating || 5)));
   // const halfStarType = rating - ratingArray.length >= 0.5 ? "fill" : "empty";
+  // useEffect(()=>{
+  //   console.log("SSsdad",_id,'facility');
+  //   getRatings()
+  //   },[])
+    const getRatings =async ()=>{
+      let rts =0
+      rts = await onGetRatings(_id,'facility')
+      setRatings(rts)
+    }
   const loadFav=async()=>{
-    
+   
     const { user } = await getUser();
     setuser1(user);
     // console.log("favvvvvvv",user.favorites.specialists[2].firstName);
@@ -252,7 +262,7 @@ const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
             color: theme.colors.brand.primary,
           }}
         >
-          {parseFloat(ratings).toFixed(2)}
+          {parseInt(ratings).toFixed(2)}
         </Text>
         <Spacer position="left" size="small" />
         <View style={{ flexDirection: 'row' }}>
@@ -336,9 +346,9 @@ const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
             <Spacer position="bottom" size="medium" />
             <Spacer position="bottom" size="medium" />
             <Row style={{justifyContent: "flex-start"}}>
-              <Ionicons name="location" size={20} color={theme.colors.brand.primary}/>
+              {/* <Ionicons name="location" size={20} color={theme.colors.brand.primary}/> */}
               <Spacer position={"left"} size={"medium"}/>
-              <Text variant="caption" style={{color: "black"}}>{facility?.address}</Text>
+              {/* <Text variant="caption" style={{color: "black"}}>{facility?.address}</Text> */}
             </Row>
             <Spacer position="bottom" size="medium" />
             {/*<ChipsRow>*/}
@@ -418,7 +428,7 @@ const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
                     variant="caption"
                     style={{ color: !facility?.isOpen ? "white" : "black" }}
                   >      
-                    {moment(facility?.openingTime).format("hh:mm:ss a")}  
+                    {moment(facility?.openingTime).format("hh:mm a")}  
                   </Text>
                 </InfoChip>
 
@@ -436,7 +446,7 @@ const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
                     variant="caption"
                     style={{ color: facility?.isOpen ? "white" : "black" }}
                   >
-                 {moment(facility?.closingTime).format("hh:mm:ss a")}
+                 {moment(facility?.closingTime).format("hh:mm a")}
                   </Text>
                 </InfoChip>
               </GradientInfoCard>

@@ -82,7 +82,7 @@ const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }
         >
           <Text style={{ fontSize: 16 }}>Masculine Style</Text>
           <Spacer position="bottom" size="small" />
-          <Text variant="caption">Generally for men</Text>
+         
         </CheckBoxInput>
         <Spacer position="bottom" size="small" />
         <CheckBoxInput
@@ -91,7 +91,7 @@ const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }
         >
           <Text style={{ fontSize: 16 }}>Feminine style</Text>
           <Spacer position="bottom" size="small" />
-          <Text variant="caption">Generally for women</Text>
+          
         </CheckBoxInput>
         <Spacer position="bottom" size="small" />
         <CheckBoxInput
@@ -100,7 +100,7 @@ const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }
         >
           <Text style={{ fontSize: 16 }}>No preference</Text>
           <Spacer position="bottom" size="small" />
-          <Text variant="caption">Style for all</Text>
+          <Text variant="caption">mixed</Text>
         </CheckBoxInput>
       </View>
       <Spacer position="top" size="large" />

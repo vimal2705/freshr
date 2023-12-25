@@ -53,6 +53,7 @@ export const renderGenderForm = (newGender, setNewGender, isform) => {
   const setGenderStorage=async(data)=>{
     console.log("mnppp", data);
     if(data=="all"){
+      console.log("yesssssssssssssssssssss");
       setNewGender("both")
     }
     else{

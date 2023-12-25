@@ -8,7 +8,7 @@ import {
   SectionTitle,
 } from "../components/details-screen.component";
 import { Spacer } from "../../components/spacer/spacer.component";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import {
   LogoutButton,
   ProfileButton,
@@ -38,6 +38,28 @@ const FacilityMenuScreen = (props) => {
   const {changeApp} = useContext(AppContext)
   const theme = useTheme();
   const {isLoading, user, onLogout} = useContext(AuthContext)
+  const handleFeedbackPress = async () => {
+    const feedbackFormUrl = 'https://forms.gle/Trh7EeJgAhE3roiX8';
+  
+    try {
+      await Linking.openURL(feedbackFormUrl);
+    } catch (error) {
+      console.error('Error opening URL:', error);
+    }
+  };
+  const handleSupportPress = async () => {
+
+    const emailAddress = 'support.fac@freshr.me';
+    
+    const mailtoLink = `mailto:${emailAddress}`;
+    
+    try {
+      await Linking.openURL(mailtoLink);
+    } catch (error) {
+      console.error('Error opening mail client:', error);
+    }
+    console.log("hellloooooooo");
+  };
 
   const renderHeader = () => {
     return (
@@ -68,12 +90,12 @@ const FacilityMenuScreen = (props) => {
             onPress={() => navigation.navigate('instruction', {type: 'host', back: true})}
             icon={
               <MaterialCommunityIcons
-                name="account-circle-outline"
+                name="video-box"
                 size={28}
                 color="black"
               />
             }
-            label="How to use?"
+            label="Tutorial"
           />
           <Separator />
         </View>
@@ -112,7 +134,7 @@ const FacilityMenuScreen = (props) => {
               // })
             }
             }
-            label="Switch service provider account"
+            label="Switch to service provider account"
           />}
           {user && !user.isSpecialist && <ProfileButton
             icon={
@@ -127,6 +149,34 @@ const FacilityMenuScreen = (props) => {
           />}
           <Separator />
         </View>
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="medium" />
+        <SectionTitle variant="label">Support</SectionTitle>
+        <Spacer position="bottom" size="large" />
+        <ProfileButton
+            icon={
+              <AntDesign
+                name="customerservice"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleSupportPress()}
+            label="Support"
+          />
+        <ProfileButton
+            icon={
+              <MaterialIcons
+                name="feedback"
+                size={28}
+                color={"black"}
+              />
+            }
+            onPress={()=>handleFeedbackPress()}
+            label="Feedback"
+          />
+        <Spacer position="bottom" size="large" />
+        <Spacer position="bottom" size="medium" />
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
         <SectionTitle variant="label">Legal</SectionTitle>

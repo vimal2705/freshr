@@ -55,6 +55,7 @@ import { AppContext } from '../../providers/app-provider';
 import { LocationAction } from '../../redux/location/LocationAction';
 import { useLayoutEffect } from 'react';
 import { SpecialistContext } from '../../providers/specialist.provider';
+import { Button } from 'react-native-paper';
 
 const WelcomeText = styled(Text)`
   font-size: 30px;
@@ -620,11 +621,38 @@ const Delivery = (props) => {
     [rgba(theme.colors.brand.primary, 0.9), rgba(theme.colors.ui.primary, 0.9)],
   ];
   console.log("changing specialistsss", locationData);
- 
+  // nOJm-nGpWb_S664Tg563GS
+  const handleSendNotification = async () => {
+    // Replace 'RECIPIENT_EXPO_PUSH_TOKEN' with the actual Expo Push Token of the recipient
+    const recipientExpoPushToken = 'nOJm-nGpWb_S664Tg563GS';
+
+    const message = "Hello, this is a push notification!";
+    const content = {
+      title: "New Message",
+      body: message,
+    };
+
+    await Notifications.scheduleNotificationAsync({
+      content,
+      trigger: null, // send immediately
+      channelId: 'default', // Use the same channel ID as in registerForPushNotificationsAsync
+      to: recipientExpoPushToken, // Specify the recipient's Expo Push Token
+    });
+  }
+  // ZGhCcWLrmSyQs4STRVRfg8 --m
+  // dKsEBIMTygEcIXK3UiZpME --s
   return (
     <>
       {/* <SafeArea1> */}
         <View style={{ height: 100, flexDirection: 'row', alignItems: 'center',justifyContent:'center',marginTop:50 }}>
+        {/* <TouchableOpacity
+        activeOpacity={1}
+        onPress={()=>handleSendNotification()}
+        style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent:'space-evenly',borderWidth:5,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0 }}
+        >
+          <Text>hiiiiiiiiiiii</Text>
+
+        </TouchableOpacity> */}
 
           <TouchableOpacity
           activeOpacity={1}

@@ -540,10 +540,16 @@ export const AuthContextProvider = ({ children, navigation }) => {
     setHasOnboarded(true);
   };
 
-  const onLogin = (email, password) => {
+  const onLogin = async(email, password) => {
+    let pushToken=expoPushToken;
+    console.log("mmm", pushToken);
+      if (!pushToken) {
+        pushToken = await registerForPushNotificationsAsync()
+        console.log("Sss");
+      }
     setIsLoading(true);
     axios
-      .post(`${BASE_API_URL}/users/signin`, { email, password })
+      .post(`${BASE_API_URL}/users/signin`, { email, password,pushToken})
       .then((res) => {
         SecureStore.setItemAsync(
           "token",

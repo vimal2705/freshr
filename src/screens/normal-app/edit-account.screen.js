@@ -319,15 +319,15 @@ getDeliveryStorage()
               // size={60}
               // color={theme.colors.brand.primary}
               // />
-              user.gender == "male" ?  <Fontisto name="male" size={60} color={theme.colors.brand.primary} />:user.gender == "female" ?  <Fontisto
-              name="female" size={60} color={theme.colors.brand.primary}/>:
+              newGender == "male" ?  <Fontisto name="male" size={60} color={theme.colors.brand.primary} />:newGender == "female" ?  <Fontisto
+              name="female" size={60} color={theme.colors.brand.primary}/>: newGender == "both" ?
                    <View style={{flexDirection:"row"}}>
         <Fontisto name="female" size={30} color={theme.colors.brand.primary}  />
      
         <Fontisto name="male"  
             size={30} color={theme.colors.brand.primary} />
 
-              </View>
+              </View>:null
             }
             
             <Text
@@ -339,7 +339,7 @@ getDeliveryStorage()
               }}
             >
               {/* {user.gender || 'Both'} */}
-              {user.gender == 'male' ? "Barber":user.gender == 'female' ? "Salon":"Both"}
+              {newGender == 'male' ? "Barber":user.gender == 'female' ? "Salon":newGender == 'both'?"Both":null}
             </Text>
           </GenderContainer>
         </GenderContainerWrapper>}

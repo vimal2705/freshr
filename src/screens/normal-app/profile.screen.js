@@ -76,11 +76,20 @@ const ProfileScreen = (props) => {
     return <LoadingScreen/>
   }
   const handleFeedbackPress = async () => {
-    // // Specify the email address you want to send the mail to
-    const emailAddress = 'sujalpatel1502@gmail.com';
-    // // Create the mailto link
+    const feedbackFormUrl = 'https://forms.gle/Trh7EeJgAhE3roiX8';
+  
+    try {
+      await Linking.openURL(feedbackFormUrl);
+    } catch (error) {
+      console.error('Error opening URL:', error);
+    }
+  };
+  const handleSupportPress = async () => {
+
+    const emailAddress = 'support@freshr.me';
+    
     const mailtoLink = `mailto:${emailAddress}`;
-    // // Use Linking.openURL to open the mail client with the specified email address
+    
     try {
       await Linking.openURL(mailtoLink);
     } catch (error) {
@@ -96,6 +105,8 @@ const ProfileScreen = (props) => {
         <Spacer position="bottom" size="large" />}
            {user.firstName == "Guest"?  <></> :
        <SectionTitle variant="label" style={{color: "black"}}>Account settings</SectionTitle>}
+      
+
        {user.firstName == "Guest"?  <></> :
         <Spacer position="bottom" size="large" />}
              {user.firstName == "Guest"?  <></> :
@@ -131,12 +142,12 @@ const ProfileScreen = (props) => {
             onPress={() => navigation.navigate('instruction', {type: 'client'})}
             icon={
               <MaterialCommunityIcons
-                name="account-circle-outline"
+                name="video-box"
                 size={28}
                 color={"black"}
               />
             }
-            label="How to use?"
+            label="Tutorial"
           />
           {/*<ProfileButton*/}
           {/*  icon={*/}
@@ -204,7 +215,7 @@ const ProfileScreen = (props) => {
               // })
             }
             }
-            label="Switch service provider account"
+            label="Switch to service provider account"
           />}
           {user && !user.isSpecialist && <ProfileButton
             icon={
@@ -232,7 +243,7 @@ const ProfileScreen = (props) => {
                 color={"black"}
               />
             }
-            onPress={()=>handleFeedbackPress()}
+            onPress={()=>handleSupportPress()}
             label="Support"
           />
         <ProfileButton

@@ -262,8 +262,6 @@ const SetLocationScreen = ({ navigation }) => {
           
         >
           <Marker coordinate={region}>
-          <Text>{`${location[0]?.city}, ${location[0]?.street==null?'':location[0]?.street}${location[0]?.postalCode}`}</Text>
-
             <FontAwesome
               name="map-marker"
               size={35}

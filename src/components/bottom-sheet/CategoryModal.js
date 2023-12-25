@@ -60,7 +60,7 @@ const CategoryModalComponent = ({
                 item = {item}
               >
                 <Text style={{ fontSize: 16, textTransform: "capitalize" }}>
-                  {item.name=="Haircut" ? "Hair Service" : item.name}
+                  {item.name=="Haircut" ? "Hair Services" : item.name}
                 </Text>
                 <Spacer position="bottom" size="small" />
                 <Text variant="caption">{item.catchPhrase}</Text>

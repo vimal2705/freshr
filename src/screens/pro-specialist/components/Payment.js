@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, Modal, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput, Modal, ScrollView, Alert } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from "styled-components/native";
@@ -84,6 +84,10 @@ const Payment = () => {
   };
 
   const sendDataa = async () => {
+    if (!selectedAccountType || !accountHolderName || !accountNumber || !mobileNumber || !selectedBank) {
+      Alert.alert('Validation Error', 'Please fill in all required fields');
+      return;
+    }
     const formData = new FormData();
 
     if (!selectedAccountType || !accountHolderName || !accountNumber || !mobileNumber || !selectedBank) {
@@ -106,8 +110,8 @@ const Payment = () => {
     //   bankName: selectedBank,
     // };
     const param = "true";
-    // await updateSpecialistInfo(formData, param)
-    // navigation.goBack()
+    await updateSpecialistInfo(formData, param)
+    navigation.goBack()
     console.log("ttypeeeeofselecteddddd",selectedAccountType);
 
 
@@ -165,11 +169,12 @@ const Payment = () => {
             </Text>
           </View>
         )}
-        defaultButtonText={selectedBank}
+        defaultButtonText={selectedBank ? selectedBank : "Select a Bank"}
         rowTextStyle={{ fontSize: 14 }}
         buttonTextStyle={{ fontSize: 18,fontWeight:'500', color: '#000', }}
         
         onSelect={(selectedItem, index) => {
+          setSelectedBank(selectedItem)
           console.log(selectedItem, index)
           setSelectedBank(selectedItem) 
         }}
@@ -192,7 +197,7 @@ const Payment = () => {
       <TextInput style={styles.input} value={accountNumber} placeholder='Account number' placeholderTextColor={'gray'} keyboardType='numeric' onChangeText={(val) => setAccountNumber(val)} />
       <TextInput style={styles.input} value={mobileNumber} placeholder='Mobile number'  placeholderTextColor={'gray'} keyboardType='phone-pad' onChangeText={(val) => setMobileNumber(val)} />
       <TouchableOpacity style={styles.button} activeOpacity={1} onPress={() => sendDataa()}>
-        <Text style={{ color: '#fff',fontSize:18 }}>Submit</Text>
+        <Text style={{ color: '#fff',fontSize:16 }}>Submit</Text>
       </TouchableOpacity>
       </View>
 
