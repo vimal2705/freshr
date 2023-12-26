@@ -262,7 +262,7 @@ const {reviews,ratings,onGetReviews,onGetRatings} =useContext(ReviewContext)
             color: theme.colors.brand.primary,
           }}
         >
-          {parseInt(ratings).toFixed(2)}
+          {parseFloat(ratings).toFixed(1)}
         </Text>
         <Spacer position="left" size="small" />
         <View style={{ flexDirection: 'row' }}>

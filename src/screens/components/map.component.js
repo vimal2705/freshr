@@ -65,7 +65,7 @@ const DataContainer = styled.View`
   ${({ carouselBottom, theme }) =>
     carouselBottom
       ? "position: absolute; top: 12px;  left: 0px; right: 0;"
-      : `padding: 8px 0px; background-color: transparent;`};
+      : `padding: 2px 0px; background-color: transparent;`};
 `;
 
 const ContainerGradient = styled(LinearGradient)`
@@ -440,7 +440,7 @@ const Map = ({
               onSnapToItem={(index) => restProps.setFacility(data[index])}
             />:
             
-            <View style={{justifyContent:'flex-start',alignItems:'center'}}>
+            <View style={{justifyContent:'flex-start',alignItems:'center',marginBottom:80}}>
             <Carousel
           ref={flatList}
           data={data}

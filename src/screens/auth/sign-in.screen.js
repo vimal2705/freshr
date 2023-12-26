@@ -61,7 +61,7 @@ const SignInScreen = (props) => {
             onPress={() => setRememberMe(!rememberMe)}
           /> */}
           <MaterialCommunityIcons
-                      name={rememberMe ? "checkbox-blank-outline" : "checkbox-marked"}
+                      name={rememberMe ?  "checkbox-marked" :"checkbox-blank-outline"}
                       size={20}
                       color={theme.colors.brand.primary}
                       onPress={() => setRememberMe(!rememberMe)}

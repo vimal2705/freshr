@@ -231,15 +231,15 @@ console.log("oguserrr",userr);
             <Spacer position="left" size="small" />
           </PriceTag>
           {!info && (
-               <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              color={theme.colors.brand.primary}
-            />
-            // <MaterialCommunityIcons
-            // status={checked ? "checkbox-blank-outline" : "checkbox-marked"}
-            //           size={20}
-            //           color={theme.colors.brand.primary}
-            //         />
+               // <Checkbox
+            //   status={checked ? "checked" : "unchecked"}
+            //   color={theme.colors.brand.primary}
+            // />
+            <MaterialCommunityIcons
+                      name={checked ?  "checkbox-marked" :"checkbox-blank-outline"}
+                      size={20}
+                      color={theme.colors.brand.primary}
+                    />
           )}
         </ServiceRight>
       </ServiceCardContainer>

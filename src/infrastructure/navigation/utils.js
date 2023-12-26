@@ -151,7 +151,7 @@ export const getStyledScreenOptions = (icons, theme, num) => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: theme.colors.brand.primary,
-        height: Platform.OS == 'ios' ?100:60,
+        height: Platform.OS == 'ios' ?90:65,
         zIndex: 4,
         marginTop: 0,
         padding: 5,

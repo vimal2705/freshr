@@ -131,8 +131,8 @@ const Delivery = (props) => {
 
 
 
-  
-  
+
+
 
 
   useEffect(() => {
@@ -227,11 +227,11 @@ const Delivery = (props) => {
   }
 
   useEffect(() => {
-   
+
     (async () => {
       const locn = await fetchdeliverylocation()
       console.log("^^^^^^^^^^^^^^^^^^^^", locn);
-      
+
       if (locn == null) {
         setDeliverylocation1()
 
@@ -305,14 +305,14 @@ const Delivery = (props) => {
     setDeliverylocation(value)
     return value;
   }
-  const fetchauthdata=async()=>{
-    const jsondata=await AsyncStorage.getItem("authh");
-    const value=JSON.parse(jsondata);
-    console.log("AUTHHHHHHHHHH-=-=-=-=--=-",value);
+  const fetchauthdata = async () => {
+    const jsondata = await AsyncStorage.getItem("authh");
+    const value = JSON.parse(jsondata);
+    console.log("AUTHHHHHHHHHH-=-=-=-=--=-", value);
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetchauthdata();
-  },[])
+  }, [])
 
 
   const dispatch = useDispatch()
@@ -644,7 +644,7 @@ const Delivery = (props) => {
   return (
     <>
       {/* <SafeArea1> */}
-        <View style={{ height: 100, flexDirection: 'row', alignItems: 'center',justifyContent:'center',marginTop:50 }}>
+      <View style={{ height: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
         {/* <TouchableOpacity
         activeOpacity={1}
         onPress={()=>handleSendNotification()}
@@ -654,50 +654,50 @@ const Delivery = (props) => {
 
         </TouchableOpacity> */}
 
-          <TouchableOpacity
+        <TouchableOpacity
           activeOpacity={1}
-          style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent:'space-evenly',borderWidth:3,borderRightWidth:0,borderRadius:20,borderTopRightRadius:0,borderBottomRightRadius:0,borderColor:theme.colors.brand.primary }} onPress={() => setCurrentScreen('Delivery')}>
-            
-            <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',right:1,top:0 }}>Where do</Text>
-            <Text style={{ fontWeight: 'bold',top:10 }}>Delivery</Text>
-            <View style={{ paddingHorizontal:5,flexDirection: "row"}}>
+          style={{ backgroundColor: currentScreen == 'SalonScreen' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly', borderWidth: 3, borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0, borderColor: theme.colors.brand.primary }} onPress={() => setCurrentScreen('Delivery')}>
 
-              <Entypo
-                name="location-pin"
-                size={16}
-                color={"black"}
-              />
-              <Text onPress={() => currentScreen == 'Delivery' ? setShowMapFilter(true) : setCurrentScreen('Delivery')} style={{ borderWidth: 1, borderRadius: 10, paddingHorizontal: 5,fontSize:12 }}>{address.length < 20 ? address : `${address.slice(0, 20)}....`}</Text>
-            </View>
-          </TouchableOpacity>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'absolute', right: 1, top: 0 }}>Where do</Text>
+          <Text style={{ fontWeight: 'bold', top: 10 }}>Delivery</Text>
+          <View style={{ paddingHorizontal: 5, flexDirection: "row" }}>
 
-          <TouchableOpacity
+            <Entypo
+              name="location-pin"
+              size={16}
+              color={"black"}
+            />
+            <Text onPress={() => currentScreen == 'Delivery' ? setShowMapFilter(true) : setCurrentScreen('Delivery')} style={{ borderWidth: 1, borderRadius: 10, paddingHorizontal: 5, fontSize: 12 }}>{address.length < 20 ? address : `${address.slice(0, 20)}....`}</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           activeOpacity={1}
-          style={{ backgroundColor: currentScreen == 'Delivery' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly',borderWidth:3,borderBottomLeftRadius:0,borderTopLeftRadius:0,borderLeftWidth:0,borderRadius:20,borderColor:theme.colors.brand.primary }} onPress={() => props.changescreen('SalonScreen')} >
-          <Text style={{fontSize:16, fontWeight: 'bold',position:'absolute',left:1,top:0 }}>we meet?</Text>
-            <MaterialIcons name="storefront" size={18} color="black" style={{ top: 10 }} />
-            <Text style={{ fontWeight: 'bold'}}>In Salon</Text>
+          style={{ backgroundColor: currentScreen == 'Delivery' ? '#fff' : theme.colors.brand.secondary, width: '45%', height: 90, alignItems: 'center', justifyContent: 'space-evenly', borderWidth: 3, borderBottomLeftRadius: 0, borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20, borderColor: theme.colors.brand.primary }} onPress={() => props.changescreen('SalonScreen')} >
+          <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'absolute', left: 1, top: 0 }}>we meet?</Text>
+          <MaterialIcons name="storefront" size={18} color="black" style={{ top: 10 }} />
+          <Text style={{ fontWeight: 'bold' }}>In Salon</Text>
 
-          </TouchableOpacity>
-         
-        </View>
+        </TouchableOpacity>
+
+      </View>
       {/* </SafeArea1> */}
       {/* <SafeArea style={{ backgroundColor: theme.colors.brand.white }}> */}
-        <PageContainer style={{ position: 'relative', backgroundColor: theme.colors.brand.white }}>
+      <PageContainer style={{ position: 'relative', backgroundColor: theme.colors.brand.white }}>
 
-          <View
-            style={{
-              backgroundColor: rgba(theme.colors.brand.quaternary, 0),
-            }}
-          >
-            {/* <Spacer position="bottom" size="medium" /> */}
-            {renderFilters()}
-            <Spacer position="bottom" size="medium" />
-            {/* <Spacer position="bottom" size="medium" /> */}
-          </View>
+        <View
+          style={{
+            backgroundColor: rgba(theme.colors.brand.quaternary, 0),
+          }}
+        >
+          {/* <Spacer position="bottom" size="medium" /> */}
+          {renderFilters()}
+          <Spacer position="bottom" size="medium" />
+          {/* <Spacer position="bottom" size="medium" /> */}
+        </View>
 
 
-          {/* <Modal
+        {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -733,98 +733,98 @@ const Delivery = (props) => {
       </Modal> */}
 
 
-          {searchIsLoading ? <ActivityIndicator /> : <Map
-            key={'map-full'}
-            fullMap={false}
-            carouselBottom={true}
-            loading={isLoading}
-            data={props.specialists}
-            delivery={true}
+        {searchIsLoading ? <ActivityIndicator /> : <Map
+          key={'map-full'}
+          fullMap={false}
+          carouselBottom={true}
+          loading={isLoading}
+          data={props.specialists}
+          delivery={true}
 
-            // resizeMap={toggleFullMap}
-            renderItem={({ item, index }) => (
-              <SpecialistCard
-                navigation={navigation}
-                darkTheme={true}
-                active={item.id === specialist?._id}
-                onPress={() => {
-                  props.setSpecialist(item);
-                  console.log("theogitem", item);
+          // resizeMap={toggleFullMap}
+          renderItem={({ item, index }) => (
+            <SpecialistCard
+              navigation={navigation}
+              darkTheme={true}
+              active={item.id === specialist?._id}
+              onPress={() => {
+                props.setSpecialist(item);
+                console.log("theogitem", item);
 
-                  navigation.navigate("SpecialistDetails", {
-                    edit: false,
-                    specialist: item,
-                    Del:true,
-                  });
-                }}
-                specialist={item}
-                locationData={locationData}
-                sharelinkdata={specialistidd}
-              />
-            )}
-
-          />
-          }
-        </PageContainer>
-
-        <PriceRangeModal
-          showModal={showPriceRangeFilter}
-          toggleShowModal={handleShowPriceRangeFilterChange}
-
-  
+                navigation.navigate("SpecialistDetails", {
+                  edit: false,
+                  specialist: item,
+                  Del: true,
+                });
+              }}
+              specialist={item}
+              locationData={locationData}
+              sharelinkdata={specialistidd}
+            />
+          )}
 
         />
-        <GenderModal
-          showModal={showGenderFilter}
-          toggleShowModal={handleShowGenderFilterChange}
-          data={data}
-        />
-        <LocationModal
-          showModal={showLocationFilter}
-          toggleShowModal={handleShowLocationFilterChange}
+        }
+      </PageContainer>
 
-        />
-        <MapModal
-          showModal={showMapModel}
-          toggleShowModal={handleShowMapChange}
-          SetLoctiondata={setlocationData}
-          setCoordinates={setCoordinates}
-        />
-        {/* <SortFacilityModal
+      <PriceRangeModal
+        showModal={showPriceRangeFilter}
+        toggleShowModal={handleShowPriceRangeFilterChange}
+
+
+
+      />
+      <GenderModal
+        showModal={showGenderFilter}
+        toggleShowModal={handleShowGenderFilterChange}
+        data={data}
+      />
+      <LocationModal
+        showModal={showLocationFilter}
+        toggleShowModal={handleShowLocationFilterChange}
+
+      />
+      <MapModal
+        showModal={showMapModel}
+        toggleShowModal={handleShowMapChange}
+        SetLoctiondata={setlocationData}
+        setCoordinates={setCoordinates}
+      />
+      {/* <SortFacilityModal
         showModal={showSortFacilityFilter}
         toggleShowModal={handleShowSortFacilityFilterChange}
       /> */}
-        <CategoryModal
-          showModal={showCategoryFilter}
-          toggleShowModal={handleShowCategoryFilterChange}
-          data={data}
-        />
-        <SearchRadiusModal
-          showModal={showSearchRadiusFilter}
-          toggleShowModal={handleShowSearchRadiusFilterChange}
-        />
-        {
-           <TouchableOpacity
-                 style={{
-                   alignItems: "center",
-                   justifyContent: "center",
-                   borderWidth:1,
-                   borderColor:theme.colors.brand.primary,
-                   width: 50,
-                   position: "absolute",
-                   bottom:120,
-                   right: 5,
-                   height: 50,
-                   backgroundColor:'#f8f8ff95',
-                   shadowColor:'#000',
-                   borderRadius: 100,
-                 }}
-                 onPress={() => refreshData()}
-               >
-                 <Ionicons name={"refresh"} size={30} color={theme.colors.brand.primary} />
-                 {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
-               </TouchableOpacity>
-        }
+      <CategoryModal
+        showModal={showCategoryFilter}
+        toggleShowModal={handleShowCategoryFilterChange}
+        data={data}
+      />
+      <SearchRadiusModal
+        showModal={showSearchRadiusFilter}
+        toggleShowModal={handleShowSearchRadiusFilterChange}
+      />
+      {
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: theme.colors.brand.primary,
+            width: 50,
+            position: "absolute",
+            bottom: 120,
+            right: 5,
+            height: 50,
+            backgroundColor: '#f8f8ff95',
+            shadowColor: '#000',
+            borderRadius: 100,
+          }}
+          onPress={() => refreshData()}
+        >
+          <Ionicons name={"refresh"} size={30} color={theme.colors.brand.primary} />
+          {/* <Text style={{ color: "white" }}>Refresh</Text>  */}
+        </TouchableOpacity>
+      }
       {/* </SafeArea> */}
     </>)
 }
@@ -833,7 +833,7 @@ const mapStateToProps = (state) => ({
   selectedFacility: state.booking.facility,
   facilities: state.facilities.facilities,
   specialists: state.specialists.delspecialist,
-  delspecialist : state.specialists.delspecialist,
+  delspecialist: state.specialists.delspecialist,
   targetGender: state.booking.targetGender,
   priceRange: state.booking.priceRange,
   category: state.booking.currentCategory,

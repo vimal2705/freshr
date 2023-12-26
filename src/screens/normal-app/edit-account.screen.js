@@ -314,10 +314,10 @@ getDeliveryStorage()
               fontWeight: "bold",
               color: "black",
               textTransform: "uppercase",
-              letterSpacing: 2,
+              letterSpacing: 1,
             }}
           >
-            Service Location Type
+            SERVICE LOCATION'S PREFRENCES
           </Text>
           <Spacer position="bottom" size={"large"} />
           <GenderContainer>

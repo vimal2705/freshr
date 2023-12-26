@@ -11,8 +11,8 @@ import { setSpecialist } from "../../redux/booking/booking.actions";
 import { ReviewContext } from "../../providers/review.provider";
 
 const Wrapper = styled.TouchableOpacity`
-  background-color: ${({darkTheme}) => darkTheme ? "#25282b" : "white"};
-  border: 2px solid ${({active, theme}) => active ? theme.colors.brand.secondary : "transparent"};
+  background-color: ${({ darkTheme }) => darkTheme ? "#25282b" : "white"};
+  border: 2px solid ${({ active, theme }) => active ? theme.colors.brand.secondary : "transparent"};
   border-radius: 8px;
   margin: 10px 0;
   position: relative;
@@ -45,9 +45,10 @@ const ImageContent = styled.View`
 
 const SpecialistCardInfoContainer = styled.View`
   justify-content: center;
+  // align-items: center;
   flex: 1;
   height: 100%;
-  padding: ${({ theme }) => theme.space[2]} 8px;
+  // padding: ${({ theme }) => theme.space[2]} 8px;
 `;
 
 const Title = styled(Text)`
@@ -58,7 +59,6 @@ const Title = styled(Text)`
 const RatingContainer = styled.View`
   flex-direction: row;
   padding: ${({ theme }) => theme.space[2]} 10px;
-  padding-left: 0;
   border-radius: 5px;
   align-items: center;
 `;
@@ -74,7 +74,6 @@ const InformationChip = styled.View`
     darkTheme ? theme.colors.brand.primary : `${rgba(theme.colors.brand.secondary, 0.9)}`};
   color: white;
   border-radius: 30px;
-  margin-bottom:5px;
 
 `;
 const InformationChipp = styled.View`
@@ -86,13 +85,13 @@ const InformationChipp = styled.View`
   height:40px;
   justify-content: center;
   align-items: center;
-  margin-top:5px;
+  
 `;
 
 const SpecialistCard = ({
   specialist,
   active = false,
-  darkTheme=false,
+  darkTheme = false,
   selectedSpecialist,
   ...restProps
 }) => {
@@ -104,28 +103,28 @@ const SpecialistCard = ({
   // const ratingCnt = 0 //specialist.reviews.length
   const serviceCnt = specialist.services.length
   let name = `${(specialist?.user?.firstName || '') + ' ' + (specialist?.user?.lastName || '')}`
-  name = !name.trim() ?  'Name not set' : name;
+  name = !name.trim() ? 'Name not set' : name;
   // const halfStarType = rating - ratingArray.length >= 0.5 ? "fill" : "empty";
 
-  const shadow = darkTheme ? {} : {...theme.shadows.default}
-  const {onGetRatings} =useContext(ReviewContext)
-  const[ratings,setRatings]=useState(0)
+  const shadow = darkTheme ? {} : { ...theme.shadows.default }
+  const { onGetRatings } = useContext(ReviewContext)
+  const [ratings, setRatings] = useState(0)
 
-  useEffect(()=>{
-    getRatings()
-    },[])
-  
-    const getRatings =async ()=>{
-      let rts =0
-      rts = await onGetRatings(specialist._id,'specialist')
-      setRatings(rts)
-    }
   useEffect(() => {
-    console.log('services',  specialist.services)
+    getRatings()
+  }, [])
+
+  const getRatings = async () => {
+    let rts = 0
+    rts = await onGetRatings(specialist._id, 'specialist')
+    setRatings(rts)
+  }
+  useEffect(() => {
+    console.log('services', specialist.services)
   }, [])
 
   return (
-    <Wrapper {...restProps} style={{...shadow}} darkTheme={darkTheme} active={active}>
+    <Wrapper {...restProps} style={{ ...shadow }} darkTheme={darkTheme} active={active}>
       {/*<ContainerGradient*/}
       {/*  colors={[*/}
       {/*    "white",*/}
@@ -147,7 +146,7 @@ const SpecialistCard = ({
               <Ionicons
                 name="checkmark-circle"
                 size={24}
-                color={ darkTheme ? theme.colors.brand.primary : theme.colors.ui.primary}
+                color={darkTheme ? theme.colors.brand.primary : theme.colors.ui.primary}
                 style={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
               />
             ))}
@@ -155,86 +154,53 @@ const SpecialistCard = ({
             <ImageContent />
           </SpecialistCardImage>
           <SpecialistCardInfoContainer>
-            
-              <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-                <View style={{marginTop:10}}>
-              <Title variant="caption" numberOfLines={2} ellipsizeMode="tail" width={110} style={{color: darkTheme ? "white" : "black"}}>
+
+            <View style={{ flexDirection: 'row', justifyContent:'space-between', alignItems: 'center',paddingHorizontal:10 }}>
+              <Title variant="caption" numberOfLines={2} ellipsizeMode="tail" width={110} style={{ color: darkTheme ? "white" : "black" }}>
                 {name}
               </Title>
-              </View>
               <InformationChipp darkTheme={false}>
-                  <Text
-                    variant="caption"
-                    style={{ color: darkTheme ? "white" : "white", fontWeight: "light", fontSize: 16 }}
-                  >
-                     Book Now
-                  </Text>
-                </InformationChipp>
-              </View>
-              
-            
+                <Text
+                  variant="caption"
+                  style={{ color: darkTheme ? "white" : "white", fontWeight: "light", fontSize: 14 }}
+                >
+                  Book Now
+                </Text>
+              </InformationChipp>
+            </View>
+            <RatingContainer>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    color: theme.colors.brand.primary,
+                  }}
+                >
+                  {parseFloat(ratings).toFixed(1) > 0.99 ? parseFloat(ratings).toFixed(1) : 'Not Rated'}
+                </Text>
+                <Spacer position="left" size="small" />
+                {
+                  ratings > 0.99 ?
+                    <View style={{ marginRight: 2 }}>
+                      <AntDesign
+                        name="star"
+                        size={14}
+                        color={darkTheme ? theme.colors.brand.primary : theme.colors.brand.secondary}
+                      />
+                    </View>
+                    : <></>
+                }
+              </RatingContainer>
+
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
+                width:'100%',
+                paddingHorizontal:10
               }}
             >
-              <RatingContainer>
-              <Text
-                 style={{
-                   fontSize: 14,
-                   fontWeight: "bold",
-                   color: theme.colors.brand.primary,
-                 }}
-                >
-                 {parseInt(ratings).toFixed(2) >0.99 ?parseInt(ratings).toFixed(2) : 'Not Rated'}
-                </Text>
-                <Spacer position="left" size="small" />
-                {
-                  ratings >0.99 ? 
-                  <View style={{marginRight: 2}}>
-                  <AntDesign
-                    name="star"
-                    size={14}
-                    color={darkTheme ? theme.colors.brand.primary : theme.colors.brand.secondary}
-                  />
-                </View>
-                  :<></>
-                }
-             
-                {/* {ratingArray.map((start, index) => (
-                  <View key={`${index}-star-`} style={{marginRight: 2}}>
-                    <AntDesign
-                      name="star"
-                      size={14}
-                      color={darkTheme ? theme.colors.brand.primary : theme.colors.brand.secondary}
-                    />
-                  </View>
-                ))} */}
-               
-               
-              </RatingContainer>
-              {/*<TouchableOpacity>*/}
-              {/*  <Text*/}
-              {/*    style={{*/}
-              {/*      textDecorationLine: "underline",*/}
-              {/*      fontWeight: "bold",*/}
-              {/*      fontSize: 12,*/}
-              {/*      color: darkTheme ? "white" : theme.colors.brand.secondary*/}
-              {/*    }}*/}
-              {/*  >*/}
-              {/*    {ratingCnt} reviews*/}
-              {/*  </Text>*/}
-              {/*  <Spacer position="left" size="medium" />*/}
-
-              {/*</TouchableOpacity>*/}
-
-            </View>
-            <Spacer position="bottom" size="medium" />
-
-            <InformationRow>
-              <Spacer position="right" size="medium">
                 <InformationChip darkTheme={darkTheme}>
                   <Text
                     variant="caption"
@@ -243,22 +209,18 @@ const SpecialistCard = ({
                     {serviceCnt} services
                   </Text>
                 </InformationChip>
-              </Spacer>
-            
-                <InformationChip darkTheme={darkTheme}>
-                  <Text
-                    variant="caption"
-                    style={{ color: darkTheme ? "white" : "white", fontWeight: "light", fontSize: 11 }}
-                  >
-                    ${priceRange[0]} - ${priceRange[1]}
-                  </Text>
-                </InformationChip>
-               
-            </InformationRow>
-            {/* <Spacer position="right" size="medium"> */}
-               
-              {/* </Spacer> */}
-            {/*<Spacer position="bottom" size="medium" />*/}
+
+              <InformationChip darkTheme={darkTheme}>
+                <Text
+                  variant="caption"
+                  style={{ color: darkTheme ? "white" : "white", fontWeight: "light", fontSize: 11 }}
+                >
+                  ${priceRange[0]} - ${priceRange[1]}
+                </Text>
+              </InformationChip>
+
+            </View>
+
           </SpecialistCardInfoContainer>
         </SpecialistCardContainer>
       </View>

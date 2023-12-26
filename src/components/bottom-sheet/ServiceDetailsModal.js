@@ -21,7 +21,7 @@ export const ServiceDetailsModal = ({
       <ServiceCard service={service} info={true} />
       <Spacer position="top" size="large" />
       <Row>
-        <RatingContainer>
+        {/* <RatingContainer>
           <Spacer position="right" size="medium">
             <Text
               variant="caption"
@@ -41,7 +41,7 @@ export const ServiceDetailsModal = ({
             readonly
             imageSize={16}
           />
-        </RatingContainer>
+        </RatingContainer> */}
         <Row>
           <Entypo name="clock" size={20} />
           <Spacer position="right" size="medium" />

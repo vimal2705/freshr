@@ -207,7 +207,7 @@ const FacilityCard = ({
                     color: theme.colors.brand.secondary,
                   }}
                 >
-                  {ratings ? parseInt(ratings).toFixed(2) : 'Not Rated'}
+                  {ratings ? parseFloat(ratings).toFixed(1) : 'Not Rated'}
                 </Text>
                 <Spacer position="left" size="small" />
                 <AntDesign

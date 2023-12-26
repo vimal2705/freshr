@@ -28,14 +28,14 @@ const TabButton = styled.TouchableOpacity`
   z-index: 20;
 `
 const CountContainer = styled.View`
-  margin-left: 10px;
-  height: 20px;
-  width: 20px;
-  background-color: black;
-  border-radius: 20px;
-  border: 1px solid ${({ active, theme }) => active ? theme.colors.brand.primary : '#25282B'};
-  align-items: center;
-  justify-content: center;
+margin-left:3
+height: ${({ isLarge }) => isLarge ? '30px' : '20px'};
+width: ${({ isLarge }) => isLarge ? '30px' : '20px'};
+background-color: black;
+border-radius: ${({ isLarge }) => isLarge ? '30px' : '20px'};
+border: 1px solid ${({ active, theme }) => active ? theme.colors.brand.primary : '#25282B'};
+align-items: center;
+justify-content: center;
 `
 const OrdersScreen = (props) => {
   // const fromcheckout = false
@@ -196,6 +196,7 @@ const specialist = useSelector((state) => state?.specialists?.specialists)
     console.log("~~~~~~~~~~~~~~~~~~~~~>>>>>>>>>>>", specialist);
     // console.log("<<<<>>>>>", specialist[0]?.services[0].serviceType.name);
   }, [specialist])
+  
   return (
     // <SafeArea>
       <View style={{ flex: 1, paddingVertical: 16, paddingHorizontal: 12 }}>
@@ -208,14 +209,18 @@ const specialist = useSelector((state) => state?.specialists?.specialists)
           showsHorizontalScrollIndicator={false}
           data={tabs}
           renderItem={({ item }) => {
+            const orders = getOrders(item);
+const isLarge = orders.length > 3;
             return (
               <TabButton active={item === currentTab} onPress={() => {
                 setCurrentTab(item)
                 }}>
                 <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>{item}</Text>
-                <CountContainer>
-                  <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>{item=='history' ? length : getOrders(item).length}</Text>
-                </CountContainer>
+                <CountContainer isLarge={isLarge}>
+  <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>
+    {item === 'history' ? length : orders.length}
+  </Text>
+</CountContainer>
               </TabButton>
             )
           }

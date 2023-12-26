@@ -41,7 +41,7 @@ export const CheckBoxInput = ({ children, value, handleChange, item }) => {
         /> */} 
         {/* { item.catchPhrase != "Coming Soon" &&  */}
          <MaterialCommunityIcons
-                      name={!value ? "checkbox-blank-outline" : "checkbox-marked"}
+                      name={value ?   "checkbox-marked":"checkbox-blank-outline"}
                       size={20}
                       color={item?.catchPhrase != "Coming Soon" ? theme.colors.brand.primary : 'lightgrey'}
                       onPress={() => handleChange()}

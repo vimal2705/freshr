@@ -203,7 +203,7 @@ const ServiceCard = ({
             //   color={theme.colors.brand.primary}
             // />
             <MaterialCommunityIcons
-                      name={checked ? "" : "checkbox-marked"}
+                      name={checked ?   "checkbox-marked" :"checkbox-blank-outline"}
                       size={20}
                       color={theme.colors.brand.primary}
 

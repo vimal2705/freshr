@@ -290,7 +290,7 @@ loadFav()
             color: theme.colors.brand.primary,
           }}
         >
-          {parseFloat(ratings).toFixed(2)}
+          {parseFloat(ratings).toFixed(1)}
         </Text>
         <Spacer position="left" size="small" />
         <View style={{ flexDirection: 'row' }}>
@@ -575,7 +575,7 @@ onGetReviews(specialist?.id,'specialist')
                   )
               )}
             </CustomTabButtonsContainer>
-            <View style={{ height: 2, backgroundColor: theme.colors.brand.primary }} />
+            {/* <View style={{ height: 2, backgroundColor: theme.colors.brand.primary }} /> */}
 
             <Spacer position="bottom" size="large" />
 

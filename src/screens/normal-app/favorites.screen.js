@@ -24,6 +24,7 @@ import { theme } from "../../infrastructure/theme";
 import { BASE_API_URL } from "../../constants";
 import { LinearGradient } from "expo-linear-gradient";
 import styled, { useTheme } from "styled-components/native";
+
 const FavoritesScreen = (props) => {
   const navigation=useNavigation();
   const layout = useWindowDimensions();
@@ -199,14 +200,11 @@ const handleFavButtonPress = async (id)=>{
   };
 
   const renderProfessionals = () => {
-
-    
     return (
       <ScrollView
       showsVerticalScrollIndicator={false}
       >
         <Spacer position="top" size="large" />
-        {/* <Text>{firstName}</Text> */}
         {
        storiesdata?.map((item,i)=>{
             
@@ -215,11 +213,8 @@ const handleFavButtonPress = async (id)=>{
               <TouchableOpacity
               onPress={()=>sendproff(item._id)}
               // onPress={()=>console.log("moxaaaa",item._id)}
-              
-              >
-
-              
-<View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',marginVertical: 5 }}>
+              >    
+<View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',marginVertical: 5,marginHorizontal:5 }}>
 
 {/* <Text></Text> */}
 {/* <Image source={require(`${item.photo}`)}/> */}
@@ -238,7 +233,7 @@ const handleFavButtonPress = async (id)=>{
   }
   }
 >
-  <Image source={{ uri: item.photo }} style={{ width: 60, height: 60, borderRadius: 40,borderWidth:2 }} />
+  <Image source={{ uri: item.photo }} style={{ width: 56, height: 56, borderRadius: 40 }} />
 </TouchableOpacity>
   <Text style={{width:200,fontSize: 16, fontWeight: 'bold'}}>{item.firstName}{item.lastName}</Text>
 </View>
