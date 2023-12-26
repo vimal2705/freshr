@@ -307,7 +307,7 @@ const navigation=useNavigation();
   const [seats, setSeats] = useState(props.route.params.facility.seatCapacity);
   const {reviews,ratings,onGetReviews} =useContext(ReviewContext)
   const fixedrating="";
-  console.log("ratingsssssssssssssssssss",ratings.toFixed(1));
+  console.log("ratingsssssssssssssssssss",ratings?.toFixed(1));
   console.log("propspspspspspspspsps",props.route.params.facility._id);
 
   const [showEditNameModal, setShowEditNameModal] = useState(false);
@@ -539,7 +539,7 @@ const navigation=useNavigation();
  
     return (
       <RatingContainer>
-       <RatingComponent rating={ratings.toFixed(1)} />
+       <RatingComponent rating={ratings?.toFixed(1)} />
       </RatingContainer>
     );
   };
@@ -566,7 +566,7 @@ const navigation=useNavigation();
                {/* <TouchableOpacity onPress={()=>console.log('helllo')}> */}
                <TouchableOpacity onPress={() => {navigation.navigate("Reviews")}} style={{flexDirection:'row'}}>
                
-               <ReviewButtonText>{reviews.length}</ReviewButtonText>
+               <ReviewButtonText>{reviews?.length}</ReviewButtonText>
      <Spacer position="right" size="small" />
       <ReviewButtonText>reviews</ReviewButtonText>
       </TouchableOpacity>
@@ -671,7 +671,7 @@ const navigation=useNavigation();
                 <Text
                   style={{ color: "white", fontSize: 35, fontWeight: "bold" }}
                 >
-                  {facilityHistory.length}
+                  {facilityHistory?.length}
                 </Text>
               </View>
             </BalanceContainer>

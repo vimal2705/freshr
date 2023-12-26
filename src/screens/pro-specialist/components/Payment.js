@@ -126,8 +126,8 @@ const Payment = () => {
     //   bankName: selectedBank,
     // };
     const param = "true";
-    // await updateSpecialistInfo(formData, param)
-    // navigation.goBack()
+    await updateSpecialistInfo(formData, param)
+    navigation.goBack()
     console.log("ttypeeeeofselecteddddd", selectedAccountType);
 
     // console.log('Sending data:', data);

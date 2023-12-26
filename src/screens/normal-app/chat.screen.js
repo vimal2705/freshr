@@ -296,8 +296,8 @@ const ChatScreen = ({ route,state,navigation }) => {
             name="arrow-back"
             size={28}
             color={"#000000"}
-            style={{left:0, bottom:0, marginLeft:10,marginTop:10}}/>
-      <Text   style={{ marginLeft:10,marginTop:12, fontSize:18,fontWeight:"500"}}>{ route.params.receiver.name }</Text>
+            style={{left:0, bottom:0, marginLeft:10,marginTop:25}}/>
+      <Text   style={{ marginLeft:10,marginTop:25, fontSize:18,fontWeight:"500"}}>{ route.params.receiver.name }</Text>
     </View>
       <GiftedChat
         inverted={true}

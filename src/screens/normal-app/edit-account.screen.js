@@ -317,7 +317,7 @@ getDeliveryStorage()
               letterSpacing: 2,
             }}
           >
-            Facility Type
+            Service Location Type
           </Text>
           <Spacer position="bottom" size={"large"} />
           <GenderContainer>

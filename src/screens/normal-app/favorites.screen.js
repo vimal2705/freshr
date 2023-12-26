@@ -40,7 +40,7 @@ const FavoritesScreen = (props) => {
   const isFocused = useIsFocused();
   const ProfilePictureGradient = styled(LinearGradient)`
   position: absolute;
-  width::60px;
+  width:60px;
   top: 0;
   left: 0;
   right: 0;

@@ -921,7 +921,7 @@ const Saloon = (props) => {
               width: "45%",
               height: 90,
               alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 3,borderColor:theme.colors.brand.primary, borderColor:'#000',borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
+              justifyContent: "space-evenly", borderWidth: 3,borderColor:theme.colors.brand.primary,borderRightWidth: 0, borderRadius: 20, borderTopRightRadius: 0, borderBottomRightRadius: 0
             }}
             onPress={() => {
               props.changescreen("Delivery")
@@ -955,8 +955,8 @@ const Saloon = (props) => {
                   : theme.colors.brand.secondary,
               width: "45%",
               height: 90,
-              alignItems: "center",
-              justifyContent: "space-evenly", borderWidth: 3, borderBottomLeftRadius: 0, borderColor:'#000',borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20,borderColor:theme.colors.brand.primary
+              alignItems: "center", 
+              justifyContent: "space-evenly", borderWidth: 3, borderBottomLeftRadius: 0,borderColor:theme.colors.brand.primary,borderTopLeftRadius: 0, borderLeftWidth: 0, borderRadius: 20,
             }}
             onPress={() => props.setCurrentScreen("SalonScreen")}
           >

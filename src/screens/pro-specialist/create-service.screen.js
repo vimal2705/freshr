@@ -149,6 +149,7 @@ const CreateServiceScreen = (props) => {
   useEffect(() => {
     if (value && !isEdit) {
       const serviceType = props.serviceTypes.filter(s => s.id === value)[0]
+      console.log("service typeeeeeee----------------------",serviceType);
       setCoverImage({uri: serviceType.photo});
       setPrice(serviceType.minimumPrice);
       setServiceDescription(serviceType.description)
@@ -248,6 +249,8 @@ const CreateServiceScreen = (props) => {
       </PaddedContainer>
     );
   };
+  
+  
 
   const replaceCoverImage = (result) => setCoverImage(result);
 

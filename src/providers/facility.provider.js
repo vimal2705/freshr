@@ -150,7 +150,7 @@ export const HostProvider = ({children}) => {
       setError(null);
       handleSuccess(res, setIsLoading, theme)
       await onGetHostFacilities();
-      console.log("gfggg",res.config.data);
+      console.log("gfggg------------------------------------------------------------",res.config.data);
       return res.config.data._parts;
     } catch (e) {
       console.log("check",e);

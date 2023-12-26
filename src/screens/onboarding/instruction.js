@@ -117,7 +117,7 @@ const Instruction = ({ route }) => {
                 }} >
                     <Text style={{ fontSize: 20, backgroundColor:'lightblue', borderRadius:10, paddingHorizontal:20 }}>skip tutorial</Text>
                 </TouchableOpacity>
-                <Text style={{fontSize: 15, marginHorizontal:30, marginTop:10}}>You can always find this tutorial withing settings inside Profile section!</Text>
+                <Text style={{fontSize: 15, marginHorizontal:30, marginTop:10}}>You can always find this tutorial within settings inside Profile section!</Text>
 
             </View>
         </SafeAreaView>

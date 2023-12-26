@@ -160,7 +160,7 @@ const Delivery = (props) => {
         setnewspecid: props.setnewspecid
       });
     }
-  }, [props.newspecid])
+  }, [specialistidd])
 
 
   const initialRegion = {

@@ -362,7 +362,10 @@ export const OrderCard = ({
   console.log("121212121234567890~~~~~~~~~~~~~~~~~~~~~~~~", order.status);
   const sendMapp = () => {
     Linking.openURL(`google.navigation:q=${host[1]}+${host[0]}`);
+
   };
+
+  console.log("orderrrrr positionnnnnnn",order.position);
   return (
     
 <>
@@ -396,11 +399,11 @@ export const OrderCard = ({
       <Container>
         {isClient && order?.status == 'PENDING' &&
           <View style={{
-            backgroundColor: '#25282b', borderRadius: 2, padding: 4,
+            backgroundColor: theme.colors.ui.warning, borderRadius: 2, padding: 4,
             position: 'absolute',
             zIndex: 15,
-            top: 6,
-            left: 16
+            top: order.position >0 ? 46:10,
+            left: 3
           }}>
             <Text
               variant="caption"
