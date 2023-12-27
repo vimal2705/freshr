@@ -408,14 +408,14 @@ export const OrderCard = ({
             backgroundColor: theme.colors.ui.warning, borderRadius: 2, padding: 4,
             position: 'absolute',
             zIndex: 15,
-            top: order.position >0 ? 46:10,
+            top: order.position >0 ? 46:5,
             left: 3
           }}>
             <Text
               variant="caption"
-              style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
+              style={{ color: "white", fontWeight: "light", letterSpacing: 1 }}
             >
-              Please Wait!
+              Please Wait Approval!
             </Text>
           </View>
         }

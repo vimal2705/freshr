@@ -99,7 +99,7 @@ export const HostVerificationScreen = ({navigation}) => {
                 status={condition.status ? 'checked' : 'unchecked'}
               /> */}
                <MaterialCommunityIcons
-                      name={condition.status ? "checkbox-blank-outline" : "checkbox-marked"}
+                      name={!condition.status ? "checkbox-blank-outline" : "checkbox-marked"}
                       size={20}
                       color={theme.colors.brand.primary}
                     />

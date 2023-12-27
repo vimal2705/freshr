@@ -317,7 +317,7 @@ getDeliveryStorage()
               letterSpacing: 1,
             }}
           >
-            SERVICE LOCATION'S PREFRENCES
+            SERVICE LOCATION PREFERENCE
           </Text>
           <Spacer position="bottom" size={"large"} />
           <GenderContainer>

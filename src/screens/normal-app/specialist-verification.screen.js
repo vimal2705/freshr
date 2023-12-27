@@ -104,7 +104,7 @@ export const SpecialistVerificationScreen = ({navigation, ...restProps}) => {
           <View key={`${condition.id}-${index}`}>
             <ConditionContainer onPress={() => updateCondition(index)}>
             <MaterialCommunityIcons
-                      name={condition.status ? "checkbox-blank-outline" : "checkbox-marked"}
+                      name={!condition.status ? "checkbox-blank-outline" : "checkbox-marked"}
                       size={20}
                       color={theme.colors.brand.primary}
                     />
@@ -127,7 +127,7 @@ export const SpecialistVerificationScreen = ({navigation, ...restProps}) => {
             //   console.log(res);
             //   setSpecialist(res);
             // });
-            navigation.navigate('instruction', {type:'specialist'})
+            navigation.navigate('instruction', {type:'specialist', shouldGoBack: false})
           }}
           disabled={!allConditionsChecked}
         >

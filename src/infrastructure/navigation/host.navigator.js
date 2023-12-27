@@ -119,7 +119,7 @@ export const FacilityNavigator = () => {
       name="SpecialistVerificationHost"
       options={({ route }) => ({
         headerShown: true,
-        headerTitle: 'Become a specialist',
+        headerTitle: 'professional',
       })}
       component={SpecialistVerificationScreen}
     />

@@ -115,7 +115,7 @@ const MenuSpecialistScreen = (props) => {
             label="Payment information"
           />
           <ProfileButton
-            onPress={() => props.navigation.navigate('instruction', {type: 'specialist', back: true})}
+            onPress={() => props.navigation.navigate('instruction', {type: 'specialist', back: true, shouldGoBack: true})}
             icon={
               <MaterialCommunityIcons
                 name="video-box"

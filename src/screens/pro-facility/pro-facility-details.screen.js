@@ -309,6 +309,7 @@ const navigation=useNavigation();
   const fixedrating="";
   console.log("ratingsssssssssssssssssss",ratings?.toFixed(1));
   console.log("propspspspspspspspsps",props.route.params.facility._id);
+  const {onUpdateFacility,error} = useContext(HostContext);
 
   const [showEditNameModal, setShowEditNameModal] = useState(false);
   const [editFacility, setEditFacility] = useState(false)

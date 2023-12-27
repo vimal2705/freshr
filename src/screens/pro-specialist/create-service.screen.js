@@ -132,6 +132,7 @@ const CreateServiceScreen = (props) => {
   const [showUpdateServiceModal, setShowUpdateServiceModal] = useState(false);
   const [showDeleteServiceModal, setShowDeleteServiceModal] = useState(false);
   const [currentDuration, setCurrentDuration] = useState(30)
+  const [moinmum, setmoinmum] = useState(0)
 
   const renderServiceIcon = (icon) => {
     return <ServiceItemIcon source={{ uri: icon }} />;
@@ -148,10 +149,12 @@ const CreateServiceScreen = (props) => {
 
   useEffect(() => {
     if (value && !isEdit) {
+      
       const serviceType = props.serviceTypes.filter(s => s.id === value)[0]
       console.log("service typeeeeeee----------------------",serviceType);
       setCoverImage({uri: serviceType.photo});
       setPrice(serviceType.minimumPrice);
+      setmoinmum(serviceType.minimumPrice)
       setServiceDescription(serviceType.description)
     }
   }, [value])
@@ -231,7 +234,13 @@ const CreateServiceScreen = (props) => {
 
         <CurrencyInput
             value={price}
-            onChangeValue={setPrice}
+            onChangeValue={prices =>{
+              if (prices > moinmum) {
+                console.log("assss");
+              }
+              else{
+              setPrice(prices)}}
+            }
           style={{
             fontSize: 28,
             fontWeight: "bold",
@@ -243,6 +252,7 @@ const CreateServiceScreen = (props) => {
           separator="."
           precision={1}
           onChangeText={(formattedValue) => {
+            
             console.log(formattedValue); // $2,310.46
           }}
         />

@@ -139,7 +139,7 @@ const ProfileScreen = (props) => {
 
 <View>
           <ProfileButton
-            onPress={() => navigation.navigate('instruction', {type: 'client'})}
+            onPress={() => navigation.navigate('instruction', {type: 'client', shouldGoBack: true})}
             icon={
               <MaterialCommunityIcons
                 name="video-box"
@@ -226,7 +226,7 @@ const ProfileScreen = (props) => {
               />
             }
             onPress={() => props.navigation.navigate("SpecialistVerification")}
-            label="Become a specialist"
+            label="Become a professional"
           />}
           <Separator />
         </View>

@@ -146,7 +146,7 @@ export const AppNavigator = (props) => {
         name="SpecialistVerification"
         options={({ route }) => ({
           headerShown: true,
-          headerTitle: 'Become a specialist',
+          headerTitle: 'Become a professional',
         })}
         component={SpecialistVerificationScreen}
       />

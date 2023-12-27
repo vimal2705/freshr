@@ -1254,7 +1254,7 @@ const Saloon = (props) => {
             right: 5,
             height: 50,
             backgroundColor:'#f8f8ff90',
-            elevation:10,
+            // elevation:10,
             shadowColor:'#000',
             borderRadius: 100,
           }}

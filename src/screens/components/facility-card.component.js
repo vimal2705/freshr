@@ -108,7 +108,7 @@ const Title = styled(Text)`
 
 const RatingContainer = styled.View`
   flex-direction: row;
-  padding: ${({ theme }) => theme.space[2]} 10px;
+  padding: ${({ theme }) => theme.space[2]} 5px;
   background-color: ${({ theme }) => rgba(theme.colors.brand.secondary, 0.1)};
   border-radius: 30px;
 `;

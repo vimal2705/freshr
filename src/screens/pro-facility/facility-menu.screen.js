@@ -87,7 +87,7 @@ const FacilityMenuScreen = (props) => {
             label="Personal information"
           />
           <ProfileButton
-            onPress={() => navigation.navigate('instruction', {type: 'host', back: true})}
+            onPress={() => navigation.navigate('instruction', {type: 'host', back: true, shouldGoBack: true})}
             icon={
               <MaterialCommunityIcons
                 name="video-box"
@@ -145,7 +145,7 @@ const FacilityMenuScreen = (props) => {
               />
             }
             onPress={() => props.navigation.navigate("SpecialistVerificationHost")}
-            label="Become a specialist"
+            label="specialist"
           />}
           <Separator />
         </View>
