@@ -45,10 +45,10 @@ export const AppProvider = ({ children, ...restProps }) => {
 useEffect(()=>{
     socketServices.initializeSocket()
     
-    socketServices.on('Send_complete_code',(dataa)=>{
-      console.log("donejobbbbbbbbbb",(dataa));
-      onGetOrders();
-    })
+    // socketServices.on('Send_complete_code',(dataa)=>{
+    //   console.log("donejobbbbbbbbbb",(dataa));
+    //   onGetOrders();
+    // })
     socketServices.on('Send_Request',(dataa)=>{
       console.log("requestttttttttttttttttt------------",dataa);
       onGetOrders();

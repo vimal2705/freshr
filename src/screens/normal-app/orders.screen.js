@@ -14,6 +14,7 @@ import { Modal } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Paymentsheet } from '../../components/bottom-sheet/payment-sheet';
+import { AuthContext } from '../../providers/auth/auth.context';
 const TabButton = styled.TouchableOpacity`
   padding: 0px 16px;
   position: relative;
@@ -49,6 +50,11 @@ const OrdersScreen = (props) => {
   //   ephemeralKey1,
   //   customer1);
   const [showPaymentsheet, setshowPaymentsheet] = useState(false);
+  const { ongoingOrder, orders, onGetOrders, pendingOrders, refreshing, onRefresh } = useContext(AppContext); 
+  const {user} = useContext(AuthContext)
+
+  console.log("user========>", user);
+
   const fromcheckout = false
   // const open=props.route.params?.open?true:false;
   const handleshowPaymentsheet = () => {
@@ -100,15 +106,15 @@ const OrdersScreen = (props) => {
       console.log("requestttttttttttttttttt------------",dataa);
 setCurrentTab('ongoing');
     })
-    socketServices.on('Send_complete_code',(dataa)=>{
-      console.log("donejobbbbbbbbbb",(dataa));
+    // socketServices.on('Send_complete_code',(dataa)=>{
+    //   console.log("donejobbbbbbbbbb",(dataa));
       
-        onGetOrders();
-        setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
+    //     onGetOrders();
+    //     setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
     
       
      
-    })
+    // })
 
 
 
@@ -123,17 +129,23 @@ setCurrentTab('ongoing');
     })
 
     socketServices.on('Send_Request',(dataa)=>{
-      console.log("paymentdataaaaa=========================",dataa);
-      handleshowPaymentsheet();
+      console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
+      
+        if(user?._id == dataa.orderr){
+          console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
+          handleshowPaymentsheet();
+        }
     })
   },[])
+
+
+  console.log("hbdxjaghsdcgbajdgshbxagsgdsjgcgevkcfuwgaebkcb::::::::::::::::::::::::::::::::::::::;", ongoingOrder);
   const getUserLoc=async()=>{
     console.log("adsasddedddd",orders);
     // const {orderr}= await fetchLiveLocation(order._id,specialistlocation=[loc.coords.longitude,loc.coords.latitude],clientloction=[]);
 
   }
   const layout = useWindowDimensions();
-  const { ongoingOrder, orders, onGetOrders, pendingOrders, refreshing, onRefresh } = useContext(AppContext);
   const [length, setLength] = useState(10);
   useEffect(() => {
     onGetOrders()
@@ -363,7 +375,11 @@ return(
 }
 <Text></Text>
 </ScrollView>
-</Modal>
+</Modal>  
+
+
+
+
 {/* // </View>
  }  */}
  {/* 5147586982 */}

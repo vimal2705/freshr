@@ -55,7 +55,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
       if(!isClient){
       // console.log("SOcket Location CLI",(dataa.loc.coords));
       setLiveclient(dataa.loc.coords)
-  console.log("client liveeee",liveclient);
+  // console.log("client liveeee",liveclient);
 }
     })
   },[])

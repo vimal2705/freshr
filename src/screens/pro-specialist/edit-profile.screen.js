@@ -12,7 +12,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import React, { useContext, useRef, useState, useEffect} from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { TextInput } from "react-native-paper";
 import {
   PaddedContainer,
@@ -25,7 +25,7 @@ import {
   Row,
 } from "../../components/helpers/helpers.component";
 import Rheostat from "react-native-rheostat";
-import MapView, { Circle } from "react-native-maps";
+import MapView, { Circle, Marker } from "react-native-maps";
 import mapStyles from "../components/mapStyles.json";
 import { rgba } from "polished";
 import { MapMarker } from "../components/map-marker.component";
@@ -74,11 +74,12 @@ export const FormInput = styled(TextInput).attrs((props) => ({
   textAlign: { undefined },
   theme: {
     colors:
-      { primary: props.theme.colors.brand.primary,
-        text: 'black',
-        placeholder: 'gray',
-        underlineColor: props.theme.colors.brand.primary
-      }
+    {
+      primary: props.theme.colors.brand.primary,
+      text: 'black',
+      placeholder: 'gray',
+      underlineColor: props.theme.colors.brand.primary
+    }
   }
 }))`
   width: 100%;
@@ -107,14 +108,14 @@ const MapLocation = styled(MapView)`
 
 const EditProfileScreen = (props) => {
   const theme = useTheme();
-  const {specialist, updateSpecialistInfo, isLoading} = useContext(SpecialistContext)
+  const { specialist, updateSpecialistInfo, isLoading } = useContext(SpecialistContext)
   const [region, setRegion] = useState(null)
   const [currentRadius, setCurrentRadius] = useState(3);
   const [showImageUploadModal, setShowImageUploadModal] = useState(false);
   const [newFirstname, setNewFirstname] = useState();
   const [newLastname, setNewLastname] = useState();
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
-  const [isUpdated, setIsUpdated ] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const mapRef = useRef();
 
   const [profilePicture, setProfilePicture] = useState();
@@ -135,13 +136,13 @@ const EditProfileScreen = (props) => {
   }, [newFirstname, newFirstname, bio, currentRadius, profilePicture, region])
 
   useEffect(() => {
-    console.log("Sssdddadaaa",specialist);
-    setRegion({latitude: specialist?.location.coordinates[1], longitude: specialist?.location.coordinates[0], latitudeDelta: 0.08, longitudeDelta: 0.08})
+    console.log("Sssdddadaaa", specialist);
+    setRegion({ latitude: specialist?.location.coordinates[1], longitude: specialist?.location.coordinates[0], latitudeDelta: 0.08, longitudeDelta: 0.08 })
     setCurrentRadius(specialist?.distance / 1000 || 3)
     setNewFirstname(specialist?.user?.firstName || '')
     console.log("firstname::::::::", specialist?.user);
     setNewLastname(specialist?.user?.lastName || '')
-    setProfilePicture({uri: specialist?.user?.photo || ''})
+    setProfilePicture({ uri: specialist?.user?.photo || '' })
     setServices(specialist?.services)
     setBio(specialist?.bio || '')
     setNewGender(specialist?.user?.gender)
@@ -165,10 +166,10 @@ const EditProfileScreen = (props) => {
   }
   const updateInfo = () => {
     const formData = new FormData();
-    if (profilePicture && profilePicture.uri !== specialist?.user?.photo ) {
+    if (profilePicture && profilePicture.uri !== specialist?.user?.photo) {
       const filename = profilePicture.uri.split('/').pop();
-      const newImageUri =  "file:///" + profilePicture.uri.split("file:/").join("");
-      formData.append('photo', {...profilePicture, uri: newImageUri, type: mime.getType(newImageUri), name: filename})
+      const newImageUri = "file:///" + profilePicture.uri.split("file:/").join("");
+      formData.append('photo', { ...profilePicture, uri: newImageUri, type: mime.getType(newImageUri), name: filename })
     }
     if (region !== null && region !== undefined && (region.latitude !== specialist?.location.coordinates[1] || region.longitude !== specialist?.location.coordinates[0])) {
       formData.append('location[type]', 'Point')
@@ -199,7 +200,7 @@ const EditProfileScreen = (props) => {
   };
 
   async function fitMapToCircle() {
-    const coordinates = {latitude: region.latitude, longitude: region.longitude};
+    const coordinates = { latitude: region.latitude, longitude: region.longitude };
     const radiusBoundaries = getBoundsOfDistance(coordinates, currentRadius * 1000);
 
     mapRef.current?.fitToCoordinates(radiusBoundaries, {
@@ -215,7 +216,7 @@ const EditProfileScreen = (props) => {
 
 
   if (isLoading) {
-    return <LoadingScreen/>
+    return <LoadingScreen />
   }
 
   const renderForm = () => {
@@ -244,7 +245,7 @@ const EditProfileScreen = (props) => {
           value={newFirstname}
           label="First name"
           numberOfLines={1}
-          style={{backgroundColor: 'white'}}
+          style={{ backgroundColor: 'white' }}
           underlineColor={theme.colors.brand.primary}
           onChangeText={(text) => {
             setNewFirstname(text);
@@ -255,7 +256,7 @@ const EditProfileScreen = (props) => {
           value={newLastname}
           label="Last name"
           numberOfLines={1}
-          style={{backgroundColor: 'white'}}
+          style={{ backgroundColor: 'white' }}
           underlineColor={theme.colors.brand.primary}
           onChangeText={(text) => {
             setNewLastname(text);
@@ -268,7 +269,7 @@ const EditProfileScreen = (props) => {
             label="Bio"
             numberOfLines={5}
             maxLength={280}
-            style={{backgroundColor: 'white', height: 80}}
+            style={{ backgroundColor: 'white', height: 80 }}
             underlineColor={theme.colors.brand.primary}
             onChangeText={(text) => {
               setBio(text);
@@ -288,13 +289,13 @@ const EditProfileScreen = (props) => {
 
   const renderRadiusSlider = () => {
     return (
-      <View style={{padding: 8, borderWidth: 1, borderRadius: 3, borderColor: theme.colors.brand.primary}}>
-        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-          <Text variant={'caption'} style={{color: 'black'}}> Change max travel distance</Text>
+      <View style={{ padding: 8, borderWidth: 1, borderRadius: 3, borderColor: theme.colors.brand.primary }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text variant={'caption'} style={{ color: 'black' }}> Change max travel distance</Text>
 
-          <Text variant={'caption'} style={{color: theme.colors.brand.primary}}> {currentRadius} km</Text>
+          <Text variant={'caption'} style={{ color: theme.colors.brand.primary }}> {currentRadius} km</Text>
         </View>
-        <Spacer position="bottom" size="small"/>
+        <Spacer position="bottom" size="small" />
         <Slider
           minimumValue={1}
           value={currentRadius}
@@ -319,12 +320,12 @@ const EditProfileScreen = (props) => {
         <MapLocation
           ref={mapRef}
           customMapStyle={mapStyles}
-          initialRegion={{latitude: specialist?.location.coordinates[1], longitude: specialist?.location.coordinates[0], latitudeDelta: 0.08, longitudeDelta: 0.08}}
+          initialRegion={{ latitude: specialist?.location.coordinates[1], longitude: specialist?.location.coordinates[0], latitudeDelta: 0.08, longitudeDelta: 0.08 }}
           showsUserLocation={true}
           showsMyLocationButton={true}
-          onRegionChangeComplete={(e) => {
-            setRegion({ ...e });
-          }}
+        // onRegionChangeComplete={(e) => {
+        //   setRegion({ ...e });
+        // }}
         >
           <Circle
             center={region}
@@ -334,14 +335,33 @@ const EditProfileScreen = (props) => {
             fillColor={rgba(theme.colors.brand.primary, 0.3)}
             zIndex={2}
           />
-          <MapMarker
+          {/* <MapMarker
             coordinate={{
               latitude: region?.latitude || 0,
               longitude: region?.longitude || 0,
             }}
             isSelected={true}
             onPress={() => null}
-          />
+            
+            // onSlidingComplete
+          /> */}
+
+
+
+          <Marker draggable={true}
+            onDragEnd={
+              async (e) => 
+                setRegion(e.nativeEvent.coordinate)
+              }
+            coordinate={{
+              latitude: region?.latitude || 0,
+              longitude: region?.longitude || 0,
+            }}
+            tracksViewChanges={false}>
+            <View style={{ width: 20, height: 20, borderRadius: 20, backgroundColor: "black", alignItems: "center", justifyContent: "center" }}>
+              <View style={{ width: 15, height: 15, borderRadius: 20, backgroundColor: theme.colors.brand.primary, ...theme.shadows.default }} />
+            </View>
+          </Marker>
         </MapLocation>
       </MapLocationContainer>
     );
@@ -357,13 +377,13 @@ const EditProfileScreen = (props) => {
           <Spacer position="bottom" size="large" />
           <Spacer position="bottom" size="large" />
         </PaddedContainer>
-          {renderMap()}
+        {renderMap()}
         <PaddedContainer>
           <Spacer position="bottom" size="large" />
           {renderRadiusSlider()}
           <Spacer position="top" size="large" />
           <Spacer position="top" size="large" />
-          <Text variant="caption" style={{color: "black"}}> Style Offer</Text>
+          <Text variant="caption" style={{ color: "black" }}> Style Offer</Text>
           <Spacer position="top" size="large" />
 
           {renderGenderForm(newGender, setNewGender, "specialist")}
@@ -409,53 +429,53 @@ const EditProfileScreen = (props) => {
         renderItem={({ item, index }) => (
           <View>
             {/*<ServiceCardGallery source={{uri: item.photo}}>*/}
-              {/*<ServiceCardGalleryMoreButton*/}
-              {/*  onPress={() => {*/}
-              {/*    setSelectedService({ ...item });*/}
-              {/*    setShowEditServiceModal(true);*/}
-              {/*  }}*/}
-              {/*>*/}
-              {/*  <Feather name="more-horizontal" size={20} color="white" />*/}
-              {/*</ServiceCardGalleryMoreButton>*/}
-              {/*<ServiceCardGalleryInfoContainer>*/}
-              {/*  <Text variant="caption" style={{ color: "white", fontSize: 14 }}>*/}
-              {/*    {item.name}*/}
-              {/*  </Text>*/}
-              {/*  <Spacer position="bottom" size="medium" />*/}
-              {/*  <View*/}
-              {/*    style={{*/}
-              {/*      flexDirection: "row",*/}
-              {/*      alignItems: "center",*/}
-              {/*    }}*/}
-              {/*  >*/}
-              {/*    <View*/}
-              {/*      style={{*/}
-              {/*        flexDirection: "row",*/}
-              {/*        alignItems: "center",*/}
-              {/*        paddingVertical: 2,*/}
-              {/*        paddingHorizontal: 8,*/}
-              {/*        borderRadius: 30,*/}
-              {/*        backgroundColor: "white",*/}
-              {/*      }}*/}
-              {/*    >*/}
-              {/*      <MaterialIcons*/}
-              {/*        name="attach-money"*/}
-              {/*        size={16}*/}
-              {/*        color={theme.colors.brand.quaternary}*/}
-              {/*      />*/}
-              {/*      <Spacer position="left" size="small" />*/}
-              {/*      <Text*/}
-              {/*        variant="caption"*/}
-              {/*        style={{*/}
-              {/*          color: theme.colors.brand.quaternary,*/}
-              {/*          fontSize: 18,*/}
-              {/*        }}*/}
-              {/*      >*/}
-              {/*        {item.price}*/}
-              {/*      </Text>*/}
-              {/*    </View>*/}
-              {/*  </View>*/}
-              {/*</ServiceCardGalleryInfoContainer>*/}
+            {/*<ServiceCardGalleryMoreButton*/}
+            {/*  onPress={() => {*/}
+            {/*    setSelectedService({ ...item });*/}
+            {/*    setShowEditServiceModal(true);*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <Feather name="more-horizontal" size={20} color="white" />*/}
+            {/*</ServiceCardGalleryMoreButton>*/}
+            {/*<ServiceCardGalleryInfoContainer>*/}
+            {/*  <Text variant="caption" style={{ color: "white", fontSize: 14 }}>*/}
+            {/*    {item.name}*/}
+            {/*  </Text>*/}
+            {/*  <Spacer position="bottom" size="medium" />*/}
+            {/*  <View*/}
+            {/*    style={{*/}
+            {/*      flexDirection: "row",*/}
+            {/*      alignItems: "center",*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <View*/}
+            {/*      style={{*/}
+            {/*        flexDirection: "row",*/}
+            {/*        alignItems: "center",*/}
+            {/*        paddingVertical: 2,*/}
+            {/*        paddingHorizontal: 8,*/}
+            {/*        borderRadius: 30,*/}
+            {/*        backgroundColor: "white",*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      <MaterialIcons*/}
+            {/*        name="attach-money"*/}
+            {/*        size={16}*/}
+            {/*        color={theme.colors.brand.quaternary}*/}
+            {/*      />*/}
+            {/*      <Spacer position="left" size="small" />*/}
+            {/*      <Text*/}
+            {/*        variant="caption"*/}
+            {/*        style={{*/}
+            {/*          color: theme.colors.brand.quaternary,*/}
+            {/*          fontSize: 18,*/}
+            {/*        }}*/}
+            {/*      >*/}
+            {/*        {item.price}*/}
+            {/*      </Text>*/}
+            {/*    </View>*/}
+            {/*  </View>*/}
+            {/*</ServiceCardGalleryInfoContainer>*/}
             {/*</ServiceCardGallery>*/}
           </View>
 
@@ -471,7 +491,7 @@ const EditProfileScreen = (props) => {
         <ProfilePictureContainer onPress={() => setShowImageUploadModal(true)}>
           <ProfilePicture source={profilePicture} />
           <Spacer position="bottom" size="small" />
-          <Text variant="caption" style={{color: 'black'}}>Change profile picture</Text>
+          <Text variant="caption" style={{ color: 'black' }}>Change profile picture</Text>
         </ProfilePictureContainer>
       </HeaderSection>
     );
@@ -484,9 +504,9 @@ const EditProfileScreen = (props) => {
         <ActionButton
           height={55}
           disabled={!isUpdated}
-          onPress={async() =>{setShowUpdateInfoModal(true)}}>
+          onPress={async () => { setShowUpdateInfoModal(true) }}>
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-             Update info
+            Update info
           </Text>
         </ActionButton>
       </ButtonContainer>
@@ -494,7 +514,7 @@ const EditProfileScreen = (props) => {
   };
 
   return (
-    <SpecialistScreenHoc showBackButton={true} style={{backgroundColor: "transparent"}}>
+    <SpecialistScreenHoc showBackButton={true} style={{ backgroundColor: "transparent" }}>
       {renderConfirmModal(
         showUpdateInfoModal,
         setShowUpdateInfoModal,
