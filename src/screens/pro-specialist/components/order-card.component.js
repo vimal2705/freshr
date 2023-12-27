@@ -1025,13 +1025,13 @@ export const OrderCard = ({
               {order.position === 0 && !isClient && order.status === "ONGOING" && (
                 <Formik
                   initialValues={{ code: "" }}
-                  onSubmit={(values) => {
+                  onSubmit={async (values) => {
                     // Complete_code
                     console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", isform);
                     if (isform == "host") {
                       console.log("check1");
                       setOrderCompleted(true);
-                      completeOrder(order.id, code);
+                      await completeOrder(order.id, values.code);
                       setCode(values.code);
                       console.log(order.client.firstName);
                       // setReviewModal(true)
@@ -1040,7 +1040,7 @@ export const OrderCard = ({
                       setCode(values.code);
 
                       if (orderCompleted) {
-                        completeOrder(order.id, code);
+                        await completeOrder(order.id, values.code);
                         setOrderCompleted(false);
                         SyncStorage.set("ordercomplete", {
                           value: "true",
@@ -1049,14 +1049,16 @@ export const OrderCard = ({
                         console.log(":Asdadsas");
                       }
                     }
-                    try {
-                      socketServices.emit("Complete_code", {
-                        order2,
-                      });
-                      console.log("yessssssssss");
-                    } catch {
-                      console.log("nooooooooo");
-                    }
+                    setTimeout(()=>{
+                      try {
+                        socketServices.emit("Complete_code", {
+                          order2,
+                        });
+                        console.log("yessssssssss");
+                      } catch {
+                        console.log("nooooooooo");
+                      }
+                    }, 5000)
                   }}
                 >
                   {({ handleChange, handleBlur, handleSubmit, values }) => (

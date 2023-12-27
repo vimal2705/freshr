@@ -76,15 +76,15 @@ const Navigation = (props) => {
   // },[])
   const pickApp = () => {
     if (skipAuth) {
-      console.log("skippeddddauth");
+      // console.log("skippeddddauth");
       return _pickApp()
     }
     //  else if (authdata=="true" || isAuthenticated) {
       else if(isAuthenticated){
-      console.log("skippeddddddsdd");
+      // console.log("skippeddddddsdd");
       return hasOnboarded ? _pickApp() : <OnboardingNavigator/>
     } else {
-      console.log("nothing skippedddddd");
+      // console.log("nothing skippedddddd");
       return <AccountNavigator/>
     }
   }

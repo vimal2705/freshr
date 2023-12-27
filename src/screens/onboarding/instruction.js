@@ -6,6 +6,9 @@ import { AppContext, AppProvider } from '../../providers/app-provider';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { useNavigation } from '@react-navigation/native';
 // const windowWidth = Dimensions.get('width');
+// import Video from 'react-native-video';
+import { Video, ResizeMode } from "expo-av";
+
 // const windowHeight = Dimensions.get('height');
 
 // import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,12 +26,9 @@ const Instruction = ({ route }) => {
     console.log("code", videourl, type);
     const fetchinst = async () => {
         const res = await loadinstruction(type)
-        console.log("res", res);
-        if (res) {
-            const temp = res.split('/')
-
-            setVideourl(temp[temp.length - 1])
-        }
+        
+            setVideourl(res)
+        
         console.log("response of inst", res);
     }
     useEffect(() => {
@@ -53,6 +53,7 @@ const Instruction = ({ route }) => {
         }
       }, [specialist])
 
+
       
   useEffect(() => {
     if (host) {
@@ -63,11 +64,16 @@ const Instruction = ({ route }) => {
       }
     }
   }, [host])
+
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
+  const desiredWidth = screenWidth * 0.95;
+  const desiredHeight = screenHeight * 0.8;
     
     return (
         <SafeAreaView style={{ flex: 1 }}>
             
-                <View style={{marginRight:170,bottom:100,transform: [{ rotate: '90deg' }]}}>
+                {/* <View style={{marginRight:170,bottom:100,transform: [{ rotate: '90deg' }]}}>
                     <YoutubePlayer
                         
                         height={500}
@@ -76,10 +82,28 @@ const Instruction = ({ route }) => {
                         videoId={videourl ? `${videourl}` : `TO7EgDFe_94`}
                     // onChangeState={onStateChange}
                     />
-                </View>
+                </View> */}
+            <View style={{ justifyContent: 'center', alignItems: 'center',flex:1 }}>
             
-
-            <View style={{top:200, justifyContent: 'center', alignItems: 'center' }}>
+            { videourl &&
+            <Video 
+            source={{ uri: videourl }} 
+            style={{
+                width:desiredWidth ,
+                height:desiredHeight,
+                // backgroundColor:'red'
+              }}
+            //   resizeMode={Video.RESIZE_MODE_COVER}
+            resizeMode={ResizeMode.CONTAIN}
+              shouldPlay={true}
+              isLooping={true}
+              usePoster
+              rate={1.0}
+              volume={1.0}
+              isMuted={false}
+              
+            />
+            }
                 <TouchableOpacity onPress={async () =>{
                     if(type=='client'){
                         if(hasOnboarded){
