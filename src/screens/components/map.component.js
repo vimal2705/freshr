@@ -191,13 +191,10 @@ const Map = ({
 
  const fitMapToCircle = (node) =>  {
    try {
-     const coord = {latitude: restProps.searchLocation[1], longitude: restProps.searchLocation[0]};
+     const coord = {latitude:currentloc ? currentloc.latitude : restProps.searchLocation[1], longitude:currentloc ? currentloc.longitude : restProps.searchLocation[0]};
      console.log("zooming");
      const radiusBoundaries = getBoundsOfDistance(coord, restProps.searchRadius * 1000);
-     map.current?.fitToCoordinates([...data?.map(item => {
-         const coordinates = item.location.coordinates
-         return {latitude: coordinates[1], longitude: coordinates[0]}
-       }), ...radiusBoundaries],
+     map.current?.fitToCoordinates([...radiusBoundaries],
        {
          edgePadding: {
            top: 30,
@@ -214,7 +211,7 @@ const Map = ({
 
   useEffect(() => {
     fitMapToCircle()
-  }, [restProps.selectedFacility, restProps.searchRadius, fullMap])
+  }, [restProps.selectedFacility, restProps.searchRadius, fullMap, currentloc])
 
 
   useEffect(() => {
@@ -290,7 +287,7 @@ const Map = ({
               ))}
 
               <Circle
-                center={{
+                center={currentloc ? currentloc : {
                   latitude: restProps.searchLocation[1],
                   longitude: restProps.searchLocation[0]
                 }}

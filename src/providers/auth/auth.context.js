@@ -718,8 +718,10 @@ export const AuthContextProvider = ({ children, navigation }) => {
         config,
       );
       console.log("sssss---> become spe",res.data);
-      setUser(res.data.data.specialist.user);
-      updateuserstorage(res.data.data.specialist.user)
+      // setUser(res.data.data.specialist.user);
+      // updateuserstorage(res.data.data.specialist.user)
+      setUser({...user,isSpecialist:true})
+      updateuserstorage({...user,isSpecialist:true})
       sendMessage(
         "Updated",
         res.data.message,
@@ -757,6 +759,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
         Guest,
         specialist,
         host,
+        setUser,
         setIsLoading,
         skipAuthentication,
         signInAsGuest,

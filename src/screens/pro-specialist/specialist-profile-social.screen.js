@@ -368,7 +368,7 @@ const SpecialistProfileSocialScreen = (props) => {
         <HeaderSection>
           <Text
             style={{
-              fontSize: 24,
+              fontSize:24,
               fontWeight: "bold",
               color: specialist?.isOnline ? theme.colors.ui.primary : "white"
             }}
@@ -385,7 +385,7 @@ const SpecialistProfileSocialScreen = (props) => {
             {/* <Text>{reviews.length}</Text> */}
             <TouchableOpacity onPress={() => {navigation.navigate("Reviews")}}>
                 <Text
-                  style={{ textDecorationLine: "underline", fontWeight: "bold", color: "black" }}
+                  style={{ textDecorationLine: "underline", fontWeight: "bold", color:specialist?.isOnline ? theme.colors.ui.primary : "white" }}
                 >
                   {reviews?.length} reviews
                 </Text>

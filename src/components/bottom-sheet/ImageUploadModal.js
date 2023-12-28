@@ -38,6 +38,7 @@ export const ImageUploadModal = ({
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: mediaType,
       allowsEditing: true,
+      videoMaxDuration:20,
       quality: 1,
     });
 

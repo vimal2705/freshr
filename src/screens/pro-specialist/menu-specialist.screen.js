@@ -81,7 +81,7 @@ const MenuSpecialistScreen = (props) => {
     return (
       <HeaderContainer>
         <Spacer position="top" size="large" />
-        <PageTitle style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}>Menu</PageTitle>
+        <PageTitle style={{color:  specialist?.isOnline?"black" : "white"}}>Menu</PageTitle>
       </HeaderContainer>
     );
   };
@@ -94,10 +94,10 @@ const MenuSpecialistScreen = (props) => {
               <MaterialCommunityIcons
                 name="account-circle-outline"
                 size={28}
-                color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
+                color={ specialist?.isOnline?"black" : "white"}
               />
             }
-            style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
+            style={{color: specialist?.isOnline?"black" : "white"}}
             onPress={() => props.navigation.navigate("Profile")}
             label="Personal information"
           />
@@ -108,9 +108,9 @@ const MenuSpecialistScreen = (props) => {
               //   size={28}
               //   color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
               // />
-              <MaterialIcons name="payment" size={28} color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}/>
+              <MaterialIcons name="payment" size={28} color={ specialist?.isOnline?"black" : "white"}/>
             }
-            style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
+            style={{color:  specialist?.isOnline?"black" : "white"}}
             onPress={() => props.navigation.navigate("Payment")}
             label="Payment information"
           />
@@ -120,12 +120,12 @@ const MenuSpecialistScreen = (props) => {
               <MaterialCommunityIcons
                 name="video-box"
                 size={28}
-                color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}
+                color={ specialist?.isOnline?"black" : "white"}
               />
               // <Feather name="help-circle" size={28}
               // color={specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"} />
             }
-            style={{color: specialist?.isOnline?"black" : specialist?.isOnline?"black" : "white"}}
+            style={{color:  specialist?.isOnline?"black" : "white"}}
             label="Tutorial"
           />
           {/*<ProfileButton*/}
@@ -215,14 +215,16 @@ const MenuSpecialistScreen = (props) => {
         </View>
         <Spacer position="bottom" size="large" />
         <Spacer position="bottom" size="medium" />
-        <SectionTitle variant="label">Support</SectionTitle>
+        {/* <SectionTitle variant="label" >Support</SectionTitle> */}
+        <Text style={{color:specialist?.isOnline?"black" : "white",fontSize:16,fontWeight:'bold'}}>Support</Text>
+
         <Spacer position="bottom" size="large" />
         <ProfileButton
             icon={
               <AntDesign
                 name="customerservice"
                 size={28}
-                color={"black"}
+                color={specialist?.isOnline?"black" : "white"}
               />
             }
             onPress={()=>handleSupportPress()}
@@ -233,7 +235,7 @@ const MenuSpecialistScreen = (props) => {
               <MaterialIcons
                 name="feedback"
                 size={28}
-                color={"black"}
+                color={specialist?.isOnline?"black" : "white"}
               />
             }
             onPress={()=>handleFeedbackPress()}
@@ -300,7 +302,7 @@ const MenuSpecialistScreen = (props) => {
             color={theme.colors.brand.secondary}
           />
           <Spacer position="left" size="medium" />
-          <Text variant="label" style={{ fontSize: 14, fontWeight: "bold", color:"white" }}>
+          <Text variant="label" style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
             Log out
           </Text>
         </LogoutButton>

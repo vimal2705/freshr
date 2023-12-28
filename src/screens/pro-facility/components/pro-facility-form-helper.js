@@ -336,7 +336,7 @@ export const renderCoverImage = (image, selectImage, show=true) => {
                 textTransform: "uppercase",
               }}
             >
-              cover image
+              coverimage
             </Text>
           </CoverImageTag>
         </CoverImage>

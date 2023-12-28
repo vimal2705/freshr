@@ -29,7 +29,7 @@ export const RatingComponent = ({ rating }) => {
       /> */}
       <StarRating
       disabled={true}
-      rating={4}
+      rating={rating}
       maxStars={5}
       starSize={20}
       fullStarColor="#FFA50080"

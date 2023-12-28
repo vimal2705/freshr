@@ -602,6 +602,7 @@ const navigation=useNavigation();
               latitude: props.route.params.facility.location?.coordinates[1],
               longitude: props.route.params.facility.location?.coordinates[0],
             }}
+            shoulddrag={false}
             isSelected={true}
             onPress={() => null}
           />

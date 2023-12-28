@@ -1,5 +1,5 @@
 import {useTheme} from 'styled-components/native'
-import { createContext, useRef, useState, useCallback, useEffect } from "react";
+import { createContext, useRef, useState, useCallback, useEffect,useContext } from "react";
 import * as Location from "expo-location";
 
 import { getError, getTokenAndCreateAuthorizationHeader, handleError, handleSuccess, sendMessage } from "./utils";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../constants";
 import FlashMessage from "react-native-flash-message";
 import moment from "moment/moment";
+import {AuthContext} from './auth/auth.context'
 
 export const SpecialistContext = createContext();
 export const SpecialistProvider = ({children}) => {
@@ -226,7 +227,7 @@ export const SpecialistProvider = ({children}) => {
       handleError(err, setIsLoading, setError, theme)
     }
   }
-
+const{user,setUser}=useContext(AuthContext);
   const onGetSpecialist = async() => {
     try {
       setIsLoading(true);
@@ -236,7 +237,7 @@ export const SpecialistProvider = ({children}) => {
         config,
       );
       console.log("SSSssddddasaa=======-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-",res.data.data.specialist);
-
+        setUser(res.data.data.specialist.user);
       setError(null);
       setSpecialist(res.data.data.specialist);
       setTotalProfit((res.data.data.profitPerOrderStatus.filter(el => el._id === "COMPLETED")[0].total || 0) / 100)

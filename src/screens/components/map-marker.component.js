@@ -8,7 +8,7 @@ import { Text } from "../../components/typography/typography.component";
 import { Spacer } from "../../components/spacer/spacer.component";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const MapMarker = ({ gender,setSearchLocation= null, active=false, data= null, animated = false, reference=null, coordinate, onPress, isSelected, isBarber=false, isFacility=false, showCallout=true, calloutContent=3,delivery=false, ...restProps}) => {
+export const MapMarker = ({ shoulddrag=true, gender,setSearchLocation= null, active=false, data= null, animated = false, reference=null, coordinate, onPress, isSelected, isBarber=false, isFacility=false, showCallout=true, calloutContent=3,delivery=false, ...restProps}) => {
   const theme = useTheme();
   const marker = useRef();
   const style = {
@@ -55,7 +55,7 @@ export const MapMarker = ({ gender,setSearchLocation= null, active=false, data= 
 
     </Marker.Animated>
   } else {
-    return (<Marker ref={marker} draggable={!(isFacility || isBarber)}
+    return (<Marker ref={marker} draggable={ shoulddrag?!(isFacility || isBarber):false}
                     onDragEnd={async (e) => { console.log('dragEnd', e.nativeEvent.coordinate); 
                     const key = "del"
                     const coord = [e.nativeEvent.coordinate.longitude, e.nativeEvent.coordinate.latitude]
