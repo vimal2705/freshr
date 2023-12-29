@@ -24,7 +24,7 @@ const Paymentsheetcomponent = ({
   const [curValue, setCurValue] = useState(null);
   const theme = useTheme();
 
-  const { ongoingOrder, paydata } = useContext(AppContext);
+  const { ongoingOrder, paydata, payOrder } = useContext(AppContext);
 console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
 
   useEffect(() => {
@@ -77,6 +77,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     else{
         showModal=false;
         toggleShowModal();
+        payOrder(ongoingOrder._id)
     }
     
   };

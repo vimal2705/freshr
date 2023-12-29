@@ -166,6 +166,7 @@ useEffect(()=>{
     
     try  {
       setLoading(true);
+      console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm()()()()()()()()()()()()");
       const config = await getTokenAndCreateAuthorizationHeader(true);
       const res = await axios.post(`${BASE_API_URL}/orders/checkout-session/${services.join(',')}/${facility}/${maxTime}`,data, config)
       setError(null);
@@ -174,6 +175,7 @@ useEffect(()=>{
       SyncStorage.remove('locationAddress');
       return res.data;
     } catch (err) {
+      console.log("innnnnn catchhhhhhhh============================??????????????????????????????", err);
       handleError(err, setLoading, setError, theme)
     }
   }
@@ -196,6 +198,9 @@ useEffect(()=>{
     try  {
       // setLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader(true);
+      if(!id || !data1 || !data2){
+        return
+      }
       const res = await axios.put(`${BASE_API_URL}/orders/${id}`,data, config)
       // setError(null);
       // setLoading(false);

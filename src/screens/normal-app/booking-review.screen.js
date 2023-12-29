@@ -574,7 +574,9 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
       console.error('--------Payment intent is undefined-----');
       // return;
     }
-
+    socketServices.emit('Complete_payment', {
+      paym,
+    })
     console.log("SSSSSSSSSSSss",paymentIntent);
     const { error } = await initPaymentSheet({
       customerId: customer,
@@ -586,6 +588,8 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
       //methods that complete payment after a delay, like SEPA Debit and Sofort.
       allowsDelayedPaymentMethods: true,
     });
+        navigation.navigate('Orders', {fromcheckout:true, customer1: customer1, ephemeralKey1: ephemeralKey1, paymentIntent1: paymentIntent1})
+
     setNewOrder(order);
   },500)
   };
@@ -660,9 +664,9 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
     console.log("beforeeeeee-----------------------asdasd-------");
   };
 
-  useEffect(() => {
-    initializePaymentSheet();
-  }, []);
+  // useEffect(() => {
+  //   initializePaymentSheet();
+  // }, []);
 
 
 
@@ -720,7 +724,7 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
       <Container showsVerticalScrollIndicator={false}>
         <View style={{flex: 1}}>
           {/*<BookingStepper pageStep={2} />*/}
-          {(booking.specialist && booking.services.length > 0) && <OrderCard  isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => openPaymentSheet()} navigation={navigation} />}
+          {(booking.specialist && booking.services.length > 0) && <OrderCard  isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => initializePaymentSheet()} navigation={navigation} />}
           {/*<ButtonContainer*/}
           {/*  style={{*/}
           {/*    shadowColor: "#000",*/}

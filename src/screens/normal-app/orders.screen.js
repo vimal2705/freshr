@@ -101,10 +101,10 @@ const OrdersScreen = (props) => {
     socketServices.on('Send_Request',(dataa)=>{
 
       // userLoc
-      getUserLoc();
+//       getUserLoc();
 
-      console.log("requestttttttttttttttttt------------",dataa);
-setCurrentTab('ongoing');
+//       console.log("requestttttttttttttttttt------------",dataa);
+// setCurrentTab('ongoing');
     })
     // socketServices.on('Send_complete_code',(dataa)=>{
     //   console.log("donejobbbbbbbbbb",(dataa));
@@ -128,13 +128,20 @@ setCurrentTab('ongoing');
     }
     })
 
-    socketServices.on('Send_Request',(dataa)=>{
-      console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
-      
-        if(user?._id == dataa.orderr){
-          console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
-          handleshowPaymentsheet();
-        }
+    socketServices.on('Send_Request',async (dataa)=>{ 
+      setTimeout(async ()=>{
+        await onGetOrders()
+        
+  
+        console.log("requestttttttttttttttttt------------",dataa);
+  setCurrentTab('ongoing');
+        console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
+        
+          if(user?._id == dataa.orderr){
+            console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
+            handleshowPaymentsheet();
+          }
+      }, 3000)
     })
   },[])
 
@@ -160,6 +167,8 @@ setCurrentTab('ongoing');
   const [historyViewMore, setHistoryViewMore] = useState(true);
   const [rejectmodal, setRejectmodal] = useState(false);
   const [rejectSpecialist, setRejectSpecialist] = useState([]);
+  const [sname, setSname] = useState(null)
+  const [sid, setSid] = useState(null)
   // const [data, setData] = useState([]);
   const tabs = ['ongoing', 'pending', 'history']
   const getOrders = (tab) => {
@@ -183,7 +192,16 @@ setCurrentTab('ongoing');
   };
 useEffect(()=>{
   socketServices.on('Reject_Send', (dataa) => {
-    console.log("rejectedddddataaaa", dataa);
+    console.log("rejectedddddataaaa---------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^", dataa);
+    setSname(dataa.spename)
+    setSid(dataa.speid)
+let temp 
+    if(dataa.speid){
+      temp = specialist.filter((item)=> item?.user?._id != dataa.speid)
+    }
+if(temp){
+  setRejectSpecialist(temp)
+}
     // let temp = []
     // specialist.map((item)=>{
     //   const temp1 = item.services.filter((item1)=>item1.serviceType.name == dataa.serviceName)
@@ -201,13 +219,22 @@ useEffect(()=>{
     setRejectmodal(true)
   })
 }, [])
-const specialist = useSelector((state) => state?.specialists?.specialists)
+const specialist = useSelector((state) => state?.specialists?.specialists) 
+
+console.log("specialistttttttttttttt[][][][][][][][][][][][][][{}{}{}{}{}{}{}{()()()()()()()()", specialist);
   // console.log("!!!!!!>>>>>>>>>>>>>>>>>>>>>>>>>", specialist[0]?.services);
+  //658c3ae2638851878cb1a19f 658d45c891e1f97785e0ad1b
   useEffect(()=>{
-    setRejectSpecialist(specialist)
+    let temp
+    if(sid){
+      temp = specialist.filter((item)=> item?.user?._id != sid)
+    }
+    setRejectSpecialist(temp ? temp : specialist)
+    console.log("\n\n\n\n\n\n\n\n\n\n\n0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", sid, sname);
     console.log("~~~~~~~~~~~~~~~~~~~~~>>>>>>>>>>>", specialist);
     // console.log("<<<<>>>>>", specialist[0]?.services[0].serviceType.name);
-  }, [specialist])
+    // 658d45c891e1f97785e0ad1b
+  }, [specialist, sid, sname])
   
   return (
     // <SafeArea>
@@ -339,11 +366,17 @@ visible={rejectmodal}
 style={{ backgroundColor: "#fff", height: '90%', marginHorizontal:15}
 }
 ><View style={{alignItems:'flex-end',height:30}}>
+
   <TouchableOpacity style={{width: 20, height: 20, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 10, right: 10, justifyContent: 'center', alignItems: 'center' }}
             onPress={()=>setRejectmodal(false)}
             >
   <Entypo name='cross' size={20} color={'black'} />
-  </TouchableOpacity>
+  </TouchableOpacity> 
+
+  </View>
+  <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'black', paddingVertical: 10}}>
+    <Text style={{fontSize: 15, color:'#fff'}}>{`     Hi There, '${sname}' is no longer available 
+Please Choose from our other list of pros`}</Text>
   </View>
   <ScrollView>
   {
@@ -363,7 +396,7 @@ return(
           edit: false,
           specialist: item
         });
-        setRejectmodal(false)
+        // setRejectmodal(false)
       }}
       specialist={item}
       // locationData={locationData}

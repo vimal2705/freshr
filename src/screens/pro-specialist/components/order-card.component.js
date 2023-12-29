@@ -347,11 +347,16 @@ export const OrderCard = ({
   }
   const [serviceName, setServiceName] = useState("");
   const [rejectedid, setRejectedid] = useState();
+  const [spename, setSpename] = useState("")
+  const [speid, setSpeid] = useState(null)
+  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", specialist?._id, specialist?.user?.firstName);
+
   useEffect(() => {
     if (!isClient) {
-      // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", order.services[0]);
       setServiceName(order.services[0].serviceType.name);
       setRejectedid(order.services[0].id);
+      setSpename(specialist?.user?.firstName + " " + specialist?.user?.lastName) 
+      setSpeid(specialist?.user?._id)
     }
   }, []);
   // console.log("ordersssssssssssssssssssssssssssssssss", order.client);
@@ -437,6 +442,8 @@ export const OrderCard = ({
                       socketServices.emit("Reject", {
                         serviceName,
                         rejectedid,
+                        speid,
+                        spename
                       });
                       console.log("yessssssssss");
                     } catch {
@@ -774,6 +781,7 @@ export const OrderCard = ({
           />
 
 <>
+{order._id &&
                     <View style={{ justifyContent: 'space-between', marginVertical: 10 }}>
                       <View style={{ flexDirection: "row", gap: 10 }}>
                         <View
@@ -805,6 +813,7 @@ export const OrderCard = ({
                       </Text>
                       </View>
                       </View>
+                      }
                       {(order.status == "IN_TRAFFIC" || order.status == "ONGOING") &&
                         <TouchableOpacity style={{ flexDirection: 'row', gap: 10 }} onPress={() => sendMapp()}>
                           <Entypo name="direction" size={18} color="black" />
@@ -822,16 +831,9 @@ export const OrderCard = ({
               {order.position === 0 && !isClient && order.status === "PENDING" && (
                 <AcceptButton
                   style={{ shadow: theme.shadows.default }}
-                  onPress={() => {
+                  onPress={async () => {
                     handleLoctaion();
-                    try {
-                      socketServices.emit("Accept_Request", {
-                        orderr,
-                      });
-                      console.log("yessssssssss");
-                    } catch {
-                      console.log("nooooooooo");
-                    }
+                    
                     // try {
                     //   socketServices.emit('Location_ChangeSP',{
                     //     userloc
@@ -842,7 +844,15 @@ export const OrderCard = ({
                     // }
 
                     console.log("doneeeeeeee----------------------");
-                    acceptOrder(order.id);
+                    await acceptOrder(order.id);
+                    try {
+                      socketServices.emit("Accept_Request", {
+                        orderr,
+                      });
+                      console.log("yessssssssss");
+                    } catch {
+                      console.log("nooooooooo");
+                    }
                   }}
                 >
                   <Text
