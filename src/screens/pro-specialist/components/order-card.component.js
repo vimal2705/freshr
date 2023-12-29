@@ -218,7 +218,7 @@ export const OrderCard = ({
       const isAndroid = Platform.OS == "android";
       console.log("here");
       let location = await Location.getCurrentPositionAsync();
-      console.log("location:::::::", location);
+      // console.log("location:::::::", location);
       // setUserloc(location.coords)
       setUserloc(location.coords);
     };

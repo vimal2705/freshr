@@ -117,12 +117,14 @@ export const FilterModal = ({
   showModal,
   toggleShowModal,
   children,
+  pay=false,
   scrollView = true,
   ...restProps
 }) => {
   const theme = useTheme();
   const dimensions = useWindowDimensions();
   const bottomSheetModalRef = useRef(null);
+  // console.log("payyyyyyyyyyyyyyyy",pay);
   useEffect(() => {
     if (showModal) {
       bottomSheetModalRef.current?.present();
@@ -138,9 +140,12 @@ export const FilterModal = ({
   return (
     <BottomModal ref={bottomSheetModalRef} {...restProps}>
       <Spacer position="bottom" size="small">
-        <CloseButton onPress={handleClose} style={{backgroundColor: "white", shadow: theme.shadows.default}}>
+        {
+          pay?null: <CloseButton onPress={handleClose} style={{backgroundColor: "white", shadow: theme.shadows.default}}>
           <Ionicons name="close" size={20} />
         </CloseButton>
+        }
+       
       </Spacer>
 
       {scrollView ? (

@@ -77,6 +77,7 @@ const HomeSpecialistScreen = (props) => {
    */
   const {isLoading, specialist, todayProfit, totalProfit, specialistServices, loadSpecialistData } = useContext(SpecialistContext)
   // console.log("specialistttttt=[=][=][=][=][=p[]=p[][p[=][]=[[]=[[]",specialistServices);
+  console.log("specccccccccccc",specialist);
 
   const {onLogout} = useContext(AppContext)
 //   useEffect(() => {
@@ -114,6 +115,13 @@ useEffect(()=>{
     console.log("payyyyyyyyyyy",dataa);
     loadSpecialistData();
   })
+  socketServices.on('send_payment_rejected',(dataa)=>{
+    console.log("payyyyyyyyyyy---====================================",specialist._id,dataa);
+    // if(specialist._id==dataa.orderr){
+    loadSpecialistData();
+    // }
+  })
+//658c3b3b638851878cb1a21e
   socketServices.on('Send_complete_Busy',(dataa)=>{
     console.log("finally done",dataa);
     loadSpecialistData();

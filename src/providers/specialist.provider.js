@@ -224,10 +224,12 @@ export const SpecialistProvider = ({children}) => {
   }
 
   const rejectOrder = async (order) => {
+    console.log("hereeeeeeeee",order);
     try  {
       setIsLoading(true);
       const config = await getTokenAndCreateAuthorizationHeader();
       const res = await axios.get(`${BASE_API_URL}/specialists/specialist/cancelOrder/${order}`, config)
+      console.log("responseeeeeeeeorderrrrrrrrrrrrr",res.data.data);
       setOngoingOrder(null);
       setSpecialist(res.data.data.specialist);
       setQueue(res.data.data.queue)

@@ -57,6 +57,11 @@ useEffect(()=>{
       console.log("startcodeeeecalled",dataa);
       onGetOrders();
     })
+    socketServices.on('send_payment_rejected',(dataa)=>{
+      console.log("startcodeeeecalled",dataa);
+      onGetOrders();
+    })
+
 
     
   },[])
@@ -264,6 +269,7 @@ useEffect(()=>{
       const cancelledOrders = res.data.data.orders.filter(order => order.status === 'CANCELLED');
       const currentOrder = res.data.data.orders.filter(order => order.status === 'IN_TRAFFIC')[0];
       const ongoingOrder = res.data.data.orders.filter(order => order.status === 'ONGOING')[0];
+      console.log("ongoingggggggggggggggggg",ongoingOrder);
 
       setCompletedOrders(completedOrders);
       setCancelledOrders(cancelledOrders);

@@ -42,7 +42,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
     
     socketServices.on('Send_Location_ChangeSP',(dataa)=>{
       if(isClient){
-      console.log("SOcket Location",(dataa.loc.coords));
+      // console.log("SOcket Location",(dataa.loc.coords));
       setLivespecialist(dataa.loc.coords)
   // console.log("liveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeloccccccccccccccccccccccccccccccccccccccccccccccc",livespecialist);
 }
@@ -50,7 +50,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
     })
     
 
-    
+    //658e7a78788a4c2422e595ff
     socketServices.on('Send_Location_ChangeCLI',(dataa)=>{
       if(!isClient){
       // console.log("SOcket Location CLI",(dataa.loc.coords));
@@ -74,7 +74,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
     const isAndroid = Platform.OS == 'android';
     console.log("here");
     let location = await Location.getCurrentPositionAsync();
-    console.log("location:::::::", location);
+    // console.log("location:::::::", location);
       // setUserloc(location.coords)
       setInitLocation(location.coords)
     }
@@ -161,7 +161,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
         }
         if(!isClient){
 
-          console.log("chnaingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg--------------<<<<<<",loc);
+          // console.log("chnaingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg--------------<<<<<<",loc);
           // const {orderr}= await fetchLiveLocation(order._id,specialistlocation=[loc.coords.longitude,loc.coords.latitude],clientloction=[]);
         try {
             socketServices.emit('Location_ChangeSP',{

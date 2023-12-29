@@ -110,7 +110,7 @@ export const ReviewCompleteCard = ({ review }) => {
   return (
     <View>
       <ReviewHeaderContainer>
-        <AuthorImage source={{ uri: author.photo ? author.photo  : facility.coverImage  }} />
+        <AuthorImage source={{ uri: author?.photo ? author?.photo  : facility?.coverImage  }} />
         <Spacer position="left" size="large" />
         <View>
           <AuthorName variant="caption">{author.firstName ? author.firstName +" "+ author.lastName : facility.name }</AuthorName>

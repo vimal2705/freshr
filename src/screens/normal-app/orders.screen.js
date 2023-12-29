@@ -88,7 +88,7 @@ const OrdersScreen = (props) => {
     const isAndroid = Platform.OS == 'android';
     console.log("here");
     let location = await Location.getCurrentPositionAsync();
-    console.log("location:::::::", location);
+    // console.log("location:::::::", location);
       // setUserloc(location.coords)
       setUserloc(location.coords)
     }
@@ -98,14 +98,14 @@ const OrdersScreen = (props) => {
   useEffect(()=>{
     socketServices.initializeSocket();
     console.log("orderssssss connected")
-    socketServices.on('Send_Request',(dataa)=>{
+//     socketServices.on('Send_Request',(dataa)=>{
 
-      // userLoc
+//       // userLoc
 //       getUserLoc();
 
 //       console.log("requestttttttttttttttttt------------",dataa);
 // setCurrentTab('ongoing');
-    })
+//     })
     // socketServices.on('Send_complete_code',(dataa)=>{
     //   console.log("donejobbbbbbbbbb",(dataa));
       
@@ -131,17 +131,25 @@ const OrdersScreen = (props) => {
     socketServices.on('Send_Request',async (dataa)=>{ 
       setTimeout(async ()=>{
         await onGetOrders()
-        
-  
         console.log("requestttttttttttttttttt------------",dataa);
   setCurrentTab('ongoing');
         console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
         
+    // socketServices.on('Send_Request',(dataa)=>{
+    //   console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
+      
+    //     if(user?._id == dataa.orderr){
+    //       console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
+    //       handleshowPaymentsheet();
+    //     }
+    // })
+
+
           if(user?._id == dataa.orderr){
             console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
             handleshowPaymentsheet();
           }
-      }, 3000)
+      }, 4000)
     })
   },[])
 
