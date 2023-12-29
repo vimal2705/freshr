@@ -375,6 +375,8 @@ export const OrderCard = ({
   return (
     
 <>
+
+{order?._id && 
       <View
         style={{
           flexDirection: "row",
@@ -384,7 +386,6 @@ export const OrderCard = ({
 
         }}
       >
-
         <Text style={{ fontSize: 15, color: 'white', backgroundColor: '#25282b', padding: 4, borderRadius: 5 }}>id: {order?._id}</Text>
         <TouchableOpacity
           onPress={() => copyToClipboard(order?._id)}
@@ -401,7 +402,7 @@ export const OrderCard = ({
           <AntDesign name="copy1" size={14} color="#fff" />
         </TouchableOpacity>
       </View>
-
+}
       <Container>
         {isClient && order?.status == 'PENDING' &&
           <View style={{

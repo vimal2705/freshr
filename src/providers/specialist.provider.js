@@ -2,7 +2,7 @@ import {useTheme} from 'styled-components/native'
 import { createContext, useRef, useState, useCallback, useEffect,useContext } from "react";
 import * as Location from "expo-location";
 
-import { getError, getTokenAndCreateAuthorizationHeader, handleError, handleSuccess, sendMessage } from "./utils";
+import { getError, getTokenAndCreateAuthorizationHeader, getTokenAndCreateAuthorizationHeader1, handleError, handleSuccess, sendMessage } from "./utils";
 import axios from "axios";
 import { BASE_API_URL } from "../constants";
 import FlashMessage from "react-native-flash-message";
@@ -157,6 +157,39 @@ export const SpecialistProvider = ({children}) => {
   const acceptOrder = async (order) => {
     try  {
       setIsLoading(true);
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setIsLoading(false);
+        setError(new Error('Please allow geolocation'));
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return; // Exit the function if geolocation permission is not granted
+      }
+  
+      // Attempt to get the current location
+      let location;
+  
+      try {
+        // Attempt to get the current location
+        location = await Location.getCurrentPositionAsync({});
+      } catch (error) {
+        // Handle the error (e.g., if location retrieval fails)
+        console.error("Error getting current location:", error.message);
+  
+        // Fallback to specialist coordinates if available
+        if (specialist && specialist.coordinates) {
+          location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
+        } else {
+          throw new Error("Unable to get current location, and specialist coordinates are not available.");
+        }
+      }
+  
       const config = await getTokenAndCreateAuthorizationHeader();
       const res = await axios.get(`${BASE_API_URL}/specialists/specialist/acceptOrder/${order}`, config)
       setOngoingOrder(res.data.data.order);
@@ -170,6 +203,19 @@ export const SpecialistProvider = ({children}) => {
       if (res.data.data.queue) {
         setQueue(res.data.data.queue)
       }
+
+      //insert code here 
+
+      const formData = new FormData();
+      formData.append('location[type]', 'Point');
+      formData.append('location[coordinates][]', location.coords.longitude);
+      formData.append('location[coordinates][]', location.coords.latitude);
+  
+      console.log("formmmmm========>", formData);
+  
+      // Update specialist info with FormData
+      await updateSpecialistInfo({ formData });
+  
       setError(null);
       handleSuccess(res, setIsLoading, theme);
     } catch (err) {
@@ -217,9 +263,51 @@ export const SpecialistProvider = ({children}) => {
   const completeOrder = async (order, endCode) => {
     try  {
       setIsLoading(true);
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setIsLoading(false);
+        setError(new Error('Please allow geolocation'));
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return; // Exit the function if geolocation permission is not granted
+      }
+  
+      // Attempt to get the current location
+      let location;
+  
+      try {
+        // Attempt to get the current location
+        location = await Location.getCurrentPositionAsync({});
+      } catch (error) {
+        // Handle the error (e.g., if location retrieval fails)
+        console.error("Error getting current location:", error.message);
+  
+        // Fallback to specialist coordinates if available
+        if (specialist && specialist.coordinates) {
+          location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
+        } else {
+          throw new Error("Unable to get current location, and specialist coordinates are not available.");
+        }
+      }
+  
       const config = await getTokenAndCreateAuthorizationHeader();
       const res = await axios.get(`${BASE_API_URL}/specialists/specialist/completeOrder/${order}/${endCode}`, config)
       setOngoingOrder(null);
+      const formData = new FormData();
+      formData.append('location[type]', 'Point');
+      formData.append('location[coordinates][]', location.coords.longitude);
+      formData.append('location[coordinates][]', location.coords.latitude);
+  
+      console.log("formmmmm========>", formData);
+  
+      // Update specialist info with FormData
+      await updateSpecialistInfo({ formData });
+  
       await onGetOrders();
       setError(null);
       handleSuccess(res, setIsLoading, theme);
@@ -277,7 +365,8 @@ const{user,setUser}=useContext(AuthContext);
 
   const updateSpecialistInfo = async (data,param) => {
     const config = await getTokenAndCreateAuthorizationHeader()
-      console.log("-----------> data2------------->", data);
+      console.log("-----------> data2------------->", data.formData);
+    
     try {
       if(param){
         const res = await axios.patch(
@@ -293,10 +382,11 @@ const{user,setUser}=useContext(AuthContext);
       }
       else{
         setIsLoading(true);
+        console.log("data of update", data);
         const config = await getTokenAndCreateAuthorizationHeader()
         const res = await axios.patch(
         `${BASE_API_URL}/specialists/specialist`,
-         data,
+         data.formData ? data.formData : data,
           {
             ...config,
             transformRequest: (data, headers) => {
@@ -311,13 +401,79 @@ const{user,setUser}=useContext(AuthContext);
      
     } catch (e) {
       console.log("errorrr in paymentttttt-=-=====");
-      console.log(e.request);
+      console.log(e);
       handleError(e, setIsLoading, setError, theme)
     }
   }
 
-  const goOnline = async () => {
 
+
+  const goOnline = async () => {
+    console.log("hereeeeeeeeeeeeeeeeeeeeee", specialist);
+  
+    try {
+      setIsLoading(true);
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log("status::", status);
+  
+      if (status !== 'granted') {
+        setIsLoading(false);
+        setError(new Error('Please allow geolocation'));
+        sendMessage(
+          "Failure",
+          'Please allow geolocation',
+          "warning",
+          2500,
+          theme.colors.ui.warning
+        );
+        return; // Exit the function if geolocation permission is not granted
+      }
+  
+      console.log("outttt");
+      let location;
+  
+      try {
+        // Attempt to get the current location
+        location = await Location.getCurrentPositionAsync();
+      } catch (error) {
+        // Handle the error (e.g., if location retrieval fails)
+        console.error("Error getting current location:", error.message);
+  
+        // Fallback to specialist coordinates if available
+        if (specialist && specialist.coordinates) {
+          location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
+        } else {
+          throw new Error("Unable to get current location, and specialist coordinates are not available.");
+        }
+      }
+  
+      console.log("locccc", location);
+  
+      const config = await getTokenAndCreateAuthorizationHeader1();
+      console.log("config", config);
+  
+      const res = await axios.post(
+        `${BASE_API_URL}/specialists/specialist/goOnline`,
+        {
+          location: {
+            type: "Point",
+            coordinates: [location.coords.longitude, location.coords.latitude]
+          }
+        },
+        config
+      );
+  
+      console.log("ressss");
+      setError(null);
+      handleSuccess(res, setIsLoading, theme);
+      setSpecialist(res.data.data.specialist);
+      setIsLoading(false);
+    } catch (e) {
+      handleError(e, setIsLoading, setError, theme);
+    }
+  };
+  
+  const goOffline = async () => {
     try {
       setIsLoading(true);
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -331,11 +487,31 @@ const{user,setUser}=useContext(AuthContext);
           2500,
           theme.colors.ui.warning
         );
+        return; // Exit the function if geolocation permission is not granted
       }
-      let location = await Location.getCurrentPositionAsync({});
-      const config = await getTokenAndCreateAuthorizationHeader()
+  
+      // Attempt to get the current location
+      let location;
+  
+      try {
+        // Attempt to get the current location
+        location = await Location.getCurrentPositionAsync({});
+      } catch (error) {
+        // Handle the error (e.g., if location retrieval fails)
+        console.error("Error getting current location:", error.message);
+  
+        // Fallback to specialist coordinates if available
+        if (specialist && specialist.coordinates) {
+          location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
+        } else {
+          throw new Error("Unable to get current location, and specialist coordinates are not available.");
+        }
+      }
+  
+      const config = await getTokenAndCreateAuthorizationHeader1();
+  
       const res = await axios.post(
-        `${BASE_API_URL}/specialists/specialist/goOnline`,
+        `${BASE_API_URL}/specialists/specialist/goOffline`,
         {
           location: {
             type: "Point",
@@ -344,30 +520,85 @@ const{user,setUser}=useContext(AuthContext);
         },
         config
       );
+  
       setError(null);
       handleSuccess(res, setIsLoading, theme);
       setSpecialist(res.data.data.specialist);
+  
+      // Create FormData
+      const formData = new FormData();
+      formData.append('location[type]', 'Point');
+      formData.append('location[coordinates][]', location.coords.longitude);
+      formData.append('location[coordinates][]', location.coords.latitude);
+  
+      console.log("formmmmm========>", formData);
+  
+      // Update specialist info with FormData
+      await updateSpecialistInfo({ formData });
+  
+      setIsLoading(false);
     } catch (e) {
-      handleError(e, setIsLoading, setError, theme)
+      handleError(e, setIsLoading, setError, theme);
     }
-  }
+  };
+  
+//   const goOffline = async () => {
+//     try {
+//       setIsLoading(true);
+//       let { status } = await Location.requestForegroundPermissionsAsync();
+//       if (status !== 'granted') {
+//         setIsLoading(false);
+//         setError(new Error('Please allow geolocation'));
+//         sendMessage(
+//           "Failure",
+//           'Please allow geolocation',
+//           "warning",
+//           2500,
+//           theme.colors.ui.warning
+//         );
+//       }
+//       // let location = await Location.getCurrentPositionAsync({});
+//       let location = {coords : {
+//         longitude:72.679483 ,
+//         latitude: 23.053738
+//       }}
+//       const config = await getTokenAndCreateAuthorizationHeader()
+//       const res = await axios.post(
+//         `${BASE_API_URL}/specialists/specialist/goOffline`,
+//         {
+//           location: {
+//             type: "Point",
+//             coordinates: [location.coords.longitude, location.coords.latitude]
+//           }
+//         },
+//         config
+//       );
+//       setError(null);
+//       handleSuccess(res, setIsLoading, theme);
+//       setSpecialist(res.data.data.specialist); 
+//       const formData = new FormData()
+//       const loca = {location : {
+//         type: "Point",
+//         coordinates: [location.coords.longitude, location.coords.latitude]
+//       } }
 
-  const goOffline = async () => {
-    try {
-      setIsLoading(true);
-      const config = await getTokenAndCreateAuthorizationHeader()
-      const res = await axios.post(
-        `${BASE_API_URL}/specialists/specialist/goOffline`,
-        null,
-        config
-      );
-      setError(null);
-      handleSuccess(res, setIsLoading, theme);
-      setSpecialist(res.data.data.specialist);
-    } catch (e) {
-      handleError(e, setIsLoading, setError, theme)
-    }
-  }
+// formData.append('location[type]', 'Point');
+// formData.append('location[coordinates][]', location.coords.longitude);
+// formData.append('location[coordinates][]', location.coords.latitude);
+
+//       // formData.append(loca.location)
+//       // formData.append(loca.location.coordinates)
+
+//       // formData.append(loca.coordinates) 
+//       console.log("formmmmm========>", formData);
+//       await updateSpecialistInfo( {
+//         formData
+//       })
+//       setIsLoading(false)
+//     } catch (e) {
+//       handleError(e, setIsLoading, setError, theme)
+//     }
+//   }
 
   const startQueue = async () => {
     try {

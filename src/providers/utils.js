@@ -64,6 +64,32 @@ export const getTokenAndCreateAuthorizationHeader = async (isJson=false) => {
   }
 }
 
+
+export const getTokenAndCreateAuthorizationHeader1 = async (isJson=false) => {
+  try {
+    const token = await SecureStore.getItemAsync("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    if (isJson) {
+      console.log("ssss",config);
+      return config
+    } else {
+      
+      return {
+        headers: {
+          ...config.headers,
+          // 'Content-Type': 'multipart/json',
+        }
+      }
+    }
+  } catch (e) {
+    throw new Error("Something wrong happened please login again.")
+  }
+}
+
 export const handleError = (e, setLoading, setError, theme) => {
   setLoading(false);
   setError(e);

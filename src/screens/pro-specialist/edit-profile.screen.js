@@ -152,7 +152,9 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     fitMapToCircle();
   }, [currentRadius])
-
+console.log("loccccccccccccccccccccc", region);
+// {"latitude": 23.0526432, "latitudeDelta": 0.08, "longitude": 72.680186, "longitudeDelta": 0.08}
+// "latitude": 23.0526525, "longitude": 72.6801917,
   const isFormCompleted = () => {
     return (
       (newFirstname !== specialist?.user?.firstName) ||
@@ -266,7 +268,7 @@ const EditProfileScreen = (props) => {
         <View style={{ position: "relative" }}>
           <FormInput
             value={bio}
-            label="Bio"
+            label="Biooo"
             numberOfLines={5}
             maxLength={280}
             style={{ backgroundColor: 'white', height: 80 }}
@@ -348,7 +350,7 @@ const EditProfileScreen = (props) => {
 
 
 
-          <Marker draggable={true}
+          <Marker draggable={false}
             onDragEnd={
               async (e) => 
                 setRegion(e.nativeEvent.coordinate)
