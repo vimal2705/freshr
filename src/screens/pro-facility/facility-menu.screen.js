@@ -145,7 +145,7 @@ const FacilityMenuScreen = (props) => {
               />
             }
             onPress={() => props.navigation.navigate("SpecialistVerificationHost")}
-            label="specialist"
+            label="Become a professional"
           />}
           <Separator />
         </View>
