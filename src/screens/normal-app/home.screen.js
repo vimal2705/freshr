@@ -176,6 +176,8 @@ const [user1, setUser1] = useState()
   const dispatch=useDispatch();
   const {user} = useContext(AuthContext)
 
+  // console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",user);
+
 
 useEffect(async ()=>{
 

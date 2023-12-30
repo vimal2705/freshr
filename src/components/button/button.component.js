@@ -53,7 +53,7 @@ export const ModalButton1 = styled.TouchableOpacity`
       ? theme.colors.ui.primary
       : theme.colors.ui.quaternary};
   padding: 10px 8px;
-  width:300px
+  width:100px
   border-radius: 5px;
   border: 2px solid #25282b;
   flex-direction: row;

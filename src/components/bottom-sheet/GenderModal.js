@@ -117,7 +117,7 @@ const GenderModalComponent = ({ showModal, toggleShowModal, data, ...restProps }
       >
         <ModalButton
           onPress={() => {
-            setGender('all');
+            setGender('notany');
             // setGenderPro(restProps.proGender);
           }}
         >

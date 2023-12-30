@@ -55,7 +55,7 @@ export const MapMarker = ({ shoulddrag=true, gender,setSearchLocation= null, act
 
     </Marker.Animated>
   } else {
-    return (<Marker ref={marker} draggable={ shoulddrag?!(isFacility || isBarber):false}
+    return (<Marker ref={marker} draggable={delivery ? true : shoulddrag?!(isFacility || isBarber):false}
                     onDragEnd={async (e) => { console.log('dragEnd', e.nativeEvent.coordinate); 
                     const key = "del"
                     const coord = [e.nativeEvent.coordinate.longitude, e.nativeEvent.coordinate.latitude]

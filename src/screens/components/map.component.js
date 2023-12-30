@@ -275,7 +275,7 @@ const Map = ({
                     latitude: item.location.coordinates[1],
                     longitude: item.location.coordinates[0],
                   }}
-                  gender={item.user.gender == undefined ? "Both": item.user.gender}
+                  gender={item.user.searchStylesFor == "none" ? "Both": item.user.searchStylesFor}
 
                   isSelected={
                     restProps.selectedFacility
@@ -423,9 +423,9 @@ const Map = ({
                 {/*</View>*/}
               </>
             )}
-           
-
-           {fullMap? <Carousel
+           {
+            data?.length > 0 ? <>
+            {fullMap? <Carousel
               ref={flatList}
               data={data}
               renderItem={renderItem}
@@ -455,6 +455,13 @@ const Map = ({
         
         
            }
+            </> :
+            <View style={{margin: 5, justifyContent:'center', alignItems:'center'}}>
+              <Text>There is no store available!</Text>
+            </View>
+           }
+
+           
           </DataContainer>
         {/*</>*/}
       {/*)}*/}

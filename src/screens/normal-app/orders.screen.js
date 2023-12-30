@@ -74,6 +74,8 @@ const OrdersScreen = (props) => {
       setCurrentTab('pending')
     }
   }, [])
+
+  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\npaid or not ******************************", ongoingOrder?.isPaid);
   const[userLoc,setUserloc]=useState();
   useEffect(() => {
     const findLoc = async () => {
@@ -198,6 +200,10 @@ const OrdersScreen = (props) => {
     setVisibleHistory(visibleHistory + 10);
     setVisiblePending(visiblePending +10);
   };
+
+  useEffect(()=>{
+    setshowPaymentsheet(ongoingOrder ? ongoingOrder?.isPaid ? false : true : false)
+  }, [])
 useEffect(()=>{
   socketServices.on('Reject_Send', (dataa) => {
     console.log("rejectedddddataaaa---------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^", dataa);

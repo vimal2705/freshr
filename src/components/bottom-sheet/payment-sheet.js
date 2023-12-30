@@ -1,14 +1,13 @@
-import {useTheme} from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
-
 import { Spacer } from "../spacer/spacer.component";
 import { Text } from "../typography/typography.component";
 import Rheostat, { AreaRheostat } from "react-native-rheostat";
 import { Row, Separator } from "../helpers/helpers.component";
-import { ModalButton,ModalButton1 } from "../button/button.component";
+import { ModalButton, ModalButton1 } from "../button/button.component";
 import { FilterModal } from "./bottom-sheet.component";
 import {
   setCurrentPriceRange,
@@ -17,12 +16,11 @@ import { useStripe } from '@stripe/stripe-react-native';
 import { AppContext } from '../../providers/app-provider';
 import { SpecialistContext } from '../../providers/specialist.provider';
 import socketServices from '../../screens/normal-app/components/Socket';
-
 const Paymentsheetcomponent = ({
-                                    showModal,
-                                    toggleShowModal,
-                                    ...restProps
-                                  }) => {
+  showModal,
+  toggleShowModal,
+  ...restProps
+}) => {
   const [curValue, setCurValue] = useState(null);
   const theme = useTheme();
   const [timer, setTimer] = useState(5* 60);
@@ -37,7 +35,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   useEffect(() => {
     socketServices.initializeSocket();
     setCurValue(restProps.priceRange);
-    console.log("Ssad",restProps);
+    console.log("Ssad", restProps);
   }, []);
 
   // console.log("ongoingorderrr",ongoingOrder);
@@ -46,27 +44,25 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   const onRheostatValUpdated = (payload) => {
     setCurValue(payload.values);
   };
-  const{initPaymentSheet,presentPaymentSheet}=useStripe();
-//   pi_3OQO41CnZhSvaL8u0vNjYMgi_secret_EgD3Uk28NejC2LNSlxuljuYQf ek_test_YWNjdF8xTTUxSzFDblpoU3ZhTDh1LE9wQjM2ZkRGd2NiQUdIOFROaURSaXdRMjFJaVlLT04_00bWS9oPFI undefined
-
-  const initialize =async () => {
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  //   pi_3OQO41CnZhSvaL8u0vNjYMgi_secret_EgD3Uk28NejC2LNSlxuljuYQf ek_test_YWNjdF8xTTUxSzFDblpoU3ZhTDh1LE9wQjM2ZkRGd2NiQUdIOFROaURSaXdRMjFJaVlLT04_00bWS9oPFI undefined
+  const initialize = async () => {
     const { error } = await initPaymentSheet({
-        customerId: null,
-        customerEphemeralKeySecret: paydata ? paydata.ephemeralKey : 'ek_test_YWNjdF8xTTUxSzFDblpoU3ZhTDh1LE9wQjM2ZkRGd2NiQUdIOFROaURSaXdRMjFJaVlLT04_00bWS9oPFI',
-        paymentIntentClientSecret: paydata ? paydata.paymentIntent : 'pi_3OQO41CnZhSvaL8u0vNjYMgi_secret_EgD3Uk28NejC2LNSlxuljuYQf',
-        merchantDisplayName: 'Freshr',
-        style: "alwaysLight",
-        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-        //methods that complete payment after a delay, like SEPA Debit and Sofort.
-        allowsDelayedPaymentMethods: true,
-      });
-
-      if(error){
-        console.log("nottttt initializedddddddddd");
-      }
-      else{
-        console.log("initializedddddddddddddddddddddd");
-      }
+      customerId: null,
+      customerEphemeralKeySecret: paydata ? paydata.ephemeralKey : 'ek_test_YWNjdF8xTTUxSzFDblpoU3ZhTDh1LE9wQjM2ZkRGd2NiQUdIOFROaURSaXdRMjFJaVlLT04_00bWS9oPFI',
+      paymentIntentClientSecret: paydata ? paydata.paymentIntent : 'pi_3OQO41CnZhSvaL8u0vNjYMgi_secret_EgD3Uk28NejC2LNSlxuljuYQf',
+      merchantDisplayName: 'Freshr',
+      style: "alwaysLight",
+      // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+      //methods that complete payment after a delay, like SEPA Debit and Sofort.
+      allowsDelayedPaymentMethods: true,
+    });
+    if (error) {
+      console.log("nottttt initializedddddddddd");
+    }
+    else {
+      console.log("initializedddddddddddddddddddddd");
+    }
   }
 
 
@@ -129,79 +125,212 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   }, [showModal]);
 
 
-  const applyFilter = async() => {
+
+  //     const countdown = setInterval(() => {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     }, 1000);
+  //     const logHiiTimer = setTimeout(async () => {
+  //       console.log("heyyyyyyyyyyyyyyyyyy", "hii");
+  //       toggleShowModal();
+  //       showModal = false // Assuming you have a state variable to control the modal
+  //       const orderr = ongoingOrder?.specialist?._id;
+  //       await rejectOrder(ongoingOrder?._id);
+  //       try {
+  //         socketServices.emit("payment_rejected", {
+  //           orderr,
+  //         });
+  //         console.log("yessssssssss");
+  //       } catch {
+  //         console.log("nooooooooo");
+  //       }
+  //       setShowTimer(false);
+  //     }, 10 * 60 * 1000);
+  //     return () => {
+  //       clearInterval(countdown);
+  //       clearTimeout(logHiiTimer);
+  //     };
+  //   }
+  // }, [showModal]);
+  const applyFilter = async () => {
     console.log("commimnggggggg");
-    const{error,paymentOption}=await presentPaymentSheet();
-    console.log("payyyoptionssssssssss",paymentOption);
-    if(error){
-        console.log("errrorrrrrr",error.message);
+    const { error, paymentOption } = await presentPaymentSheet();
+    console.log("payyyoptionssssssssss", paymentOption);
+    if (error) {
+      console.log("errrorrrrrr", error.message);
     }
-    else{
-        showModal=false;
-        toggleShowModal();
-        payOrder(ongoingOrder._id)
+    else {
+      showModal = false;
+      await payOrder(ongoingOrder?._id)
+      toggleShowModal();
     }
-    
   };
-  // const formatTime = (timeInSeconds) => {
-  //   const minutes = Math.floor(timeInSeconds / 60);
-  //   const seconds = timeInSeconds % 60;
-  //   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  // };
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
-//658e7a78788a4c2422e595ff
-
+  //658e7a78788a4c2422e595ff
+  const rejectOrderr = async () => {
+    console.log("heyyyyyyyyyyyyyyyyyy", "hii");
+    toggleShowModal();
+    showModal = false // Assuming you have a state variable to control the modal
+    const orderr = ongoingOrder?.specialist?._id;
+    await rejectOrder(ongoingOrder?._id);
+    setOngoingOrder(null)
+    try {
+      socketServices.emit("payment_rejected", {
+        orderr,
+      });
+      console.log("yessssssssss");
+    } catch {
+      console.log("nooooooooo");
+    }
+    setShowTimer(false);
+  }
+  console.log("ongoingggggggggg", ongoingOrder?.price);
   return (
     <FilterModal pay={true} showModal={showModal} toggleShowModal={toggleShowModal}>
-      <Spacer position="top" size="large" />
       <View style={{ flex: 1 }}>
         <Spacer position="left" size="medium">
-      <View style={{flexDirection:"row" ,justifyContent:"space-between"}}>
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>Service charge</Text>
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>${ongoingOrder?.price/100}</Text>
-          {/* <Text style={{ fontSize: 22, fontWeight: "bold" }}>${95}</Text> */}
-
+        <View style={{ justifyContent: 'center', alignItems: 'center',marginBottom:10 }}>
+            <Text style={{ fontSize: 22,fontWeight:'bold' }}>
+              Time remaining : {formatTime(timer)}
+            </Text>
           </View>
-          
-      <View style={{flexDirection:"row" ,justifyContent:"space-between"}}>
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>Seat charge</Text>
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>${5}</Text>
+         
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+
+            <Text
+              variant="caption"
+              style={{ fontSize: 16, fontWeight: "bold" }}
+            >
+              Base Price
+            </Text>
+            <Text
+              variant="caption"
+              style={{ fontSize: 16, fontWeight: "bold" }}
+            >
+              ${(((ongoingOrder?.paymentslip.basePrice)))?.toFixed(2)}
+            </Text>
+          </View>
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            Convinience fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.convenienceFee)))?.toFixed(2)}
+          </Text>
+          </View>
+          {/* deliveryFee */}
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            Delivery fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.deliveryFee)))?.toFixed(2)}
+          </Text>
+          </View>
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            Facility fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.facilityFee)))?.toFixed(2)}
+          </Text>
+          </View>
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            GST/QST Fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.gstQst)))?.toFixed(2)}
+          </Text>
+          </View>
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            Maintenance Fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.maintenanceFee)))?.toFixed(2)}
+          </Text>
+          </View>
+      <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
+
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            Processing fee
+          </Text>
+          <Text
+            variant="caption"
+            style={{ fontSize: 16, fontWeight: "bold" }}
+          >
+            ${(((ongoingOrder?.paymentslip.processingFee)))?.toFixed(2)}
+          </Text>
           </View>
           <Spacer position="bottom" size="large" />
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
-          <Text style={{ fontSize: 18 }}>
-            Time remaining: {formatTime(timer)}
-          </Text>
-        </View>
-        {/* {showTimer && (
+          
+          {/* {showTimer && (
           <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
             <Text style={{ fontSize: 18 }}>
               Time remaining: {formatTime(timer)}
             </Text>
           </View>
         )} */}
-          <View style={{flexDirection:"row" ,justifyContent:"space-between"}}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Text
               variant="caption"
-              style={{ fontSize: 16, fontWeight: "bold" }}
+              style={{ fontSize: 20, fontWeight: "bold" }}
             >
-              Total Price 
+              Total Price
             </Text>
             <Text
               variant="caption"
-              style={{ fontSize: 16, fontWeight: "bold" }}
+              style={{ fontSize: 20, fontWeight: "bold" }}
             >
-            ${((ongoingOrder?.price)/100)+5}
+              ${(((ongoingOrder?.price)) + 5)?.toFixed(2)}
             </Text>
-            </View>
-          
+
+
+          </View>
         </Spacer>
-     
         <Spacer position="bottom" size="large" />
       </View>
       <Spacer position="bottom" size="large" />
@@ -209,31 +338,33 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
       {/* <Row
         style={{
           justifyContent: "space-between",
-        
           paddingHorizontal: 8,
           paddingVertical: 16,
           alignContent:"center"
         }}
       > */}
-      <View style={{justifyContent:'center',alignItems:'center',marginVertical:20}}>
-        <ModalButton1 variant="primary" onPress={()=>applyFilter()} >
-          <Text style={{ color: "white" }}>Pay Now</Text>
-        </ModalButton1>
+      <View style={{ flexDirection: "row",justifyContent:'space-between' }}>
+        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
+          <ModalButton1 variant="primary" onPress={() => rejectOrderr()} >
+            <Text style={{ color: "white" }}>Cancel</Text>
+          </ModalButton1>
+        </View>
+        <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
+          <ModalButton1 variant="primary" onPress={() => applyFilter()} >
+            <Text style={{ color: "white" }}>Pay Now</Text>
+          </ModalButton1>
+        </View>
       </View>
       {/* </Row> */}
     </FilterModal>
   );
 };
-
 const mapStateToProps = (state) => ({
   priceRange: state.booking.priceRange,
 });
-
 const mapDispatchToProps = (dispatch) => ({
   setPriceRange: (range) => dispatch(setCurrentPriceRange(range)),
 });
-
-
 export const Paymentsheet = connect(
   mapStateToProps,
   mapDispatchToProps

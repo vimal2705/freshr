@@ -20,7 +20,7 @@ import {
   ButtonContainer,
 } from "../../components/button/process-action-button.component";
 import { LinearGradient } from "expo-linear-gradient";
-import {  SelectButton } from "../onboarding/set-gender-screen";
+import { SelectButton } from "../onboarding/set-gender-screen";
 import { LoadingScreen } from "../loading.screen";
 import { ImageUploadModal } from "../../components/bottom-sheet/ImageUploadModal";
 import { renderConfirmModal } from "./components/modal.component";
@@ -28,6 +28,7 @@ import { SpecialistContext } from "../../providers/specialist.provider";
 import mime from "mime";
 import { SpecialistScreenHoc } from "./specialist-screen-hoc";
 import Slider from "@react-native-community/slider";
+import { Input } from "react-native-elements";
 
 const Container = styled.View`
   min-height: ${Dimensions.get("window").height - 150};
@@ -38,7 +39,7 @@ const CoverImage = styled.ImageBackground`
   height: 130px;
   flex: 1;
   width: 100%;
-  background-color: ${({theme}) => theme.colors.brand.quaternary};
+  background-color: ${({ theme }) => theme.colors.brand.quaternary};
   background-size: contain;
   background-position: center;
   border-radius: 5px;
@@ -80,11 +81,12 @@ export const DescriptionInput = styled(TextInput).attrs((props) => ({
   textAlign: { undefined },
   theme: {
     colors:
-      { primary: props.theme.colors.brand.primary,
-        text: props.active ? "black" : "white",
-        placeholder: props.active ? "black" : "white",
-        underlineColor: props.theme.colors.brand.primary
-      }
+    {
+      primary: props.theme.colors.brand.primary,
+      text: props.active ? "black" : "white",
+      placeholder: props.active ? "black" : "white",
+      underlineColor: props.theme.colors.brand.primary
+    }
   }
 }))`
   width: 100%;
@@ -96,7 +98,7 @@ export const DescriptionInput = styled(TextInput).attrs((props) => ({
 const CreateServiceScreen = (props) => {
   const { isEdit = false } = props.route.params;
   const theme = useTheme();
-  const {onCreateService, specialist, updateService, deleteService, isLoading, error} = useContext(SpecialistContext)
+  const { onCreateService, specialist, updateService, deleteService, isLoading, error } = useContext(SpecialistContext)
   const mockImage =
     "https://i.pinimg.com/originals/83/1b/5d/831b5dfdc5a785b1603054452698d5a8.jpg";
 
@@ -125,14 +127,16 @@ const CreateServiceScreen = (props) => {
   const [open, setOpen] = useState(false);
   const [gender, setGender] = useState('none')
   const [value, setValue] = useState(null);
-  const [price, setPrice] = React.useState(10);
+  const [price, setPrice] = React.useState(90);
   const [serviceDescription, setServiceDescription] = useState("");
   const [isFormCompleted, setIsFormCompleted] = useState(false);
   const [showCreateServiceModal, setShowCreateServiceModal] = useState(false);
   const [showUpdateServiceModal, setShowUpdateServiceModal] = useState(false);
   const [showDeleteServiceModal, setShowDeleteServiceModal] = useState(false);
   const [currentDuration, setCurrentDuration] = useState(30)
-  const [moinmum, setmoinmum] = useState(0)
+  const [moinmum, setmoinmum] = useState(90)
+
+  console.log("moin", moinmum);
 
   const renderServiceIcon = (icon) => {
     return <ServiceItemIcon source={{ uri: icon }} />;
@@ -149,12 +153,12 @@ const CreateServiceScreen = (props) => {
 
   useEffect(() => {
     if (value && !isEdit) {
-      
+
       const serviceType = props.serviceTypes.filter(s => s.id === value)[0]
-      console.log("service typeeeeeee----------------------",serviceType);
-      setCoverImage({uri: serviceType.photo});
-      setPrice(serviceType.minimumPrice);
-      setmoinmum(serviceType.minimumPrice)
+      console.log("service typeeeeeee----------------------", serviceType);
+      setCoverImage({ uri: serviceType.photo });
+      // setPrice(serviceType.minimumPrice);
+      // setmoinmum(serviceType.minimumPrice)
       setServiceDescription(serviceType.description)
     }
   }, [value])
@@ -162,10 +166,10 @@ const CreateServiceScreen = (props) => {
   useEffect(() => {
     if (props.route.params.service) {
       console.log(props.route.params.service.id)
-      setCoverImage({uri: props.route.params.service.photo});
+      setCoverImage({ uri: props.route.params.service.photo });
       if (props.route.params.service.forFemale && props.route.params.service.forMale) {
         setGender('none')
-      } else if ( props.route.params.service.forFemale ) {
+      } else if (props.route.params.service.forFemale) {
         setGender('female')
       } else {
         setGender('male')
@@ -178,11 +182,13 @@ const CreateServiceScreen = (props) => {
     }
   }, [props.route])
 
-// console.log('999999',props.serviceTypes);
+  // console.log('999999',props.serviceTypes);
   const [items, setItems] =
-  useState(props.serviceTypes.map
-    (service => ({label: service.name, value: service.id, key: service.id, id: service.id, 
-      icon: () => renderServiceIcon(service.photo)})));
+    useState(props.serviceTypes.map
+      (service => ({
+        label: service.name, value: service.id, key: service.id, id: service.id,
+        icon: () => renderServiceIcon(service.photo)
+      })));
 
   const renderSelectService = () => {
     return (
@@ -219,6 +225,8 @@ const CreateServiceScreen = (props) => {
     );
   };
 
+  const [focused, setfocused] = useState(false)
+
   const renderPriceInput = () => {
     return (
       <PaddedContainer style={{ position: "relative", alignItems: "center", flex: 1, height: 100, backgroundColor: 'black', borderRadius: 4, borderWidth: 2, borderColor: "#25282b" }}>
@@ -230,9 +238,9 @@ const CreateServiceScreen = (props) => {
         <Spacer position="bottom" size="large" />
         <SectionTitle style={{ color: "white" }}>Price</SectionTitle>
         <Spacer position="bottom" size="large" />
-     
 
-        <CurrencyInput
+
+        {/* <CurrencyInput
             value={price}
             onChangeValue={prices =>{
               if (prices > moinmum) {
@@ -247,27 +255,65 @@ const CreateServiceScreen = (props) => {
             textAlign: "center",
             color: theme.colors.brand.primary,
           }}
-          prefix="$"
-          delimiter=","
-          separator="."
-          precision={1}
+          // prefix="$"
+          // delimiter=","
+          // separator="."
+          // precision={1}
           onChangeText={(formattedValue) => {
             
             console.log(formattedValue); // $2,310.46
           }}
+        /> */}
+        <View style={{flexDirection:'row', alignItems: 'center', justifyContent:'center'}}>
+        <Text style={{fontSize: 28,
+            fontWeight: "bold",
+            textAlign: "center",
+            color: theme.colors.brand.primary,}}>$</Text>
+        <TextInput
+        theme={{ colors: { text: theme.colors.brand.primary, textAlign:'left' } }}
+        style={{height:40, width:70, fontSize: 28,
+          backgroundColor: 'black',
+          fontWeight: "bold",
+          textAlign: "center",
+          // color: 'red'
+        }}
+        onFocus={()=>setfocused(false)}
+        onBlur={()=>setfocused(true)}
+        placeholderTextColor={focused ? theme.colors.brand.primary : 'transparent'}
+          placeholder={`${moinmum}`}  // Set the placeholder to the initial value of moinmum
+          value={price==0 ? `` : price}
+          keyboardType='numeric'
+          onChangeText={(enteredValue) => {
+            const parsedValue = parseFloat(enteredValue);  // Convert entered value to a number
+
+            if (!isNaN(parsedValue)) {
+              // Check if the entered value is a valid number
+              if (parsedValue > moinmum) {
+                console.log("heree");
+                setPrice(moinmum);  // If greater than moinmum, set the value to moinmum
+              } else {
+                setPrice(enteredValue);  // Otherwise, set it to the entered value
+              }
+            } else {
+              // Handle non-numeric input if needed
+              setPrice(0)
+              console.log("Invalid input");
+            }
+          }}
         />
+        </View>
       </PaddedContainer>
     );
   };
-  
-  
+
+
 
   const replaceCoverImage = (result) => setCoverImage(result);
 
   const renderForm = () => {
     return (
       <View>
-        <View style={{ flex: 1, padding: 8, borderWidth: 2, borderColor: "#25282b"}}>
+        <View style={{ flex: 1, padding: 8, borderWidth: 2, borderColor: "#25282b" }}>
           <CoverImage source={coverImage} resizeMode="contain">
             <TouchableOpacity
               style={{ width: "100%", height: "100%" }}
@@ -276,7 +322,7 @@ const CreateServiceScreen = (props) => {
             <CoverImageIndicator
               style={{ backgroundColor: rgba(theme.colors.brand.secondary, 0.9) }}
             >
-              <Text style={{fontSize: 10, color: "white"}}>Change image</Text>
+              <Text style={{ fontSize: 10, color: "white" }}>Change image</Text>
             </CoverImageIndicator>
           </CoverImage>
         </View>
@@ -288,7 +334,7 @@ const CreateServiceScreen = (props) => {
     return (
       <ButtonContainer
         style={{ ...theme.shadows.default, backgroundColor: specialist?.isOnline ? "white" : "black" }}
-      
+
       >
         <ActionButton
           height={55}
@@ -310,33 +356,33 @@ const CreateServiceScreen = (props) => {
 
   const renderDeleteButton = () => {
     return (
-        <PaddedContainer
-          style={{}}
-        >
-          <TouchableOpacity
-            onPress={() => setShowDeleteServiceModal(true)}
-            style={{ backgroundColor: specialist?.isOnline ? "white" : 'black', paddingVertical: 12, borderRadius: 5, borderWidth: 2, borderColor: theme.colors.brand.secondary, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+      <PaddedContainer
+        style={{}}
+      >
+        <TouchableOpacity
+          onPress={() => setShowDeleteServiceModal(true)}
+          style={{ backgroundColor: specialist?.isOnline ? "white" : 'black', paddingVertical: 12, borderRadius: 5, borderWidth: 2, borderColor: theme.colors.brand.secondary, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
 
           <AntDesign name="close" size={20} color={theme.colors.brand.secondary} />
           <Spacer position="left" size="large" />
-          <Text variant="caption" style={{ fontSize: 13, color: specialist?.isOnline ? "black":  "white" }}>
+          <Text variant="caption" style={{ fontSize: 13, color: specialist?.isOnline ? "black" : "white" }}>
             Delete service
           </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-        </PaddedContainer>
+      </PaddedContainer>
     );
   };
 
   const renderDurationSlider = () => {
     return (
-      <View style={{padding: 8, borderWidth: 1, borderRadius: 3, borderColor: "#25282b"}}>
-        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-          <Text variant={'caption'} style={{color: 'white'}}> Estimated max duration in minutes</Text>
+      <View style={{ padding: 8, borderWidth: 1, borderRadius: 3, borderColor: "#25282b" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text variant={'caption'} style={{ color: 'white' }}> Estimated max duration in minutes</Text>
 
-          <Text variant={'caption'} style={{color: theme.colors.brand.primary}}> {currentDuration} min</Text>
+          <Text variant={'caption'} style={{ color: theme.colors.brand.primary }}> {currentDuration} min</Text>
         </View>
-        <Spacer position="bottom" size="small"/>
+        <Spacer position="bottom" size="small" />
         <Slider
           value={currentDuration}
           step={1}
@@ -364,10 +410,10 @@ const CreateServiceScreen = (props) => {
         {/*</LongSelectButton>*/}
         <Spacer position="bottom" size="large" />
 
-        <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+        <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
           <SelectButton
             key={"gender-none"}
-            style={{padding: 8, elevation: 1}}
+            style={{ padding: 8, elevation: 1 }}
             active={gender === choices[0].value}
             onPress={() => setGender(choices[0].value)}
           >
@@ -375,7 +421,7 @@ const CreateServiceScreen = (props) => {
               variant="caption"
               style={{
                 fontSize: 16,
-                color:"white",
+                color: "white",
               }}
             >
               {choices[0].title}
@@ -394,7 +440,7 @@ const CreateServiceScreen = (props) => {
           <Spacer position="right" size="small" />
           <SelectButton
             key={"gender-male"}
-            style={{elevation: 1}}
+            style={{ elevation: 1 }}
             active={gender === choices[1].value}
             onPress={() => setGender(choices[1].value)}
           >
@@ -421,7 +467,7 @@ const CreateServiceScreen = (props) => {
           <Spacer position="right" size="small" />
           <SelectButton
             key={"gender-female"}
-            style={{elevation: 1}}
+            style={{ elevation: 1 }}
             active={gender === choices[2].value}
             onPress={() => setGender(choices[2].value)}
           >
@@ -453,49 +499,49 @@ const CreateServiceScreen = (props) => {
   const renderFlatListHeader = () => {
     return (<>
       {!isEdit && renderSelectService()}
-      {value  ?
+      {value ?
         <View>
-        <Spacer position="top" size="large"/>
-        <PaddedContainer>
-          <View style={{flexDirection: 'column'}}>
-            {renderForm()}
-            <Spacer position="bottom" size="large"/>
-           
-            {renderPriceInput()}
-          </View>
-          <Spacer position="bottom" size="large"/>
-          {renderDurationSlider()}
           <Spacer position="top" size="large" />
-          {/* <Spacer position="top" size="large" /> COMMENT THIS LINE */}
-          {/*<Text variant="caption" style={{fontSize: 16, color: "white"}}>Describe service </Text>  COMMENT THIS LINE  */}
-           <Spacer position="top" size="large"/>
-          <DescriptionInput
-            label="Service's description"
-            numberOfLines={5}
-            style={{backgroundColor: specialist?.isOnline ? "white" : 'black', color: specialist?.isOnline ? "black" : 'white', height: 90}}
-            color={'white'}
-            active={specialist?.isOnline}
-            underlineColor={theme.colors.brand.primary}
-            value={serviceDescription}
-            onChangeText={(text) => {
-              setServiceDescription(text);
-            }}
-          />
-        </PaddedContainer>
-        <PaddedContainer>
-          <Spacer position="top" size="large" />
-          <Spacer position="top" size="large" />
-          <Text variant="caption" style={{fontSize: 16, color: "white"}}>Service for</Text>
-        </PaddedContainer>
-        {renderSelectGender()}
-        <Spacer position="bottom" size="large" />
+          <PaddedContainer>
+            <View style={{ flexDirection: 'column' }}>
+              {renderForm()}
+              <Spacer position="bottom" size="large" />
+
+              {renderPriceInput()}
+            </View>
+            <Spacer position="bottom" size="large" />
+            {renderDurationSlider()}
+            <Spacer position="top" size="large" />
+            {/* <Spacer position="top" size="large" /> COMMENT THIS LINE */}
+            {/*<Text variant="caption" style={{fontSize: 16, color: "white"}}>Describe service </Text>  COMMENT THIS LINE  */}
+            <Spacer position="top" size="large" />
+            <DescriptionInput
+              label="Service's description"
+              numberOfLines={5}
+              style={{ backgroundColor: specialist?.isOnline ? "white" : 'black', color: specialist?.isOnline ? "black" : 'white', height: 90 }}
+              color={'white'}
+              active={specialist?.isOnline}
+              underlineColor={theme.colors.brand.primary}
+              value={serviceDescription}
+              onChangeText={(text) => {
+                setServiceDescription(text);
+              }}
+            />
+          </PaddedContainer>
+          <PaddedContainer>
+            <Spacer position="top" size="large" />
+            <Spacer position="top" size="large" />
+            <Text variant="caption" style={{ fontSize: 16, color: "white" }}>Service for</Text>
+          </PaddedContainer>
+          {renderSelectGender()}
+          <Spacer position="bottom" size="large" />
           {isEdit && renderDeleteButton()}
           <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="large" />
-        <Spacer position="bottom" size="large" />
-      </View> : <View/>} 
+          <Spacer position="bottom" size="large" />
+          <Spacer position="bottom" size="large" />
+          <Spacer position="bottom" size="large" />
+          <Spacer position="bottom" size="large" />
+        </View> : <View />}
       <ImageUploadModal
         showModal={showImageUploadModal}
         toggleShowModal={() => setShowImageUploadModal(false)}
@@ -503,7 +549,7 @@ const CreateServiceScreen = (props) => {
         noGallery={false}
       />
       <Spacer position="bottom" size="large" />
-    </>) 
+    </>)
   }
 
   const deleteThisService = async () => {
@@ -511,35 +557,35 @@ const CreateServiceScreen = (props) => {
   }
 
   if (isLoading) {
-    return <LoadingScreen/>
+    return <LoadingScreen />
   }
 
 
   const createFormData = () => {
     const formData = new FormData();
     const filename = coverImage.uri.split('/').pop();
-    const newImageUri =  "file:///" + coverImage.uri.split("file:/").join("");
+    const newImageUri = "file:///" + coverImage.uri.split("file:/").join("");
 
-    formData.append('photo', coverImage.height ? {...coverImage, uri: newImageUri, type: mime.getType(newImageUri), name: filename} : coverImage.uri );
+    formData.append('photo', coverImage.height ? { ...coverImage, uri: newImageUri, type: mime.getType(newImageUri), name: filename } : coverImage.uri);
     formData.append("description", serviceDescription);
     formData.append('forMale', gender === 'male' || gender === 'none');
     formData.append('forFemale', gender === 'female' || gender === 'none');
     formData.append('duration', currentDuration);
-    formData.append('price', price )
+    formData.append('price', price)
     return formData
   }
 
   const createService = () => {
     const data = createFormData()
     data.append('serviceType', value);
-    onCreateService(data).then(res =>  !error && props.navigation.navigate('SpecialistServiceDetails', {service: res})).catch(e => props.navigation.goBack()) ;
+    onCreateService(data).then(res => !error && props.navigation.navigate('SpecialistServiceDetails', { service: res })).catch(e => props.navigation.goBack());
   }
 
   const editService = () => {
     const data = createFormData();
     updateService(serviceId, data).then(res => {
       console.log(res);
-      !error && props.navigation.navigate('SpecialistServiceDetails', {service: res});
+      !error && props.navigation.navigate('SpecialistServiceDetails', { service: res });
     })
   }
 

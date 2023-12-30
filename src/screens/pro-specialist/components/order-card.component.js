@@ -873,7 +873,8 @@ export const OrderCard = ({
               {order.position === 0 && !isClient && order.status === "IN_TRAFFIC" && (
                 <Formik
                   initialValues={{ code: "" }}
-                  onSubmit={(values) => {
+                  onSubmit={async (values) => {
+                    await startOrder(order.id, values.code);
                     try {
                       socketServices.emit("Accept_start_code", {
                         order1,
@@ -883,7 +884,6 @@ export const OrderCard = ({
                       console.log("nooooooooo");
                     }
                     console.log(values.code);
-                    startOrder(order.id, values.code);
                   }}
                 >
                   {({ handleChange, handleBlur, handleSubmit, values }) => (

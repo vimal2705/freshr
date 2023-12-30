@@ -322,7 +322,11 @@ setPaydata(data)
       console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
 
       if(config.targetGender=='male' || config.targetGender=='female'){
-        const filteredData = tempData.filter((item)=>item?.user?.gender == config.targetGender)
+        const filteredData = tempData.filter((item)=>item?.user?.searchStylesFor == config.targetGender)
+        setMatchingFacilities(filteredData)
+      }
+      else if(config.targetGender=='all'){
+        const filteredData = tempData.filter((item)=>item?.user?.searchStylesFor == "none")
         setMatchingFacilities(filteredData)
       }
       else{
@@ -387,6 +391,7 @@ setPaydata(data)
         completedOrders,
         cancelledOrders,
         ongoingOrder,
+        setOngoingOrder, 
         loadFilters,
         loading,
         refreshing,
