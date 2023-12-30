@@ -387,7 +387,7 @@ const{user,setUser}=useContext(AuthContext);
           console.log("response form paymengtttyuh======",res.data.data);
       }
       else{
-        setIsLoading(true);
+        // setIsLoading(true);
         console.log("data of update", data);
         const config = await getTokenAndCreateAuthorizationHeader()
         const res = await axios.patch(

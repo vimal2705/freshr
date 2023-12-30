@@ -52,7 +52,7 @@ const SearchRadiusModalComponent = ({
               minimumValue={1}
               step={1}
               thumbTintColor={theme.colors.brand.secondary}
-              maximumValue={20}
+              maximumValue={100}
               onValueChange={(value) => setCurValue(value)}
               minimumTrackTintColor={theme.colors.brand.secondary}
               maximumTrackTintColor={rgba(theme.colors.brand.quaternary, 0.5)}

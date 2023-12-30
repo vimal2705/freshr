@@ -105,7 +105,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
         toggleShowModal();
         showModal=false // Assuming you have a state variable to control the modal
         const orderr=ongoingOrder?.specialist?._id;
-        await rejectOrder(ongoingOrder._id);
+        await rejectOrder(ongoingOrder?._id);
         try {
           socketServices.emit("payment_rejected", {
             orderr,
@@ -160,10 +160,11 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     }
     else {
       showModal = false;
-      await payOrder(ongoingOrder?._id)
+       payOrder(ongoingOrder?._id)
       toggleShowModal();
     }
   };
+  
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -355,6 +356,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
           </ModalButton1>
         </View>
       </View>
+     
       {/* </Row> */}
     </FilterModal>
   );

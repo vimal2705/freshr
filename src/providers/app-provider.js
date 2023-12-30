@@ -318,6 +318,7 @@ setPaydata(data)
         searchURL,configHeader
       );
       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
+      console.log("response ---------------------",res.data.data);
       const tempData = res.data.data.facilities
       console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
 

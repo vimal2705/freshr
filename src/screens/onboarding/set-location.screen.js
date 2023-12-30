@@ -288,7 +288,7 @@ const SetLocationScreen = ({ navigation }) => {
                 thumbTintColor={theme.colors.brand.primary}
                 fillColor={rgba(theme.colors.brand.primary, 0.5)}
                 geodesic
-                maximumValue={20}
+                maximumValue={100}
                 onSlidingComplete={(value) => {
                   setRadius(value);
                 }}

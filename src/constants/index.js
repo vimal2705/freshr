@@ -1,4 +1,4 @@
-const HOST_PROTOCOL = "https";
+const HOST_PROTOCOL = "http";
 const API_SUFFIX = "api/v1";
 
 // const API_HOST = "secret-caverns-70396-e6c5c94cfdfb.herokuapp.com" 
