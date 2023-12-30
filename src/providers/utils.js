@@ -29,14 +29,15 @@ export const flashMessageStyle = {
 };
 
 export const sendMessage = (title, description, status, duration, color) =>
-  showMessage({
-    message: title,
-    description,
-    type: status,
-    backgroundColor: color,
-    ...flashMessageStyle,
-    duration,
-  });
+  // showMessage({
+  //   message: title,
+  //   description,
+  //   type: status,
+  //   backgroundColor: color,
+  //   ...flashMessageStyle,
+  //   duration,
+  // });
+  console.log("hiiiiiii");
 
 
 export const getTokenAndCreateAuthorizationHeader = async (isJson=false) => {
