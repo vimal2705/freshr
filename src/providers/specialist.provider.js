@@ -158,37 +158,37 @@ export const SpecialistProvider = ({children}) => {
     try  {
       setIsLoading(true);
 
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setIsLoading(false);
-        setError(new Error('Please allow geolocation'));
-        sendMessage(
-          "Failure",
-          'Please allow geolocation',
-          "warning",
-          2500,
-          theme.colors.ui.warning
-        );
-        return; // Exit the function if geolocation permission is not granted
-      }
+      // let { status } = await Location.requestForegroundPermissionsAsync();
+      // if (status !== 'granted') {
+      //   setIsLoading(false);
+      //   setError(new Error('Please allow geolocation'));
+      //   sendMessage(
+      //     "Failure",
+      //     'Please allow geolocation',
+      //     "warning",
+      //     2500,
+      //     theme.colors.ui.warning
+      //   );
+      //   return; // Exit the function if geolocation permission is not granted
+      // }
   
-      // Attempt to get the current location
-      let location;
+      // // Attempt to get the current location
+      // let location;
   
-      try {
-        // Attempt to get the current location
-        location = await Location.getCurrentPositionAsync({});
-      } catch (error) {
-        // Handle the error (e.g., if location retrieval fails)
-        console.error("Error getting current location:", error.message);
+      // try {
+      //   // Attempt to get the current location
+      //   location = await Location.getCurrentPositionAsync({});
+      // } catch (error) {
+      //   // Handle the error (e.g., if location retrieval fails)
+      //   console.error("Error getting current location:", error.message);
   
-        // Fallback to specialist coordinates if available
-        if (specialist && specialist.coordinates) {
-          location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
-        } else {
-          throw new Error("Unable to get current location, and specialist coordinates are not available.");
-        }
-      }
+      //   // Fallback to specialist coordinates if available
+      //   if (specialist && specialist.coordinates) {
+      //     location = { coords: { latitude: specialist.coordinates[1], longitude: specialist.coordinates[0] } };
+      //   } else {
+      //     throw new Error("Unable to get current location, and specialist coordinates are not available.");
+      //   }
+      // }
   
       const config = await getTokenAndCreateAuthorizationHeader();
       const res = await axios.get(`${BASE_API_URL}/specialists/specialist/acceptOrder/${order}`, config)
@@ -206,15 +206,15 @@ export const SpecialistProvider = ({children}) => {
 
       //insert code here 
 
-      const formData = new FormData();
-      formData.append('location[type]', 'Point');
-      formData.append('location[coordinates][]', location.coords.longitude);
-      formData.append('location[coordinates][]', location.coords.latitude);
+      // const formData = new FormData();
+      // formData.append('location[type]', 'Point');
+      // formData.append('location[coordinates][]', location.coords.longitude);
+      // formData.append('location[coordinates][]', location.coords.latitude);
   
-      console.log("formmmmm========>", formData);
+      // console.log("formmmmm========>", formData);
   
-      // Update specialist info with FormData
-      await updateSpecialistInfo({ formData });
+      // // Update specialist info with FormData
+      // await updateSpecialistInfo({ formData });
   
       setError(null);
       handleSuccess(res, setIsLoading, theme);
@@ -383,7 +383,7 @@ const{user,setUser}=useContext(AuthContext);
           console.log("response form paymengtttyuh======",res.data.data);
       }
       else{
-        setIsLoading(true);
+        // setIsLoading(true);
         console.log("data of update", data);
         const config = await getTokenAndCreateAuthorizationHeader()
         const res = await axios.patch(

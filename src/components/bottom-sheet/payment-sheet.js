@@ -25,7 +25,7 @@ const Paymentsheetcomponent = ({
                                   }) => {
   const [curValue, setCurValue] = useState(null);
   const theme = useTheme();
-  const [timer, setTimer] = useState(5* 60);
+  const [timer, setTimer] = useState(10* 60);
   const [showTimer, setShowTimer] = useState(true);
 
   const { ongoingOrder, paydata, payOrder } = useContext(AppContext);
@@ -93,7 +93,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   // }, [showModal])
   useEffect(() => {
     // Reset the timer to 1 minute when the component is opened again
-    setTimer(5 * 60);
+    setTimer(10 * 60);
 
     // Only execute the timer-related code if the modal is initially opened
     if (showModal) {
@@ -109,7 +109,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
         toggleShowModal();
         showModal=false // Assuming you have a state variable to control the modal
         const orderr=ongoingOrder?.specialist?._id;
-        await rejectOrder(ongoingOrder._id);
+        await rejectOrder(ongoingOrder?._id);
         try {
           socketServices.emit("payment_rejected", {
             orderr,
@@ -119,7 +119,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
           console.log("nooooooooo");
         }
         setShowTimer(false);
-      }, 5 * 60 * 1000);
+      }, 10 * 60 * 1000);
 
       return () => {
         clearInterval(countdown);
@@ -139,7 +139,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     else{
         showModal=false;
         toggleShowModal();
-        payOrder(ongoingOrder._id)
+        payOrder(ongoingOrder?._id)
     }
     
   };
@@ -155,6 +155,22 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 //658e7a78788a4c2422e595ff
+const rejectOrderr=async()=>{
+  console.log("heyyyyyyyyyyyyyyyyyy", "hii");
+        toggleShowModal();
+        showModal=false // Assuming you have a state variable to control the modal
+        const orderr=ongoingOrder?.specialist?._id;
+        await rejectOrder(ongoingOrder?._id);
+        try {
+          socketServices.emit("payment_rejected", {
+            orderr,
+          });
+          console.log("yessssssssss");
+        } catch {
+          console.log("nooooooooo");
+        }
+        setShowTimer(false);
+}
 
   return (
     <FilterModal pay={true} showModal={showModal} toggleShowModal={toggleShowModal}>
@@ -215,10 +231,17 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
           alignContent:"center"
         }}
       > */}
+      <View style={{flexDirection:"row"}}>
+      <View style={{justifyContent:'center',alignItems:'center',marginVertical:20}}>
+        <ModalButton1 variant="primary" onPress={()=>rejectOrderr()} >
+          <Text style={{ color: "white" }}>cancel</Text>
+        </ModalButton1>
+      </View>
       <View style={{justifyContent:'center',alignItems:'center',marginVertical:20}}>
         <ModalButton1 variant="primary" onPress={()=>applyFilter()} >
           <Text style={{ color: "white" }}>Pay Now</Text>
         </ModalButton1>
+      </View>
       </View>
       {/* </Row> */}
     </FilterModal>

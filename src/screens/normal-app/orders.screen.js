@@ -425,7 +425,7 @@ return(
  }  */}
  {/* 5147586982 */}
   <Paymentsheet
-        showModal={showPaymentsheet}
+        showModal={ongoingOrder ? ongoingOrder.isPaid ? false : true : showPaymentsheet}
         toggleShowModal={handleshowPaymentsheet}
         ongoingOrder={ongoingOrder}
       />
