@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 // const SOCKET_URL ='https://secret-caverns-70396-e6c5c94cfdfb.herokuapp.com'
-const SOCKET_URL='https://seriously-hardy-stinkbug.ngrok-free.app'
+const SOCKET_URL='https://freshr-testing-7bde9045e79c.herokuapp.com'
 // const SOCKET_URL = 'https://637b-2405-201-201c-8115-d093-e02b-6909-3587.ngrok-free.app'
 class WSService {
     initializeSocket=async()=>{

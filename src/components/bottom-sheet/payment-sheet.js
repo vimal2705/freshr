@@ -26,7 +26,7 @@ const Paymentsheetcomponent = ({
   const [timer, setTimer] = useState(5* 60);
   const [showTimer, setShowTimer] = useState(true);
 
-  const { ongoingOrder, paydata, payOrder } = useContext(AppContext);
+  const { ongoingOrder, paydata, payOrder,setOngoingOrder } = useContext(AppContext);
 console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   const {  rejectOrder } = useContext(SpecialistContext)
 
@@ -188,7 +188,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     }
     setShowTimer(false);
   }
-  console.log("ongoingggggggggg", ongoingOrder?.price);
+  // console.log("ongoingggggggggg", ongoingOrder?.price);
   return (
     <FilterModal pay={true} showModal={showModal} toggleShowModal={toggleShowModal}>
       <View style={{ flex: 1 }}>
@@ -211,7 +211,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
               variant="caption"
               style={{ fontSize: 16, fontWeight: "bold" }}
             >
-              ${(((ongoingOrder?.paymentslip.basePrice)))?.toFixed(2)}
+              ${(((ongoingOrder?.paymentslip?.basePrice)))?.toFixed(2)}
             </Text>
           </View>
       <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
@@ -226,7 +226,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.convenienceFee)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.convenienceFee)))?.toFixed(2)}
           </Text>
           </View>
           {/* deliveryFee */}
@@ -242,7 +242,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.deliveryFee)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.deliveryFee)))?.toFixed(2)}
           </Text>
           </View>
       <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
@@ -257,7 +257,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.facilityFee)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.facilityFee)))?.toFixed(2)}
           </Text>
           </View>
       <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
@@ -272,7 +272,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.gstQst)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.gstQst)))?.toFixed(2)}
           </Text>
           </View>
       <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
@@ -287,7 +287,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.maintenanceFee)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.maintenanceFee)))?.toFixed(2)}
           </Text>
           </View>
       <View style={{flexDirection:"row" ,justifyContent:"space-between",marginVertical:5}}>
@@ -302,7 +302,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             variant="caption"
             style={{ fontSize: 16, fontWeight: "bold" }}
           >
-            ${(((ongoingOrder?.paymentslip.processingFee)))?.toFixed(2)}
+            ${(((ongoingOrder?.paymentslip?.processingFee)))?.toFixed(2)}
           </Text>
           </View>
           <Spacer position="bottom" size="large" />
@@ -325,7 +325,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
               variant="caption"
               style={{ fontSize: 20, fontWeight: "bold" }}
             >
-              ${(((ongoingOrder?.price)) + 5)?.toFixed(2)}
+              ${(((ongoingOrder?.price)))?.toFixed(2)}
             </Text>
 
 
