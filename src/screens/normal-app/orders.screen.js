@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Dimensions, FlatList, RefreshControl, ScrollView, useWindowDimensions, View } from "react-native";
+import { Dimensions, FlatList, RefreshControl, ScrollView, useWindowDimensions, View,BackHandler } from "react-native";
 import { useEffect, useState, useContext } from "react";
 import { SafeArea } from "../../components/utils/safearea.component";
 import { Spacer } from "../../components/spacer/spacer.component";
@@ -60,6 +60,23 @@ const OrdersScreen = (props) => {
   const handleshowPaymentsheet = () => {
     setshowPaymentsheet(!showPaymentsheet);
   };
+  const handleBackPress = () => {
+    if (showPaymentsheet) {
+      
+      return true;
+    } else {
+      
+      return false;
+    }
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      
+      backHandler.remove();
+    };
+  }, [showPaymentsheet]);
 
   // useEffect(()=>{
   //   if(open){

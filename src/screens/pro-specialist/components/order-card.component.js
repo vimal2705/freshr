@@ -645,7 +645,7 @@ export const OrderCard = ({
                 <Ionicons name="cash" size={16} color="white" />
                 <Spacer position="left" size="large" />
                 <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
-                  $ {order.price / 100}
+                  $ {order.price}
                 </Text>
               </SmallOrderCard>
 

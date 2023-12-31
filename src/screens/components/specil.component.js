@@ -142,11 +142,11 @@ const Map = ({
 }) => {
 
   const handleSnapToItem = useCallback((index)=>{
-    restProps.setSpecialist(data[index]);
-  },[data,restProps.selectSpecialist]);
+    restProps?.setSpecialist(data[index]);
+  },[data,restProps?.selectSpecialist]);
   const theme = useTheme();
   const navigation = useNavigation();
-  const [lng, lat] = restProps.searchLocation;
+  const [lng, lat] = restProps?.searchLocation;
   const [defaultRegion, setDefaultRegion] = useState(null)
   const flatList = useRef();
   const [isMounted, setIsMounted] = useState(false)
@@ -192,23 +192,23 @@ const Map = ({
 `;
 
   useEffect(() => {
-    console.log("restProps.searchLocation",restProps.searchLocation);
-    if (!restProps.selectedspecialist || !flatList) {
-      restProps.setSpecialist(data[0])
+    console.log("restProps.searchLocation",restProps?.searchLocation);
+    if (!restProps?.selectedspecialist || !flatList) {
+      restProps?.setSpecialist(data[0])
     }
     const index = data.findIndex(
-      (item) => item._id === restProps.selectedspecialist?._id
+      (item) => item._id === restProps?.selectedspecialist?._id
     );
     flatList.current?.snapToItem(index);
 
-  }, [restProps.selectedspecialist]);
+  }, [restProps?.selectedspecialist]);
 
 
  const fitMapToCircle = (node) =>  {
    try {
-     const coord = {latitude: delivery && deliverylocation? deliverylocation[1] : restProps.searchLocation[1], longitude:delivery && deliverylocation? deliverylocation[0]: restProps.searchLocation[0]};
+     const coord = {latitude: delivery && deliverylocation? deliverylocation[1] : restProps?.searchLocation[1], longitude:delivery && deliverylocation? deliverylocation[0]: restProps?.searchLocation[0]};
      console.log("zooming");
-     const radiusBoundaries = getBoundsOfDistance(coord, restProps.searchRadius * 1000);
+     const radiusBoundaries = getBoundsOfDistance(coord, restProps?.searchRadius * 1000);
      map.current?.fitToCoordinates([...data?.map(item => {
          const coordinates = item.location.coordinates
          return {latitude: coordinates[1], longitude: coordinates[0]}
@@ -230,16 +230,19 @@ const Map = ({
   useEffect(() => {
     fitMapToCircle()
 
-  }, [restProps.selectedspecialist, restProps.searchRadius, fullMap])
+  }, [restProps?.selectedspecialist, restProps?.searchRadius, fullMap])
 
 
   useEffect(() => {
-    restProps.setSpecialist(data[0])
-    restProps.setFacility(null);
+    restProps?.setSpecialist(data[0])
+    restProps?.setFacility(null);
     setIsMounted(true);
     setIsFullMap(fullMap)
     fetchdeliverylocation()
   }, [])
+
+
+  console.log("resttttttpropssssssssss",restProps);
 
   return (
     <>
@@ -291,7 +294,7 @@ const Map = ({
                   latitude: lat,
                   longitude: lng,
                 }}
-                setSearchLocation={restProps.setSearchLocation}
+                setSearchLocation={restProps?.setSearchLocation}
                 isSelected={false}
                 delivery={delivery}
              
@@ -309,20 +312,20 @@ const Map = ({
               longitude:item.location.coordinates[0],
             }}
             isSelected={
-                restProps.selectedspecialist
-                  ? item._id === restProps.selectedspecialist?._id
+                restProps?.selectedspecialist
+                  ? item._id === restProps?.selectedspecialist?._id
                   : false
               }
-              onPress={() => restProps.setSpecialist(item)}
+              onPress={() => restProps?.setSpecialist(item)}
                 />
               ))}
 
               <Circle
                 center={{
-                  latitude:delivery && deliverylocation ? deliverylocation[1]: restProps.searchLocation[1],
-                  longitude:delivery && deliverylocation ? deliverylocation[0]: restProps.searchLocation[0]
+                  latitude:delivery && deliverylocation ? deliverylocation[1]: restProps?.searchLocation[1],
+                  longitude:delivery && deliverylocation ? deliverylocation[0]: restProps?.searchLocation[0]
                 }}
-                radius={restProps.searchRadius * 1000}
+                radius={restProps?.searchRadius * 1000}
                 strokeColor={theme.colors.brand.primary}
                 strokeWidth={3}
                 fillColor={rgba(theme.colors.brand.primary, 0.3)}
@@ -380,7 +383,7 @@ const Map = ({
               showsHorizontalScrollIndicator={false}
               sliderWidth={width}
               itemWidth={(width - 48) * 0.97}
-              onSnapToItem={sharelinkdata ? restProps.setSpecialist(sharelinkdata) : (index) => restProps.setSpecialist(data[index])}
+              onSnapToItem={sharelinkdata ? restProps?.setSpecialist(sharelinkdata) : (index) => restProps?.setSpecialist(data[index])}
             />        
         </View>
            }

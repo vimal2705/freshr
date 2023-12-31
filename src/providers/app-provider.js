@@ -309,6 +309,7 @@ setPaydata(data)
     try {
       loadingAction()
       const [lng, lat] = config.searchLocation
+      
       console.log(lat,"1check",lng);
       const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
     //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/all/all/all/all/8/150`
@@ -354,15 +355,18 @@ setPaydata(data)
     try {
       loadingAction()
       console.log("config.searchLocation",config.searchLocation);
+      console.log("configgggggggggggggggggggg",config);
+      // {"currentService": null, "priceRange": [0, 150], "proGender": undefined, "searchLocation": [72.68018363043666, 23.052638634048087], "searchRadius": 20, "serviceType": null, "targetGender": "all"}
       const [lng, lat] = config.searchLocation
-      console.log(lat,"2check",lng);
-      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
+      // console.log(lat,"2check-------",lng,config.searchRadius,config.targetGender,,config.currentService?.name,config.serviceType?.name,config.priceRange,);
+      // 23.052638634048087 2check------- 72.68018363043666 20 all undefined undefined undefined [0, 150]
+      const searchURL = `${BASE_API_URL}/services/services-within/${(config.searchRadius || 3)}/center/${lat},${lng}/unit/km/all/all/all/all/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}/all`
     //  const searchURL=`${BASE_API_URL}/services/services-within/20/center/45.504769529788376,-73.77249799668789/unit/km/${config.targetGender || 'all'}/${config.proGender || 'all'}/${config.currentService?.name.toLowerCase() || 'all'}/${config.serviceType?.name.toLowerCase() || 'all'}/${config.priceRange ? config.priceRange[0] : '0'}/${config.priceRange ? config.priceRange[1] : '1000'}`
       const configHeader = await getTokenAndCreateAuthorizationHeader();
       const res = await axios.get(
         searchURL,configHeader
       );
-      // console.log("responseneapiiiiiiiii",res.data.data.specialists);
+      console.log("responseneapiiiiiiiii",res.data.data.specialists);
   // const searchSpecialist = async ({ loadingAction, stopLoadingAction, config, setMatchingFacilities, setMatchingSpecialists } ) => {
     setMatchSpecialists (res.data.data.specialists);
     console.log("res.data.data.specialists",res.data.data.specialists);
