@@ -1,12 +1,16 @@
 import styled, { useTheme } from "styled-components/native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
-
 import { SafeArea } from "../../components/utils/safearea.component";
 import React, { useContext, useRef, useState } from "react";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { Text } from "../../components/typography/typography.component";
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ActionButton } from "./components/helpers.component";
 import { TextInput } from "react-native-paper";
 import * as yup from "yup";
@@ -22,27 +26,24 @@ import { AuthContext } from "../../providers/auth/auth.context";
 import { MessageBox } from "../../components/MessageBox/message-box.component";
 import { LoadingScreen } from "../loading.screen";
 import FlashMessage from "react-native-flash-message";
-
 const Container = styled.View`
   flex: 1;
   background-color: white;
   position: relative;
 `;
-
 export const FormInput = styled(TextInput).attrs((props) => ({
   mode: "outlined",
-  color: 'black',
+  color: "black",
   numberOfLines: 1,
   textAlign: { undefined },
   theme: {
-    colors:
-    {
+    colors: {
       primary: props.theme.colors.brand.primary,
-      text: 'black',
-      placeholder: 'gray',
-      underlineColor: props.theme.colors.brand.primary
-    }
-  }
+      text: "black",
+      placeholder: "gray",
+      underlineColor: props.theme.colors.brand.primary,
+    },
+  },
 }))`
   width: 100%;
   font-size: 14px;
@@ -57,12 +58,9 @@ const SignUpScreen = (props) => {
     useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-
   if (isLoading) {
     return <LoadingScreen />;
   }
-
   const renderForm = () => {
     return (
       <View
@@ -79,37 +77,41 @@ const SignUpScreen = (props) => {
           <Text variant="caption" style={{ fontSize: 26 }}>
             Create an Account
           </Text>
-         
-         
           <Spacer position="top" size="large" />
           {/*{error && <MessageBox message={error.message} status="failure" />}*/}
-
           <Spacer position="top" size="large" />
           <Spacer position="top" size="large" />
           <Formik
             initialValues={{
               email: "",
-              firstName:"",
-              lastName:"",
+              firstName: "",
+              lastName: "",
               password: "",
               confirmPassword: "",
             }}
             onSubmit={(values) => {
               console.log("EXECUTEDDDDDDDDDDD");
               console.log(JSON.stringify(values));
-
               onRegister(values);
             }}
             validationSchema={yup.object().shape({
               email: yup.string().email().required(),
-          firstName: yup
-              .string()
-              .matches(/^[a-zA-Z\s-]+$/, 'Invalid first name. Only letters, spaces, and hyphens are allowed.')
-              .required('First name is required'),
-              lastName: yup .string()
-              .matches(/^[a-zA-Z\s-]+$/, 'Invalid first name. Only letters, spaces, and hyphens are allowed.')
-              .required('Last name is required'),
-       
+              firstName: yup
+                .string()
+                .matches(
+                  /^[a-zA-Z\s-]+$/,
+                  "Invalid first name. Only letters, spaces, and hyphens are allowed."
+                )
+                .min(2, "First name should be at least 2 characters.")
+                .required("First name is required"),
+              lastName: yup
+                .string()
+                .matches(
+                  /^[a-zA-Z\s-]+$/,
+                  "Invalid last name. Only letters, spaces, and hyphens are allowed."
+                )
+                .min(2, "Last name should be at least 2 characters.")
+                .required("Last name is required"),
               password: yup
                 .string()
                 .min(6)
@@ -130,10 +132,7 @@ const SignUpScreen = (props) => {
               isValid,
               handleSubmit,
             }) => (
-              
               <View>
-                
-                
                 {renderNameInput({
                   values,
                   handleChange,
@@ -144,8 +143,8 @@ const SignUpScreen = (props) => {
                   value: "firstName",
                   message: "FirstName",
                 })}
-                      <Spacer position="bottom" size="large" />
-                      {renderLNameInput({
+                <Spacer position="bottom" size="large" />
+                {renderLNameInput({
                   values,
                   handleChange,
                   errors,
@@ -164,7 +163,7 @@ const SignUpScreen = (props) => {
                   touched,
                   theme,
                 })}
-                      <Spacer position="bottom" size="large" />
+                <Spacer position="bottom" size="large" />
                 {renderPasswordInput({
                   values,
                   handleChange,
@@ -200,15 +199,14 @@ const SignUpScreen = (props) => {
                   }}
                 >
                   <View style={{}}>
-          {renderAuthFormFooter({
-            message: "Already have an account",
-            messageLink: "Sign in here",
-            navigation: props.navigation,
-            navigationLink: "signin",
-            theme,
-          })}
-        </View>
-                  
+                    {renderAuthFormFooter({
+                      message: "Already have an account",
+                      messageLink: "Sign in here",
+                      navigation: props.navigation,
+                      navigationLink: "signin",
+                      theme,
+                    })}
+                  </View>
                   <ActionButton onPress={(e) => handleSubmit(e)}>
                     <Text style={{ color: "white", fontSize: 16 }}>
                       create account
@@ -219,7 +217,7 @@ const SignUpScreen = (props) => {
             )}
           </Formik>
           <Spacer position="top" size="large" />
-        </ScrollView >
+        </ScrollView>
         {/* <View style={{ flex: 1, justifyContent: "flex-end" }}>
           {renderAuthFormFooter({
             message: "Already have an account",
@@ -232,11 +230,9 @@ const SignUpScreen = (props) => {
       </View>
     );
   };
-
   return (
     <>
       <FlashMessage ref={flashRef} />
-
       <SafeArea>
         <Container>
           {renderAuthFormNav({
@@ -250,8 +246,6 @@ const SignUpScreen = (props) => {
     </>
   );
 };
-
 const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({});
-
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
