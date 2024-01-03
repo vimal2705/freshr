@@ -494,6 +494,7 @@ const BookingReviewScreen = ({ Apilocc,booking, route, navigation, ...restProps}
  
 
   console.log("APIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILOCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",route.params.Apilocc);
+  console.log("distanceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",route.params.specialistTravelDistance);
   console.log("ogggggggdelllllllllllll",route.params.Del);
   const mapRef = useRef(null)
 
@@ -511,6 +512,17 @@ const [showPaymentsheet, setshowPaymentsheet] = useState(false);
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const paym="payment done";
   const [userloc, setUserloc] = useState({})
+  function getCurrentDate() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+  
+    return `${day}-${month}-${year}`;
+  }
+  
+  const currentDate = getCurrentDate();
+  // console.log("curentdateeeeeeeeeeeeeeeeeeeee",currentDate);
   useEffect(() => {
     const findLoc = async () => {
       console.log("startt");
@@ -549,6 +561,19 @@ const [showPaymentsheet, setshowPaymentsheet] = useState(false);
 const [customer1, setCustomer1] = useState(null)
 const [ephemeralKey1, setephemeralKey1] = useState(null)
 const [paymentIntent1, setpaymentIntent1] = useState(null)
+const [approxTime,setApproxTime]=useState(null)
+
+useEffect(()=>{
+  const serviceTime = route?.params?.servicetime;
+  if (serviceTime) {
+    // Convert the date to a string using toLocaleString()
+    // const approxTimeString = serviceTime.toLocaleString();
+    const approxTimeString = serviceTime.toString();
+    console.log("approxTimeString",approxTimeString);
+    setApproxTime(approxTimeString);
+  }
+  // setApproxTime(route?.params?.servicetime)
+},[route.params])
 
   const initializePaymentSheet = async () => {
     
@@ -561,7 +586,7 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
       ephemeralKey,
       customer,
       order
-    } = await fetchPaymentSheetParams(booking.services.map(service => service.id), booking.facility ==null ? null :booking.facility._id, 40, {...route.params,address:booking.facility ==null ?address :null,selectedLocation:booking.facility == null ?route.params.Apilocc:null, }); 
+    } = await fetchPaymentSheetParams(booking.services.map(service => service.id), booking.facility ==null ? null :booking.facility._id, 40, {...route.params,address:booking.facility ==null ?address :null,selectedLocation:booking.facility == null ?route.params.Apilocc:null,servicingTotalTime:approxTime}); 
     console.log("newwwww afterrrrrr");
     setpaymentIntent1(paymentIntent)
     setephemeralKey1(ephemeralKey)
@@ -724,7 +749,7 @@ const [paymentIntent1, setpaymentIntent1] = useState(null)
       <Container showsVerticalScrollIndicator={false}>
         <View style={{flex: 1}}>
           {/*<BookingStepper pageStep={2} />*/}
-          {(booking.specialist && booking.services.length > 0) && <OrderCard  isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => initializePaymentSheet()} navigation={navigation} />}
+          {(booking.specialist && booking.services.length > 0) && <OrderCard date={currentDate} distance={route.params.clientTravelDistance} isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => initializePaymentSheet()} navigation={navigation} />}
           {/*<ButtonContainer*/}
           {/*  style={{*/}
           {/*    shadowColor: "#000",*/}

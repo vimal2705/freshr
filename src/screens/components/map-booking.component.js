@@ -177,7 +177,7 @@ export const MapBooking = ({selectedFacility, isClient, searchLocation, speciali
           // console.log("chnainggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcliiiiiiiii--------------<<<<<<");
           // const {orderr}= await fetchLiveLocation(order._id,specialistlocation=[],clientloction=[loc.coords.longitude,loc.coords.latitude]);
         try {
-          console.log("Cliofsocket[][][][][][][][][][][][][][][][][][][][][][][][][][]",loc);
+          // console.log("Cliofsocket[][][][][][][][][][][][][][][][][][][][][][][][][][]",loc);
             socketServices.emit('Location_ChangeCLI',{
               loc
             })

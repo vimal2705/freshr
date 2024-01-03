@@ -125,16 +125,23 @@ const MeetingTimeSelectionScreen = ({
   const [specialistTravelTime, setSpecialistTravelTime] = useState(null);
   const [specialistTravelDistance, setSpecialistTravelDistance] = useState(null);
   const [clientTravelTime, setClientTravelTime] = useState(null);
+  const [servicetime, setserviceTime] = useState(null);
+
   const [clientTravelDistance, setClientTravelDistance] = useState(null);
   const [meetingTime, setMeetingTime] = useState(null)
   const[Apilocc,setApilocc]=useState([]);
   const Apiloc = useSelector(state=>state.locationn)
   useEffect(()=>{
+  setserviceTime(route.params.servicee);
+  },[route.params])
+  useEffect(()=>{
+
       setApilocc(Apiloc);
   },[Apiloc])
   // setApilocc()
   console.log("OGGGGGGGGGGGGGGGGGGAPIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILOCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",Apilocc);
   console.log("Dellllll in meetinggggggggg",route.params.Del);
+  console.log("servicessssss---------------lklklkklkk------------------------------------------",servicetime);  
 
   useEffect(() => {
     console.log("finallll moxa sujal",restProps.selectedSpecialist)
@@ -321,7 +328,7 @@ const MeetingTimeSelectionScreen = ({
       >
         <ActionButton
           height={50}
-          onPress={() => navigation.push("BookingReview", {Apilocc,clientTravelTime, specialistTravelTime, clientTravelDistance, specialistTravelDistance,Del:route.params.Del?route.params.Del:false})}
+          onPress={() => navigation.push("BookingReview", {servicetime,Apilocc,clientTravelTime, specialistTravelTime, clientTravelDistance, specialistTravelDistance,Del:route.params.Del?route.params.Del:false})}
         >
           <Text
             style={{

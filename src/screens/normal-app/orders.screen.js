@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Dimensions, FlatList, RefreshControl, ScrollView, useWindowDimensions, View,BackHandler } from "react-native";
+import { Dimensions, FlatList, RefreshControl, ScrollView, useWindowDimensions, View, BackHandler } from "react-native";
 import { useEffect, useState, useContext } from "react";
 import { SafeArea } from "../../components/utils/safearea.component";
 import { Spacer } from "../../components/spacer/spacer.component";
@@ -50,8 +50,8 @@ const OrdersScreen = (props) => {
   //   ephemeralKey1,
   //   customer1);
   const [showPaymentsheet, setshowPaymentsheet] = useState(false);
-  const { ongoingOrder, orders, onGetOrders, pendingOrders, refreshing, onRefresh } = useContext(AppContext); 
-  const {user} = useContext(AuthContext)
+  const { ongoingOrder, orders, onGetOrders, pendingOrders, refreshing, onRefresh } = useContext(AppContext);
+  const { user } = useContext(AuthContext)
 
   console.log("user========>", user);
 
@@ -62,10 +62,10 @@ const OrdersScreen = (props) => {
   };
   const handleBackPress = () => {
     if (showPaymentsheet) {
-      
+
       return true;
     } else {
-      
+
       return false;
     }
   };
@@ -73,7 +73,7 @@ const OrdersScreen = (props) => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
 
     return () => {
-      
+
       backHandler.remove();
     };
   }, [showPaymentsheet]);
@@ -86,14 +86,14 @@ const OrdersScreen = (props) => {
   // },[props.route.params])
   console.log("-------------------------------------------------->", fromcheckout);
   const navigation = useNavigation()
-  useEffect(()=>{
-    if(fromcheckout){
+  useEffect(() => {
+    if (fromcheckout) {
       setCurrentTab('pending')
     }
   }, [])
 
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\npaid or not ******************************", ongoingOrder?.isPaid);
-  const[userLoc,setUserloc]=useState();
+  const [userLoc, setUserloc] = useState();
   useEffect(() => {
     const findLoc = async () => {
       console.log("startt");
@@ -104,78 +104,78 @@ const OrdersScreen = (props) => {
         console.log("noooooooooooooooooooo");
         return;
       }
-    const isAndroid = Platform.OS == 'android';
-    console.log("here");
-    let location = await Location.getCurrentPositionAsync();
-    // console.log("location:::::::", location);
+      const isAndroid = Platform.OS == 'android';
+      console.log("here");
+      let location = await Location.getCurrentPositionAsync();
+      // console.log("location:::::::", location);
       // setUserloc(location.coords)
       setUserloc(location.coords)
     }
     console.log("outtt");
     findLoc()
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     socketServices.initializeSocket();
     console.log("orderssssss connected")
-//     socketServices.on('Send_Request',(dataa)=>{
+    //     socketServices.on('Send_Request',(dataa)=>{
 
-//       // userLoc
-//       getUserLoc();
+    //       // userLoc
+    //       getUserLoc();
 
-//       console.log("requestttttttttttttttttt------------",dataa);
-// setCurrentTab('ongoing');
-//     })
+    //       console.log("requestttttttttttttttttt------------",dataa);
+    // setCurrentTab('ongoing');
+    //     })
     // socketServices.on('Send_complete_code',(dataa)=>{
     //   console.log("donejobbbbbbbbbb",(dataa));
-      
+
     //     onGetOrders();
     //     setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
-    
-      
-     
+
+
+
     // })
 
 
 
-    socketServices.on('Send_complete_Busy',(dataa)=>{
-      console.log("yoooooooooooooooooooooooooodoneeeeeeeeeeeeeeeeeeeee",(dataa));
-      if(dataa.order3==false){
-      setTimeout(()=>{
-      onGetOrders();
-    setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
-      }, 5000)
-    }
+    socketServices.on('Send_complete_Busy', (dataa) => {
+      console.log("yoooooooooooooooooooooooooodoneeeeeeeeeeeeeeeeeeeee", (dataa));
+      if (dataa.order3 == false) {
+        setTimeout(() => {
+          onGetOrders();
+          setLength([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length)
+        }, 5000)
+      }
     })
 
-    socketServices.on('Send_Request',async (dataa)=>{ 
-      setTimeout(async ()=>{
+    socketServices.on('Send_Request', async (dataa) => {
+      setTimeout(async () => {
         await onGetOrders()
-        console.log("requestttttttttttttttttt------------",dataa);
-  setCurrentTab('ongoing');
-        console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
-        
-    // socketServices.on('Send_Request',(dataa)=>{
-    //   console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
-      
-    //     if(user?._id == dataa.orderr){
-    //       console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
-    //       handleshowPaymentsheet();
-    //     }
-    // })
+        console.log("requestttttttttttttttttt------------", dataa);
+        setCurrentTab('ongoing');
+        console.log("paymentdataaaaa=========================", dataa, ongoingOrder);
+
+        // socketServices.on('Send_Request',(dataa)=>{
+        //   console.log("paymentdataaaaa=========================",dataa, ongoingOrder);
+
+        //     if(user?._id == dataa.orderr){
+        //       console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
+        //       handleshowPaymentsheet();
+        //     }
+        // })
 
 
-          if(user?._id == dataa.orderr){
-            console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu",ongoingOrder,dataa.orderr);
-            handleshowPaymentsheet();
-          }
+        if (user?._id == dataa.orderr) {
+          console.log("mhhgyghyugyugyugyuguuuuhujhyuhuhu", ongoingOrder, dataa.orderr);
+          handleshowPaymentsheet();
+        }
       }, 4000)
     })
-  },[])
+  }, [])
 
 
   console.log("hbdxjaghsdcgbajdgshbxagsgdsjgcgevkcfuwgaebkcb::::::::::::::::::::::::::::::::::::::;", ongoingOrder);
-  const getUserLoc=async()=>{
-    console.log("adsasddedddd",orders);
+  const getUserLoc = async () => {
+    console.log("adsasddedddd", orders);
     // const {orderr}= await fetchLiveLocation(order._id,specialistlocation=[loc.coords.longitude,loc.coords.latitude],clientloction=[]);
 
   }
@@ -187,7 +187,7 @@ const OrdersScreen = (props) => {
     // console.log("mmmmmmmmmmmmmmmmmmmmmmmmmm",[...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))]);
     // console.log([...orders.filter(order => !['ONGOING', 'IN_TRAFFIC', 'PENDING', 'CANCELLED'].includes(order.status))].length);
   }, [])
- 
+
   const [currentTab, setCurrentTab] = useState('ongoing')
   const [visibleHistory, setVisibleHistory] = useState(10);
   const [visiblePending, setVisiblePending] = useState(10);
@@ -215,50 +215,50 @@ const OrdersScreen = (props) => {
   }
   const loadMoreHistory = () => {
     setVisibleHistory(visibleHistory + 10);
-    setVisiblePending(visiblePending +10);
+    setVisiblePending(visiblePending + 10);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setshowPaymentsheet(ongoingOrder ? ongoingOrder?.isPaid ? false : true : false)
   }, [])
-useEffect(()=>{
-  socketServices.on('Reject_Send', (dataa) => {
-    console.log("rejectedddddataaaa---------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^", dataa);
-    setSname(dataa.spename)
-    setSid(dataa.speid)
-let temp 
-    if(dataa.speid){
-      temp = specialist.filter((item)=> item?.user?._id != dataa.speid)
-    }
-if(temp){
-  setRejectSpecialist(temp)
-}
-    // let temp = []
-    // specialist.map((item)=>{
-    //   const temp1 = item.services.filter((item1)=>item1.serviceType.name == dataa.serviceName)
-    //   temp = [...temp, temp1]
-    //   console.log("tempppp", temp);
-    // })
-    // temp = specialist.filter((item)=>item.services[0]?.serviceType?.name == dataa?.serviceName)
-    // const temp = specialist.filter(specialist => {
-    //   // Check each service for the "Bob" haircut
-    //   const bobService = specialist.services.find(service => service.serviceType.name === dataa.serviceName);
-    //   return bobService !== undefined; // Return true if Bob haircut is found in services
-    // });
-    // console.log("<><><><>", temp);
-    // setRejectSpecialist(temp)
-    setRejectmodal(true)
-  })
-}, [])
-const specialist = useSelector((state) => state?.specialists?.specialists) 
+  useEffect(() => {
+    socketServices.on('Reject_Send', (dataa) => {
+      console.log("rejectedddddataaaa---------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^", dataa);
+      setSname(dataa.spename)
+      setSid(dataa.speid)
+      let temp
+      if (dataa.speid) {
+        temp = specialist.filter((item) => item?.user?._id != dataa.speid)
+      }
+      if (temp) {
+        setRejectSpecialist(temp)
+      }
+      // let temp = []
+      // specialist.map((item)=>{
+      //   const temp1 = item.services.filter((item1)=>item1.serviceType.name == dataa.serviceName)
+      //   temp = [...temp, temp1]
+      //   console.log("tempppp", temp);
+      // })
+      // temp = specialist.filter((item)=>item.services[0]?.serviceType?.name == dataa?.serviceName)
+      // const temp = specialist.filter(specialist => {
+      //   // Check each service for the "Bob" haircut
+      //   const bobService = specialist.services.find(service => service.serviceType.name === dataa.serviceName);
+      //   return bobService !== undefined; // Return true if Bob haircut is found in services
+      // });
+      // console.log("<><><><>", temp);
+      // setRejectSpecialist(temp)
+      setRejectmodal(true)
+    })
+  }, [])
+  const specialist = useSelector((state) => state?.specialists?.specialists)
 
-console.log("specialistttttttttttttt[][][][][][][][][][][][][][{}{}{}{}{}{}{}{()()()()()()()()", specialist);
+  console.log("specialistttttttttttttt[][][][][][][][][][][][][][{}{}{}{}{}{}{}{()()()()()()()()", specialist);
   // console.log("!!!!!!>>>>>>>>>>>>>>>>>>>>>>>>>", specialist[0]?.services);
   //658c3ae2638851878cb1a19f 658d45c891e1f97785e0ad1b
-  useEffect(()=>{
+  useEffect(() => {
     let temp
-    if(sid){
-      temp = specialist.filter((item)=> item?.user?._id != sid)
+    if (sid) {
+      temp = specialist.filter((item) => item?.user?._id != sid)
     }
     setRejectSpecialist(temp ? temp : specialist)
     console.log("\n\n\n\n\n\n\n\n\n\n\n0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", sid, sname);
@@ -266,118 +266,118 @@ console.log("specialistttttttttttttt[][][][][][][][][][][][][][{}{}{}{}{}{}{}{()
     // console.log("<<<<>>>>>", specialist[0]?.services[0].serviceType.name);
     // 658d45c891e1f97785e0ad1b
   }, [specialist, sid, sname])
-  
+
   return (
     // <SafeArea>
-      <View style={{ flex: 1, paddingVertical: 16, paddingHorizontal: 12 }}>
-        <Spacer position={"bottom"} size={"large"} />
-        <Spacer position={"bottom"} size={"large"} />
-        <Text variant="caption" style={{ color: "black", fontSize: 18, letterSpacing: 2 }}>Your orders</Text>
-        <Spacer position={"bottom"} size={"large"} />
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={tabs}
-          renderItem={({ item }) => {
-            const orders = getOrders(item);
-const isLarge = orders.length > 3;
+    <View style={{ flex: 1, paddingVertical: 16, paddingHorizontal: 12 }}>
+      <Spacer position={"bottom"} size={"large"} />
+      <Spacer position={"bottom"} size={"large"} />
+      <Text variant="caption" style={{ color: "black", fontSize: 18, letterSpacing: 2 }}>Your orders</Text>
+      <Spacer position={"bottom"} size={"large"} />
+      <FlatList
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={tabs}
+        renderItem={({ item }) => {
+          const orders = getOrders(item);
+          const isLarge = orders.length > 3;
+          return (
+            <TabButton active={item === currentTab} onPress={() => {
+              setCurrentTab(item)
+            }}>
+              <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>{item}</Text>
+              <CountContainer isLarge={isLarge}>
+                <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>
+                  {item === 'history' ? length : orders.length}
+                </Text>
+              </CountContainer>
+            </TabButton>
+          )
+        }
+        } />
+      <View>
+        <Spacer position={"bottom"} size={"small"} />
+      </View>
+      {currentTab === 'history' && <FlatList
+        // horizontal={false}
+        // showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        data={getOrders("history").length == 0 ? ['empty'] : getOrders("history")}
+        renderItem={({ item }) => {
+          if (item === 'empty') {
+            return <View style={{ flex: 1 }} />
+          } else {
             return (
-              <TabButton active={item === currentTab} onPress={() => {
-                setCurrentTab(item)
-                }}>
-                <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>{item}</Text>
-                <CountContainer isLarge={isLarge}>
-  <Text variant='caption' style={{ fontWeight: 'light', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>
-    {item === 'history' ? length : orders.length}
-  </Text>
-</CountContainer>
-              </TabButton>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item}
+                  showSpecialist={true} navigation={props.navigation} giveReview={true} />
+              </ScrollView>
             )
           }
-          } />
-        <View>
-          <Spacer position={"bottom"} size={"small"} />
-        </View>
-        {currentTab === 'history' && <FlatList
-          // horizontal={false}
-          // showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+        }}
+        keyExtractor={(item) => `completed}-${item.id}`}
+      />}
+      {/*{currentTab === 'cancelled' && <FlatList*/}
+      {/*  horizontal={false}*/}
+      {/*  showsHorizontalScrollIndicator={false}*/}
+      {/*  refreshControl={*/}
+      {/*    <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />*/}
+      {/*  }*/}
+      {/*  data={getOrders("cancelled")}*/}
+      {/*  renderItem={({ item }) => <View>*/}
+      {/*    <OrderCard style={{ marginBottom: 10, paddingVertical: 7 }} isClient={true} order={item} key={item.id}*/}
+      {/*               showSpecialist={true} navigation={props.navigation} />*/}
+      {/*  </View>}*/}
+      {/*  keyExtractor={(item) => `completed}-${item.id}`}*/}
+      {/*/>}*/}
+      {currentTab === 'ongoing' && <FlatList
+        horizontal={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        data={getOrders("ongoing").length === 0 ? ['empty'] : getOrders("ongoing")}
+        renderItem={({ item }) => {
+          if (item === 'empty') {
+            return <View style={{ flex: 1 }} />
+          } else {
+            return (
+              <View>
+                <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item} key={item.id}
+                  showSpecialist={true} navigation={props.navigation} />
+                <Spacer position={'top'} size={'medium'} />
+              </View>
+            )
           }
-          data={getOrders("history").length == 0 ? ['empty'] : getOrders("history")}
-          renderItem={({ item }) => {
-            if (item === 'empty') {
-              return <View style={{ flex: 1 }} />
-            } else {
-              return (
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item}
-                    showSpecialist={true} navigation={props.navigation} giveReview={true} />
-                </ScrollView>
-              )
-            }
-          }}
-          keyExtractor={(item) => `completed}-${item.id}`}
-        />}
-        {/*{currentTab === 'cancelled' && <FlatList*/}
-        {/*  horizontal={false}*/}
-        {/*  showsHorizontalScrollIndicator={false}*/}
-        {/*  refreshControl={*/}
-        {/*    <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />*/}
-        {/*  }*/}
-        {/*  data={getOrders("cancelled")}*/}
-        {/*  renderItem={({ item }) => <View>*/}
-        {/*    <OrderCard style={{ marginBottom: 10, paddingVertical: 7 }} isClient={true} order={item} key={item.id}*/}
-        {/*               showSpecialist={true} navigation={props.navigation} />*/}
-        {/*  </View>}*/}
-        {/*  keyExtractor={(item) => `completed}-${item.id}`}*/}
-        {/*/>}*/}
-        {currentTab === 'ongoing' && <FlatList
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+        }}
+        keyExtractor={(item) => `completed}-${item.id}`}
+      />}
+      {currentTab === 'pending' && <FlatList
+        horizontal={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        data={getOrders("pending").length === 0 ? ['empty'] : getOrders("pending")}
+        renderItem={({ item }) => {
+          // console.log('=======>',item.services[0].serviceType)
+          if (item === 'empty') {
+            return <View style={{ flex: 1 }} />
+          } else {
+            return (
+              <View>
+                <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item} key={item.id}
+                  showSpecialist={true} navigation={props.navigation} />
+                <Spacer position={'top'} size={'medium'} />
+              </View>
+            )
           }
-          data={getOrders("ongoing").length === 0 ? ['empty'] : getOrders("ongoing")}
-          renderItem={({ item }) => {
-            if (item === 'empty') {
-              return <View style={{ flex: 1 }} />
-            } else {
-              return (
-                <View>
-                  <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item} key={item.id}
-                    showSpecialist={true} navigation={props.navigation} />
-                  <Spacer position={'top'} size={'medium'} />
-                </View>
-              )
-            }
-          }}
-          keyExtractor={(item) => `completed}-${item.id}`}
-        />}
-        {currentTab === 'pending' && <FlatList
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl style={{ position: "absolute", top: 200 }} refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={getOrders("pending").length === 0 ? ['empty'] : getOrders("pending")}
-          renderItem={({ item }) => {
-            // console.log('=======>',item.services[0].serviceType)
-            if (item === 'empty') {
-              return <View style={{ flex: 1 }} />
-            } else {
-              return (
-                <View>
-                  <OrderCard style={{ marginBottom: 10 }} isClient={true} order={item} key={item.id}
-                    showSpecialist={true} navigation={props.navigation} />
-                  <Spacer position={'top'} size={'medium'} />
-                </View>
-              )
-            }
-          }}
-          keyExtractor={(item) => `completed}-${item?.id}`}
-        />}
-        {currentTab=='history' && historyViewMore && length > 10 &&
+        }}
+        keyExtractor={(item) => `completed}-${item?.id}`}
+      />}
+      {currentTab == 'history' && historyViewMore && length > 10 &&
         <TouchableOpacity
           onPress={loadMoreHistory}
           style={{
@@ -389,70 +389,68 @@ const isLarge = orders.length > 3;
           }}>
           <Text style={{ color: 'white' }}>View More</Text>
         </TouchableOpacity>
-         }
-{/* { rejectmodal &&
-//  <View style={{backgroundColor:'red',height:200}}> */}
-<Modal
-visible={rejectmodal}
-style={{ backgroundColor: "#fff", height: '90%', marginHorizontal:15}
-}
-><View style={{alignItems:'flex-end',height:30}}>
+      }
+      {/* { rejectmodal && */}
+      {/* <View style={{ height: '80%', alignItems: 'center', justifyContent: 'center' }}> */}
+        <Modal
+          visible={rejectmodal}
+          style={{ backgroundColor: "#fff",borderRadius:5, height: '60%', marginHorizontal: 15,marginTop:200 }
+          }
+        >
+          <View style={{ alignItems: 'flex-end', height: 30 }}>
 
-  <TouchableOpacity style={{width: 20, height: 20, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 10, right: 10, justifyContent: 'center', alignItems: 'center' }}
-            onPress={()=>setRejectmodal(false)}
+            <TouchableOpacity style={{ width: 30, height: 30, backgroundColor: '#000', borderRadius: 30,justifyContent:'center',alignItems:'center',position:'absolute',bottom:rejectSpecialist.length==1?120:60,right:-10}}
+              onPress={() => setRejectmodal(false)}
             >
-  <Entypo name='cross' size={20} color={'black'} />
-  </TouchableOpacity> 
+              <Entypo name='cross' size={24} color={'#fff'} />
+            </TouchableOpacity>
 
-  </View>
-  <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'black', paddingVertical: 10}}>
-    <Text style={{fontSize: 15, color:'#fff'}}>{`     Hi There, '${sname}' is no longer available 
+          </View>
+          <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', paddingVertical: 5 }}>
+            <Text style={{ fontSize: 15, color: '#fff' }}>{`     Hi There, '${sname}' is no longer available 
 Please Choose from our other list of pros`}</Text>
-  </View>
-  <ScrollView>
-  {
-rejectSpecialist?.map((item, index)=>{
-  // console.log("rejecteddddddddddddddddddddddddddddddddddddddd",item);
-return(
+          </View>
+          <ScrollView>
+            {
+              rejectSpecialist?.map((item, index) => {
+                // console.log("rejecteddddddddddddddddddddddddddddddddddddddd",item);
+                return (
 
-<View style={{justifyContent:'center',alignItems:'center',height:200}}>
-<View style={{width:300}}>
-   <SpecialistCard
-      navigation={navigation}
-      darkTheme={true}
-      // active={item.id === specialist?._id}
-      onPress={() => {
-        // setSpecialist(item);
-        navigation.navigate("SpecialistDetails", {
-          edit: false,
-          specialist: item
-        });
-        // setRejectmodal(false)
-      }}
-      specialist={item}
-      // locationData={locationData}
-    />
-    </View>
-    </View>
-)
-})
-}
-<Text></Text>
-</ScrollView>
-</Modal>  
+                  <View style={{  alignItems: 'center',flex:1 }}>
+                    <View style={{ width: 300 }}>
+                      <SpecialistCard
+                        navigation={navigation}
+                        darkTheme={true}
+                        // active={item.id === specialist?._id}
+                        onPress={() => {
+                          // setSpecialist(item);
+                          navigation.navigate("SpecialistDetails", {
+                            edit: false,
+                            specialist: item
+                          });
+                          // setRejectmodal(false)
+                        }}
+                        specialist={item}
+                      // locationData={locationData}
+                      />
+                    </View>
+                  </View>
+                )
+              })
+            }
+            <Text></Text>
+          </ScrollView>
+        </Modal>
 
+      {/* </View> */}
 
-
-
-{/* // </View>
- }  */}
- {/* 5147586982 */}
-  <Paymentsheet
+      {/* 5147586982 */}
+      <Paymentsheet
         showModal={showPaymentsheet}
         toggleShowModal={handleshowPaymentsheet}
         ongoingOrder={ongoingOrder}
       />
-      </View>
+    </View>
     // </SafeArea>
   );
 };

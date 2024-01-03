@@ -160,6 +160,8 @@ const StatusContainer = styled.View`
 export const OrderCard = ({
   isform,
   order,
+  date,
+  distance,
   isClient = false,
   isSpecialist = false,
   isHost = false,
@@ -194,6 +196,7 @@ export const OrderCard = ({
   const order3 = isSpecialist;
   const { specialist } = useContext(SpecialistContext);
   console.log("specialllllllllllllllllll", specialist);
+  console.log("dataaaaaaaaaaaaaaaa-----------------------------",date,distance);
 
   // const dispatch = useDispatch()
   const dispatch = useDispatch();
@@ -607,13 +610,14 @@ export const OrderCard = ({
                 variant="caption"
                 style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
               >
-                {`${order?.createdAt?.substring(
+                {/* {`${order?.createdAt?.substring(
                   8,
                   10
                 )}/${order?.createdAt?.substring(
                   5,
                   7
-                )}/${order?.createdAt?.substring(0, 4)}`}
+                )}/${order?.createdAt?.substring(0, 4)}`} */}
+                {date}
               </Text>
             </View>
             <Spacer position="bottom" size="large" />
@@ -645,7 +649,7 @@ export const OrderCard = ({
                 <Ionicons name="cash" size={16} color="white" />
                 <Spacer position="left" size="large" />
                 <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
-                  $ {order.price}
+                  $ {(order.price)/100}
                 </Text>
               </SmallOrderCard>
 
@@ -653,9 +657,7 @@ export const OrderCard = ({
                 <FontAwesome name="car" size={16} color="white" />
                 <Spacer position="left" size="large" />
                 <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
-                  {isClient
-                    ? order.clientTravelDistance
-                    : order.specialistTravelDistance}{" "}
+                  {distance}{" "}
                   km
                 </Text>
               </SmallOrderCard>

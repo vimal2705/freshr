@@ -167,6 +167,9 @@ useEffect(()=>{
   }
   
   const fetchPaymentSheetParams = async (services, facility, maxTime, data) => {
+
+
+    console.log("dataa----------------------------------------------------------------------------->9090909090909090909090909090909090",data);
    
     
     try  {

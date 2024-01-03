@@ -150,6 +150,8 @@ const SpecialistDetailsScreen = ({
   const [reviewDescription, setReviewDescription] = useState('');
   const [shownServices, setShownServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
+  const [sendingService, setsendingService] = useState(null);
+
   const [isFav, setIsFav] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [cntPerCategory, setCntPerCategory] = useState(null);
@@ -275,6 +277,7 @@ loadFav()
     console.log("againnn doneee",service);
     setSelectedService(true);
     setSelectedService(service);
+    // setsendingService(service);
   };
   const handleCloseViewMore = () => {
     setSelectedService(null);
@@ -363,6 +366,8 @@ onGetReviews(specialist?.id,'specialist')
     formData.append('description',reviewDescription );
     updateSpecialistReviews(formData);
   }
+
+  console.log("sendingdataaa========================================",sendingService?.estimatedDuration?.totalMinutes);
   return (
     specialist ==undefined ?
     <><Text>asdasd</Text></>
@@ -491,6 +496,7 @@ onGetReviews(specialist?.id,'specialist')
                         <ServiceCard
                           active={true} 
                           service={serviceItem}
+                          // setsendingService={setsendingService}
                           onMorePress={() => handleShowViewMore(serviceItem)}
                         />
                         <Spacer position="bottom" size="medium" />
@@ -589,6 +595,7 @@ onGetReviews(specialist?.id,'specialist')
                     disabled={!((specialist.isQueueing ? (specialist.queue < specialist.maxQueue) : !specialist.frontQueue))}
                     service={serviceItem}
                     onMorePress={() => handleShowViewMore(serviceItem)}
+                    setsendingService={setsendingService}
                   />
                   <Spacer position="bottom" size="medium" />
                 </View>
@@ -640,7 +647,7 @@ onGetReviews(specialist?.id,'specialist')
     }
                 editBooking
                   ? navigation.push("BookingReview")
-                  : navigation.push("MeetingTimeSelection", { edit: false,Del:route.params.Del?route.params.Del:false })
+                  : navigation.push("MeetingTimeSelection", { edit: false,Del:route.params.Del?route.params.Del:false,servicee:sendingService.estimatedDuration.totalMinutes})
 
                 }
               }

@@ -431,7 +431,7 @@ const SpecialistProfileSocialScreen = (props) => {
             style={{left:10}}
             onPress={async () => {
             try {
-              await Share.share({message:`freshr://Home/${specialist._id}/${true}/${null}`,url:`freshr://Home/${specialist._id}/${true}/${null}`})
+              await Share.share({message:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`,url:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`})
                 .then((res) => {
                   console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
                 })

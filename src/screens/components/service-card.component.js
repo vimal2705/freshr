@@ -123,10 +123,12 @@ const ServiceCard = ({
   press = null,
   active,
   userr=false,
+  setsendingService,
 }) => {
   const theme = useTheme();
   const [checked, setChecked] = useState(true);
   const[user1,setuser1]=useState();
+  const[aproxData,setApproxData]=useState(null);
   // const { onLogout} = useContext(AuthContext)
   // const {  getUser } = useContext(AppContext);
 
@@ -155,6 +157,9 @@ console.log("oguserrr",userr);
       ]);
     }
   else{
+    // setApproxData()
+    // console.log("hiiiiiiiiiiiiiiiii",service);
+    setsendingService(service);
       setChecked((oldValue) => {
         if (!info) {
           if (oldValue) {
