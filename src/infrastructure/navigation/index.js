@@ -1,7 +1,7 @@
 import { Alert, Linking, Platform, StatusBar, View } from "react-native";
 import { useContext, useEffect, useRef,useCallback, useState } from "react";
 import { connect } from "react-redux";
-import { NavigationContainer,useFocusEffect, useLinking, useNavigation } from "@react-navigation/native";
+import { NavigationContainer,useFocusEffect, useLinking } from "@react-navigation/native";
 import { setServices } from "../../redux/services/services.action";
 import { AccountNavigator } from "./account.navigator";
 import { OnboardingNavigator } from "./onboarding.navigator";
@@ -15,53 +15,13 @@ import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Navigation = (props) => {
-  // const navigation=useNavigation();
-  // useEffect(()=>{
-  //     const getUrl=async()=>{
-  //       const initialUrl= await Linking.getInitialURL();
-  //       if(initialUrl !== null){
-  //         return;
-  //       }
-  //       if(initialUrl.includes('FacilityDetails')){
-  //           Alert.alert(initialUrl);
-  //           // RootNavigation.navigate('FacilityDetails');
-            
-  //       }
-  //     }
-
-  //     getUrl();
-  // },)
-  // const navigation=useNavigation();
- 
   const navigationRef = useRef();
   const { isAuthenticated, hasOnboarded, skipAuth,setuserfromstorage } = useContext(AuthContext);
   const[authdata,setauthdata]=useState();
   const {currentApp} = useContext(AppContext);
-  // const Navigation=useNavigation();
   //  const {getInitialState}=useLinking(navigationRef)
-  useEffect(() => {
-    const handleDeepLink = (event) => {
-      if (event.url.includes('FacilityDetails')) {
-        Alert.alert(event.url);
-        // Handle deep link here
-      }
-    };
-    // Assuming you have a 'FacilityDetails' screen in your navigation setup
-// if (getInitialURL.includes('FacilityDetails')) {
-//   Navigation.navigate('FacilityDetails');
-// }
-
-
-  
-    Linking.addEventListener('url', handleDeepLink);
-  
-    // Clean up event listener
-    return () => {
-      Linking.removeEventListener('url', handleDeepLink);
-    };
-  }, []);
   const linking = {
-    prefixes: ['https://wan.qps.mybluehost.me/','freshr://'],
+    prefixes: ['freshr://','https://wan.qps.mybluehost.me'],
     // https://wan.qps.mybluehost.me/
     config: {
       initialRouteName: 'normalApp',
@@ -106,6 +66,22 @@ const Navigation = (props) => {
         return <SpecialistNavigator/>
     }
   }
+
+  // useEffect(() => {
+  //   const handleDeepLink = (event) => {
+  //     if (event.url.includes('FacilityDetails')) {
+  //       Alert.alert(event.url);
+  //       // Handle deep link here
+  //     }
+  //   };
+  
+  //   Linking.addEventListener('url', handleDeepLink);
+  
+  //   // Clean up event listener
+  //   return () => {
+  //     Linking.removeEventListener('url', handleDeepLink);
+  //   };
+  // }, []);
   // const fetchauthdata=async()=>{
   //   const jsondata=await AsyncStorage.getItem("authh");
   //   const value=JSON.parse(jsondata);

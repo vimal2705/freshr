@@ -653,6 +653,7 @@ export const AuthContextProvider = ({ children, navigation }) => {
       // });
       setIsLoading(false);
     } catch (e) {
+      console.log("failed to createeeee");
       setIsLoading(false);
       setError(getError(e));
       showMessage({

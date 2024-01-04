@@ -459,7 +459,7 @@ onGetReviews(specialist?.id,'specialist')
               <QuoteIconContainer style={{ bottom: 0, right: 0 }}>
                 <MaterialIcons name="format-quote" size={16} color={"white"} />
               </QuoteIconContainer>
-              <Text style={{ lineHeight: 22, fontSize: 14, color: "white" }}>{specialist.about ? specialist.about : "Lorem ipsum dolor sit amet   "}</Text>
+              <Text style={{ lineHeight: 22, fontSize: 14, color: "white" }}>{specialist.bio ? specialist.bio : "Lorem ipsum dolor sit amet   "}</Text>
             </DescriptionContainer>
             {!((specialist.isQueueing ? (specialist.queue < specialist.maxQueue) : !specialist.frontQueue)) && (
               <View>

@@ -53,7 +53,7 @@ export const FacilityScreenHoc = ({children, showBackButton=false}) => {
             color={"white"}
             onPress={() => navigation.navigate("Menu")}
           >
-            <Feather name="menu" size={24} color={ "black"} />
+            <Feather name="settings" size={24} color={ "black"} />
           </NavButton>
         </View>
       </TopNavContainer>

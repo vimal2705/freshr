@@ -28,18 +28,11 @@
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://u.expo.dev/da370a1a-d467-40cf-897a-dfcf3278c238"/>
     <meta-data android:name="expo.modules.updates.EXPO_RUNTIME_VERSION" android:value="@string/expo_runtime_version"/>
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
+      <intent-filter  android:autoVerify="true" >
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.freshr.freshrapp"/>
-        <data android:scheme="freshr"/>
-      </intent-filter>
-      <intent-filter>
+        <intent-filter >
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
@@ -47,6 +40,14 @@
         <data android:scheme="https"/>
         <data android:host="wan.qps.mybluehost.me"/>
       </intent-filter>
+      <intent-filter >
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="com.freshr.freshrapp"/>
+        <data android:scheme="freshr"/>
+      </intent-filter>
+    
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
     <uses-library android:name="org.apache.http.legacy" android:required="false"/>

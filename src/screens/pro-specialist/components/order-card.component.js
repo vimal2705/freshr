@@ -160,7 +160,8 @@ const StatusContainer = styled.View`
 export const OrderCard = ({
   isform,
   order,
-  date,
+  bookingg = false,
+  // date,
   distance,
   isClient = false,
   isSpecialist = false,
@@ -188,6 +189,7 @@ export const OrderCard = ({
   const [selectedEntity, setSelectedEntity] = useState("");
   const [rejectmodal, setRejectmodal] = useState(false);
   const [rejectSpecialist, setRejectSpecialist] = useState([]);
+  const [distanceee, setDistanceee] = useState(null);
   const isFocused = useIsFocused();
   const orderr = order?.client?._id;
   const orderreject = "Rejected";
@@ -196,8 +198,10 @@ export const OrderCard = ({
   const order3 = isSpecialist;
   const { specialist } = useContext(SpecialistContext);
   console.log("specialllllllllllllllllll", specialist);
-  console.log("dataaaaaaaaaaaaaaaa-----------------------------",date,distance);
-
+  console.log("dataaaaaaaaaaaaaaaa-----------------------------########################",);
+  useEffect(() => {
+    setDistanceee(distance)
+  }, [distance])
   // const dispatch = useDispatch()
   const dispatch = useDispatch();
   const [copiedText, setCopiedText] = useState("");
@@ -205,7 +209,7 @@ export const OrderCard = ({
   const copyToClipboard = (text) => {
     Clipboard.setStringAsync(text);
   };
-  // console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", order);
+  console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", order.servicingTotalTime);
 
   const [userloc, setUserloc] = useState({});
   useEffect(() => {
@@ -241,6 +245,16 @@ export const OrderCard = ({
       (clientloction = [userloc.longitude, userloc.latitude])
     );
   };
+  function getCurrentDate() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+
+    return `${day}-${month}-${year}`;
+  }
+
+  const currentDate = getCurrentDate();
 
   const [host, setHost] = useState([]);
   const [address, setAddress] = useState("");
@@ -283,8 +297,8 @@ export const OrderCard = ({
     socketServices.initializeSocket();
     socketServices.on("Send_complete_code", (dataa) => {
       console.log("donejobbbbbbbbbb", dataa);
-      if(dataa.order2 == order._id && isClient){
-        setReviewModal(true); 
+      if (dataa.order2 == order._id && isClient) {
+        setReviewModal(true);
         // SyncStorage.set("ordercomplete", {
         //   value: "true",
         //   order: order,
@@ -358,7 +372,7 @@ export const OrderCard = ({
     if (!isClient) {
       setServiceName(order.services[0].serviceType.name);
       setRejectedid(order.services[0].id);
-      setSpename(specialist?.user?.firstName + " " + specialist?.user?.lastName) 
+      setSpename(specialist?.user?.firstName + " " + specialist?.user?.lastName)
       setSpeid(specialist?.user?._id)
     }
   }, []);
@@ -378,46 +392,46 @@ export const OrderCard = ({
 
   };
 
-  console.log("orderrrrr positionnnnnnn",order);
+  console.log("orderrrrr positionnnnnnn", order);
   // order.client._id
   return (
-    
-<>
 
-{order?._id && 
-      <View
-        style={{
-          flexDirection: "row",
-          // justifyContent: "center",
-          gap: 10,
-          left: 25,
+    <>
 
-        }}
-      >
-        <Text style={{ fontSize: 15, color: 'white', backgroundColor: '#25282b', padding: 4, borderRadius: 5 }}>id: {order?._id}</Text>
-        <TouchableOpacity
-          onPress={() => copyToClipboard(order?._id)}
+      {order?._id &&
+        <View
           style={{
-            borderWidth: 1,
+            flexDirection: "row",
+            // justifyContent: "center",
+            gap: 10,
+            left: 25,
 
-            backgroundColor: "#000",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 5,
-            padding: 4
           }}
         >
-          <AntDesign name="copy1" size={14} color="#fff" />
-        </TouchableOpacity>
-      </View>
-}
+          <Text style={{ fontSize: 15, color: 'white', backgroundColor: '#25282b', padding: 4, borderRadius: 5 }}>id: {order?._id}</Text>
+          <TouchableOpacity
+            onPress={() => copyToClipboard(order?._id)}
+            style={{
+              borderWidth: 1,
+
+              backgroundColor: "#000",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+              padding: 4
+            }}
+          >
+            <AntDesign name="copy1" size={14} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      }
       <Container>
         {isClient && order?.status == 'PENDING' &&
           <View style={{
             backgroundColor: theme.colors.ui.warning, borderRadius: 2, padding: 4,
             position: 'absolute',
             zIndex: 15,
-            top: order.position >0 ? 46:5,
+            top: order.position > 0 ? 46 : 5,
             left: 3
           }}>
             <Text
@@ -599,27 +613,56 @@ export const OrderCard = ({
             <Spacer position="bottom" size="medium" />
 
 
-            <View style={{
-              backgroundColor: '#25282b', borderRadius: 4, padding: 4,
-              position: 'absolute',
-              zIndex: 15,
-              top: 6,
 
-            }}>
-              <Text
-                variant="caption"
-                style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
-              >
-                {/* {`${order?.createdAt?.substring(
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+
+              <View style={{
+                backgroundColor: '#25282b',
+                height:40,
+                justifyContent:'center',
+                alignItems:'center',
+                borderRadius:4,
+                paddingHorizontal:10
+              }}>
+                <Text
+                  variant="caption"
+                  style={{ color: "white", fontWeight: "light", letterSpacing: 2 }}
+                >
+                  {/* {`${order?.createdAt?.substring(
                   8,
                   10
                 )}/${order?.createdAt?.substring(
                   5,
                   7
                 )}/${order?.createdAt?.substring(0, 4)}`} */}
-                {date}
-              </Text>
+                  {currentDate}
+                </Text>
+              </View>
+
+              {
+                !bookingg ? 
+                <View style={{ backgroundColor: '#25282b',
+                height:40,
+                justifyContent:'center',
+                alignItems:'center',
+                borderRadius:4,
+                paddingHorizontal:10,
+                flexDirection:'row',
+                gap:5
+                }}>
+                <AntDesign name="clockcircleo" size={15} color="#fff" />
+                <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
+                  {order?.servicingTotalTime} min
+                </Text>
+
+
+              </View>:null
+              }
+
+             
             </View>
+
+
             <Spacer position="bottom" size="large" />
 
             {/* {order.address == undefined ? <View><Text></Text></View> : <TouchableOpacity onPress={copyToClipboard(order?.address?.address1 + order?.address?.apartment + order?.address?.locality + order?.address?.State + order?.address?.postcode + order?.address?.country)}><Text>{order?.address?.address1} {order?.address?.apartment} {order?.address?.locality} {order?.address?.State} {order?.address?.postcode} {order?.address?.country}</Text></TouchableOpacity>} */}
@@ -649,15 +692,17 @@ export const OrderCard = ({
                 <Ionicons name="cash" size={16} color="white" />
                 <Spacer position="left" size="large" />
                 <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
-                  $ {(order.price)/100}
+                  $ {bookingg ? (order.price) / 100 : (order.price)}
                 </Text>
               </SmallOrderCard>
+
+
 
               <SmallOrderCard>
                 <FontAwesome name="car" size={16} color="white" />
                 <Spacer position="left" size="large" />
                 <Text variant="caption" style={{ color: "white", fontSize: 15 }}>
-                  {distance}{" "}
+                  {distance ? distance : order?.specialistTravelDistance}{" "}
                   km
                 </Text>
               </SmallOrderCard>
@@ -777,541 +822,473 @@ export const OrderCard = ({
                       </Text>
                     </ExtraSmallServiceCardPrice>
                   </ExtraSmallServiceCard>
-                  
-                  </>
-            )}
-          />
 
-<>
-{order._id &&
-                    <View style={{ justifyContent: 'space-between', marginVertical: 10 }}>
-                      <View style={{ flexDirection: "row", gap: 10 }}>
-                        <View
-                          style={{
-                            backgroundColor: "#000",
-                            borderRadius: 10,
-                            height: 20,
-                            width: 20,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <AntDesign name="user" size={14} color="#fff" />
-                        </View>
-                        <Text style={{ fontSize: 16, textAlign: 'center' }}>
-                          {order?.client?.firstName} {order?.client?.lastName}
-                        </Text>
+                </>
+              )}
+            />
 
-                      </View>
-                      <View style={{ flexDirection: "row", gap: 10 }}>
-                        <Entypo name="scissors" size={18} color="black" />
-                      <Text style={{ fontSize: 16 }}>
-                        {specialist?.user?.firstName
-                          ? specialist?.user?.firstName
-                          : order?.specialist?.user?.firstName}{" "}
-                        {specialist?.user?.lastName
-                          ? specialist?.user?.lastName
-                          : order?.specialist?.user?.lastName}
-                      </Text>
-                      </View>
-                      </View>
-                      }
-                      {(order.status == "IN_TRAFFIC" || order.status == "ONGOING") &&
-                        <TouchableOpacity style={{ flexDirection: 'row', gap: 10 }} onPress={() => sendMapp()}>
-                          <Entypo name="direction" size={18} color="black" />
-                          <Text style={{ fontSize: 16, textDecorationLine: 'underline', color: '#1D6DF3' }}>{address}</Text>
-                          <FontAwesome5 name="directions" size={18} color="#1D6DF3" />
-                        </TouchableOpacity>
-                      }
+            <>
+              {order._id &&
+                <View style={{ justifyContent: 'space-between', marginVertical: 10 }}>
+                  <View style={{ flexDirection: "row", gap: 10 }}>
+                    <View
+                      style={{
+                        backgroundColor: "#000",
+                        borderRadius: 10,
+                        height: 20,
+                        width: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <AntDesign name="user" size={14} color="#fff" />
+                    </View>
+                    <Text style={{ fontSize: 16, textAlign: 'center' }}>
+                      {order?.client?.firstName} {order?.client?.lastName}
+                    </Text>
 
-
-                    </>
+                  </View>
+                  <View style={{ flexDirection: "row", gap: 10 }}>
+                    <Entypo name="scissors" size={18} color="black" />
+                    <Text style={{ fontSize: 16 }}>
+                      {specialist?.user?.firstName
+                        ? specialist?.user?.firstName
+                        : order?.specialist?.user?.firstName}{" "}
+                      {specialist?.user?.lastName
+                        ? specialist?.user?.lastName
+                        : order?.specialist?.user?.lastName}
+                    </Text>
+                  </View>
                 </View>
+              }
+              {(order.status == "IN_TRAFFIC" || order.status == "ONGOING") &&
+                <TouchableOpacity style={{ flexDirection: 'row', gap: 10 }} onPress={() => sendMapp()}>
+                  <Entypo name="direction" size={18} color="black" />
+                  <Text style={{ fontSize: 16, textDecorationLine: 'underline', color: '#1D6DF3' }}>{address}</Text>
+                  <FontAwesome5 name="directions" size={18} color="#1D6DF3" />
+                </TouchableOpacity>
+              }
 
-              <Spacer position="bottom" size="large" />
 
-              {order.position === 0 && !isClient && order.status === "PENDING" && (
-                <AcceptButton
-                  style={{ shadow: theme.shadows.default }}
-                  onPress={async () => {
-                    handleLoctaion();
-                    
-                    // try {
-                    //   socketServices.emit('Location_ChangeSP',{
-                    //     userloc
-                    //   })
+            </>
+          </View>
 
-                    // } catch (error) {
-                    //   console.log("nooooooooolocccccccccccc",error);
-                    // }
+          <Spacer position="bottom" size="large" />
 
-                    console.log("doneeeeeeee----------------------");
-                    await acceptOrder(order.id);
-                    try {
-                      socketServices.emit("Accept_Request", {
-                        orderr,
-                      });
-                      console.log("yessssssssss");
-                    } catch {
-                      console.log("nooooooooo");
-                    }
-                  }}
-                >
+          {order.position === 0 && !isClient && order.status === "PENDING" && (
+            <AcceptButton
+              style={{ shadow: theme.shadows.default }}
+              onPress={async () => {
+                handleLoctaion();
+
+                // try {
+                //   socketServices.emit('Location_ChangeSP',{
+                //     userloc
+                //   })
+
+                // } catch (error) {
+                //   console.log("nooooooooolocccccccccccc",error);
+                // }
+
+                console.log("doneeeeeeee----------------------");
+                await acceptOrder(order.id);
+                try {
+                  socketServices.emit("Accept_Request", {
+                    orderr,
+                  });
+                  console.log("yessssssssss");
+                } catch {
+                  console.log("nooooooooo");
+                }
+              }}
+            >
+              <Text
+                variant="caption"
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  textTransform: "uppercase",
+                  fontWeight: "light",
+                  letterSpacing: 2,
+                }}
+              >
+                Accept request
+              </Text>
+            </AcceptButton>
+          )}
+
+          {order.position === 0 && !isClient && order.status === "IN_TRAFFIC" && (
+            <Formik
+              initialValues={{ code: "" }}
+              onSubmit={async (values) => {
+                await startOrder(order.id, values.code);
+                try {
+                  socketServices.emit("Accept_start_code", {
+                    order1,
+                  });
+                  console.log("yessssssssss");
+                } catch {
+                  console.log("nooooooooo");
+                }
+                console.log(values.code);
+              }}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <>
+                  <TextInput
+                    color={"white"}
+                    mode={"outlined"}
+                    type={"outlined"}
+                    onChangeText={handleChange("code")}
+                    onBlur={handleBlur("code")}
+                    value={values.code}
+                    label={"Enter start code"}
+                    theme={{
+                      colors: {
+                        primary: theme.colors.brand.primary,
+                        muted: "#fafafa",
+                        text: "white",
+                        placeholder: "white",
+                      },
+                    }}
+                    style={{ backgroundColor: "#25282b", color: "white" }}
+                    keyboardType={"numeric"}
+                    maxLength={4}
+                  />
+                  <Spacer position="bottom" size="large" />
+                  <AcceptButton
+                    style={{ shadow: theme.shadows.default }}
+                    onPress={handleSubmit}
+                  >
+                    <Text
+                      variant="caption"
+                      style={{
+                        color: "white",
+                        fontSize: 14,
+                        textTransform: "uppercase",
+                        fontWeight: "light",
+                        letterSpacing: 2,
+                      }}
+                    >
+                      Confirm start code
+                    </Text>
+                  </AcceptButton>
+                </>
+              )}
+            </Formik>
+          )}
+          {isCheckout && (
+            <AcceptButton
+              style={{ shadow: theme.shadows.default }}
+              onPress={checkout}
+            >
+              <Text
+                variant="caption"
+                style={{
+                  color: "white",
+                  fontSize: 14,
+                  textTransform: "uppercase",
+                  fontWeight: "light",
+                  letterSpacing: 2,
+                }}
+              >
+                Place Order
+              </Text>
+            </AcceptButton>
+          )}
+
+          {!["COMPLETED", "CANCELLED", "PENDING"].includes(order.status) &&
+            (order.startCode || order.endCode) &&
+            isClient &&
+            !isCheckout && (
+              <View
+                style={{
+                  padding: 16,
+                  backgroundColor: "#25282b",
+                  borderRadius: 5,
+                }}
+              >
+                {order.status === "IN_TRAFFIC" && order.startCode && (
                   <Text
-                    variant="caption"
+                    variant={"caption"}
                     style={{
-                      color: "white",
-                      fontSize: 14,
                       textTransform: "uppercase",
-                      fontWeight: "light",
                       letterSpacing: 2,
+                      fontWeight: "bold",
+                      color: theme.colors.brand.primary,
                     }}
                   >
-                    Accept request
+                    start code
                   </Text>
-                </AcceptButton>
-              )}
-
-              {order.position === 0 && !isClient && order.status === "IN_TRAFFIC" && (
-                <Formik
-                  initialValues={{ code: "" }}
-                  onSubmit={async (values) => {
-                    await startOrder(order.id, values.code);
-                    try {
-                      socketServices.emit("Accept_start_code", {
-                        order1,
-                      });
-                      console.log("yessssssssss");
-                    } catch {
-                      console.log("nooooooooo");
-                    }
-                    console.log(values.code);
-                  }}
-                >
-                  {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <>
-                      <TextInput
-                        color={"white"}
-                        mode={"outlined"}
-                        type={"outlined"}
-                        onChangeText={handleChange("code")}
-                        onBlur={handleBlur("code")}
-                        value={values.code}
-                        label={"Enter start code"}
-                        theme={{
-                          colors: {
-                            primary: theme.colors.brand.primary,
-                            muted: "#fafafa",
-                            text: "white",
-                            placeholder: "white",
-                          },
-                        }}
-                        style={{ backgroundColor: "#25282b", color: "white" }}
-                        keyboardType={"numeric"}
-                        maxLength={4}
-                      />
-                      <Spacer position="bottom" size="large" />
-                      <AcceptButton
-                        style={{ shadow: theme.shadows.default }}
-                        onPress={handleSubmit}
-                      >
-                        <Text
-                          variant="caption"
-                          style={{
-                            color: "white",
-                            fontSize: 14,
-                            textTransform: "uppercase",
-                            fontWeight: "light",
-                            letterSpacing: 2,
-                          }}
-                        >
-                          Confirm start code
-                        </Text>
-                      </AcceptButton>
-                    </>
-                  )}
-                </Formik>
-              )}
-              {isCheckout && (
-                <AcceptButton
-                  style={{ shadow: theme.shadows.default }}
-                  onPress={checkout}
-                >
+                )}
+                {order.status === "ONGOING" && order.endCode && (
                   <Text
-                    variant="caption"
+                    variant={"caption"}
                     style={{
-                      color: "white",
-                      fontSize: 14,
                       textTransform: "uppercase",
-                      fontWeight: "light",
                       letterSpacing: 2,
+                      fontWeight: "bold",
+                      color: theme.colors.brand.primary,
                     }}
                   >
-                    Place Order
+                    End code
                   </Text>
-                </AcceptButton>
-              )}
-
-              {!["COMPLETED", "CANCELLED", "PENDING"].includes(order.status) &&
-                (order.startCode || order.endCode) &&
-                isClient &&
-                !isCheckout && (
+                )}
+                <Spacer position={"bottom"} size={"medium"} />
+                {order.status === "IN_TRAFFIC" && order.startCode && (
                   <View
                     style={{
-                      padding: 16,
-                      backgroundColor: "#25282b",
-                      borderRadius: 5,
+                      padding: 8,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      backgroundColor: "black",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {order.status === "IN_TRAFFIC" && order.startCode && (
+                    {order.startCode.split("").map((c) => (
                       <Text
                         variant={"caption"}
                         style={{
-                          textTransform: "uppercase",
-                          letterSpacing: 2,
-                          fontWeight: "bold",
+                          fontSize: 24,
                           color: theme.colors.brand.primary,
-                        }}
-                      >
-                        start code
-                      </Text>
-                    )}
-                    {order.status === "ONGOING" && order.endCode && (
-                      <Text
-                        variant={"caption"}
-                        style={{
-                          textTransform: "uppercase",
-                          letterSpacing: 2,
                           fontWeight: "bold",
-                          color: theme.colors.brand.primary,
                         }}
                       >
-                        End code
+                        {c}
                       </Text>
-                    )}
-                    <Spacer position={"bottom"} size={"medium"} />
-                    {order.status === "IN_TRAFFIC" && order.startCode && (
-                      <View
-                        style={{
-                          padding: 8,
-                          flexDirection: "row",
-                          alignItems: "center",
-                          backgroundColor: "black",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {order.startCode.split("").map((c) => (
-                          <Text
-                            variant={"caption"}
-                            style={{
-                              fontSize: 24,
-                              color: theme.colors.brand.primary,
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {c}
-                          </Text>
-                        ))}
-                      </View>
-                    )}
-                    {order.status === "ONGOING" && order.endCode && (
-                      <View
-                        style={{
-                          padding: 8,
-                          flexDirection: "row",
-                          alignItems: "center",
-                          backgroundColor: "black",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {order.endCode.split("").map((c) => (
-                          <Text
-                            variant={"caption"}
-                            style={{
-                              fontSize: 24,
-                              color: theme.colors.brand.primary,
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {c}
-                          </Text>
-                        ))}
-                      </View>
-                    )}
+                    ))}
                   </View>
                 )}
+                {order.status === "ONGOING" && order.endCode && (
+                  <View
+                    style={{
+                      padding: 8,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      backgroundColor: "black",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {order.endCode.split("").map((c) => (
+                      <Text
+                        variant={"caption"}
+                        style={{
+                          fontSize: 24,
+                          color: theme.colors.brand.primary,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {c}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+              </View>
+            )}
 
-              {order.position === 0 && !isClient && order.status === "ONGOING" && (
-                <Formik
-                  initialValues={{ code: "" }}
-                  onSubmit={(values) => {
-                    // Complete_code
-                    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", isform);
-                    if (isform == "host") {
-                      console.log("check1");
-                      setOrderCompleted(true);
-                      completeOrder(order.id, code);
-                      setCode(values.code);
-                      console.log(order.client.firstName);
-                      // setReviewModal(true)
-                    } else {
-                      setOrderCompleted(true);
-                      setCode(values.code);
+          {order.position === 0 && !isClient && order.status === "ONGOING" && (
+            <Formik
+              initialValues={{ code: "" }}
+              onSubmit={(values) => {
+                // Complete_code
+                console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", isform);
+                if (isform == "host") {
+                  console.log("check1");
+                  setOrderCompleted(true);
+                  completeOrder(order.id, code);
+                  setCode(values.code);
+                  console.log(order.client.firstName);
+                  // setReviewModal(true)
+                } else {
+                  setOrderCompleted(true);
+                  setCode(values.code);
+                  if (orderCompleted) {
+                    completeOrder(order.id, code);
+                    setOrderCompleted(false);
+                    SyncStorage.set("ordercomplete", {
+                      value: "true",
+                      order: order,
+                    });
+                    console.log(":Asdadsas");
+                  }
+                }
+                try {
+                  socketServices.emit("Complete_code", {
+                    order2,
+                  });
+                  console.log("yessssssssss");
+                } catch {
+                  console.log("nooooooooo");
+                }
+              }}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <>
+                  <TextInput
+                    color={"white"}
+                    type={"outlined"}
+                    mode={"outlined"}
+                    onChangeText={handleChange("code")}
+                    onBlur={handleBlur("code")}
+                    value={values.code}
+                    label={"Enter end code"}
+                    theme={{
+                      colors: {
+                        primary: theme.colors.brand.primary,
+                        muted: "#fafafa",
+                        text: "white",
+                        placeholder: "white",
+                      },
+                    }}
+                    style={{ backgroundColor: "#25282b", color: "white" }}
+                    keyboardType={"numeric"}
+                    maxLength={4}
+                  />
+                  <Spacer position="bottom" size="large" />
+                  <AcceptButton
+                    style={{ shadow: theme.shadows.default }}
+                    onPress={handleSubmit}
+                  >
+                    <Text
+                      variant="caption"
+                      style={{
+                        fontSize: 14,
+                        textTransform: "uppercase",
+                        fontWeight: "light",
+                        letterSpacing: 2,
+                      }}
+                    >
+                      Confirm complete code
+                    </Text>
+                  </AcceptButton>
+                </>
+              )}
+            </Formik>
+          )}
+        </DetailsContainer>
+        {
+          <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={ReviewModal}
+            style={{
+              backgroundColor: "#00000030",
+              marginLeft: 0,
+              marginBottom: 0,
+              height: "100%",
+              width: "100%",
+            }}
+            onRequestClose={() => {
+              //  onClose ? onClose:null
+              if (orderCompleted) {
+                completeOrder(order.id, code);
+                setOrderCompleted(false);
+              }
+              setSelectedEntity("");
+              setReviewDescription("");
+              setReviewRatings(0);
+              // setReviewModal(false)
+            }}
+          >
+            {/* {/All views of Modal/} */}
+
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: theme.colors.brand.primary,
+                height: selectedEntity == "" ? "60%" : "auto",
+                alignSelf: "center",
+                width: "80%",
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: "#fff",
+              }}
+            >
+              {selectedEntity == "" ? (
+                <>
+                  <TouchableOpacity
+                    style={{
+                      width: 20,
+                      height: 20,
+                      backgroundColor: "white",
+                      borderRadius: 30,
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onPress={() => {
+                      try {
+                        socketServices.emit("Complete_Busy", {
+                          order3,
+                        });
+                        console.log("yessssssssssbusssyyyyyyyyyyyyyyyyyyy");
+                      } catch {
+                        console.log("nooooooooobusyyyyyyyyyyyyyyyyyyyy");
+                      }
+
+                      setReviewModal(false);
+                      onGetOrders()
                       if (orderCompleted) {
                         completeOrder(order.id, code);
                         setOrderCompleted(false);
-                        SyncStorage.set("ordercomplete", {
-                          value: "true",
-                          order: order,
-                        });
-                        console.log(":Asdadsas");
                       }
-                    }
-                    try {
-                      socketServices.emit("Complete_code", {
-                        order2,
-                      });
-                      console.log("yessssssssss");
-                    } catch {
-                      console.log("nooooooooo");
-                    }
-                  }}
-                >
-                  {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <>
-                      <TextInput
+                      setSelectedEntity("");
+                      setReviewDescription("");
+                      setReviewRatings(0);
+                      // onGetOrders()
+                      // onClose ? onClose:null
+                    }}
+                  >
+                    <Entypo name="cross" size={20} color={"black"} />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                    }}
+                  >
+                    Select Entity to Review
+                  </Text>
+                  {isClient || isHost ? (
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                      <FontAwesome
+                        name="scissors"
+                        size={18}
                         color={"white"}
-                        type={"outlined"}
-                        mode={"outlined"}
-                        onChangeText={handleChange("code")}
-                        onBlur={handleBlur("code")}
-                        value={values.code}
-                        label={"Enter end code"}
-                        theme={{
-                          colors: {
-                            primary: theme.colors.brand.primary,
-                            muted: "#fafafa",
-                            text: "white",
-                            placeholder: "white",
-                          },
-                        }}
-                        style={{ backgroundColor: "#25282b", color: "white" }}
-                        keyboardType={"numeric"}
-                        maxLength={4}
+                        style={{ margin: 5 }}
                       />
-                      <Spacer position="bottom" size="large" />
-                      <AcceptButton
-                        style={{ shadow: theme.shadows.default }}
-                        onPress={handleSubmit}
-                      >
-                        <Text
-                          variant="caption"
-                          style={{
-                            fontSize: 14,
-                            textTransform: "uppercase",
-                            fontWeight: "light",
-                            letterSpacing: 2,
-                          }}
-                        >
-                          Confirm complete code
-                        </Text>
-                      </AcceptButton>
-                    </>
+                      <Text style={{ color: "white", fontSize: 20 }}>
+                        Specialist
+                      </Text>
+                    </View>
+                  ) : order.facility == undefined ? (
+                    <></>
+                  ) : (
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                      <FontAwesome
+                        name="home"
+                        size={18}
+                        color={"white"}
+                        style={{ margin: 5 }}
+                      />
+                      <Text style={{ color: "white", fontSize: 20 }}>
+                        Facility
+                      </Text>
+                    </View>
                   )}
-                </Formik>
-              )}
-            </DetailsContainer>
-            {
-              <Modal
-              animationType={"fade"}
-              transparent={true}
-              visible={ReviewModal}
-              style={{
-                backgroundColor: "#00000030",
-                marginLeft: 0,
-                marginBottom: 0,
-                height: "100%",
-                width: "100%",
-              }}
-              onRequestClose={() => {
-                //  onClose ? onClose:null
-                if (orderCompleted) {
-                  completeOrder(order.id, code);
-                  setOrderCompleted(false);
-                }
-                setSelectedEntity("");
-                setReviewDescription("");
-                setReviewRatings(0);
-                // setReviewModal(false)
-              }}
-            >
-              {/* {/All views of Modal/} */}
-    
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: theme.colors.brand.primary,
-                  height: selectedEntity == "" ? "60%" : "auto",
-                  alignSelf: "center",
-                  width: "80%",
-                  borderRadius: 10,
-                  borderWidth: 1,
-                  borderColor: "#fff",
-                }}
-              >
-                {selectedEntity == "" ? (
-                  <>
-                    <TouchableOpacity
-                      style={{
-                        width: 20,
-                        height: 20,
-                        backgroundColor: "white",
-                        borderRadius: 30,
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() => {
-                        try {
-                          socketServices.emit("Complete_Busy", {
-                            order3,
-                          });
-                          console.log("yessssssssssbusssyyyyyyyyyyyyyyyyyyy");
-                        } catch {
-                          console.log("nooooooooobusyyyyyyyyyyyyyyyyyyyy");
-                        }
-    
-                        setReviewModal(false);
-                        onGetOrders()
-                        if (orderCompleted) {
-                          completeOrder(order.id, code);
-                          setOrderCompleted(false);
-                        }
-                        setSelectedEntity("");
-                        setReviewDescription("");
-                        setReviewRatings(0);
-                        // onGetOrders()
-                        // onClose ? onClose:null
-                      }}
-                    >
-                      <Entypo name="cross" size={20} color={"black"} />
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                        marginBottom: 10,
-                      }}
-                    >
-                      Select Entity to Review
-                    </Text>
-                    {isClient || isHost ? (
-                      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                        <FontAwesome
-                          name="scissors"
-                          size={18}
-                          color={"white"}
-                          style={{ margin: 5 }}
-                        />
-                        <Text style={{ color: "white", fontSize: 20 }}>
-                          Specialist
-                        </Text>
-                      </View>
-                    ) : order.facility == undefined ? (
-                      <></>
-                    ) : (
-                      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                        <FontAwesome
-                          name="home"
-                          size={18}
-                          color={"white"}
-                          style={{ margin: 5 }}
-                        />
-                        <Text style={{ color: "white", fontSize: 20 }}>
-                          Facility
-                        </Text>
-                      </View>
-                    )}
-                    {order.facility == undefined ? (
-                      <></>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          isClient || isHost
-                            ? setSelectedEntity("specialist")
-                            : isClient || isSpecialist
-                              ? setSelectedEntity("facility")
-                              : ToastAndroid.show(
-                                "Please Select a Valid Entity to Review",
-                                ToastAndroid.SHORT
-                              );
-                        }}
-                        style={{
-                          backgroundColor: "#fff",
-                          margin: 10,
-                          width: "80%",
-                          elevation: 2,
-                          height: 50,
-                          padding: 5,
-                          borderRadius: 5,
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Image
-                          source={{
-                            uri:
-                              isClient || isHost
-                                ? order.specialist?.user?.photo
-                                : order.facility?.coverImage,
-                          }}
-                          style={{ height: 30, width: 30, marginHorizontal: 10 }}
-                        />
-                        <Text
-                          style={{ color: "#000", fontSize: 15, fontWeight: "600" }}
-                        >
-                          {isClient || isHost
-                            ? `${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
-                            : isSpecialist
-                              ? `${order.facility?.name}`
-                              : ``}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                    {isSpecialist || isHost ? (
-                      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                        <FontAwesome
-                          name="user"
-                          size={18}
-                          color={"white"}
-                          style={{ margin: 5 }}
-                        />
-    
-                        <Text style={{ color: "white", fontSize: 20 }}>Client</Text>
-                      </View>
-                    ) : (
-                      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                        <FontAwesome
-                          name="home"
-                          size={18}
-                          color={"white"}
-                          style={{ margin: 5 }}
-                        />
-    
-                        <Text style={{ color: "white", fontSize: 20 }}>
-                          Facility
-                        </Text>
-                      </View>
-                    )}
+                  {order.facility == undefined ? (
+                    <></>
+                  ) : (
                     <TouchableOpacity
                       onPress={() => {
-                        isSpecialist || isHost
-                          ? setSelectedEntity("client")
-                          : isClient
+                        isClient || isHost
+                          ? setSelectedEntity("specialist")
+                          : isClient || isSpecialist
                             ? setSelectedEntity("facility")
                             : ToastAndroid.show(
                               "Please Select a Valid Entity to Review",
@@ -1331,107 +1308,283 @@ export const OrderCard = ({
                       }}
                     >
                       <Image
-                        source={{ uri: order.facility?.coverImage }}
+                        source={{
+                          uri:
+                            isClient || isHost
+                              ? order.specialist?.user?.photo
+                              : order.facility?.coverImage,
+                        }}
                         style={{ height: 30, width: 30, marginHorizontal: 10 }}
                       />
                       <Text
                         style={{ color: "#000", fontSize: 15, fontWeight: "600" }}
                       >
-                        {isSpecialist || isHost
-                          ? `${order.client?.firstName} ${order.client?.lastName}`
-                          : isClient
+                        {isClient || isHost
+                          ? `${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
+                          : isSpecialist
                             ? `${order.facility?.name}`
                             : ``}
                       </Text>
                     </TouchableOpacity>
-                  </>
-                ) : (
-                  <></>
-                )}
-                {selectedEntity !== "" ? (
-                  <>
+                  )}
+                  {isSpecialist || isHost ? (
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                      <FontAwesome
+                        name="user"
+                        size={18}
+                        color={"white"}
+                        style={{ margin: 5 }}
+                      />
+
+                      <Text style={{ color: "white", fontSize: 20 }}>Client</Text>
+                    </View>
+                  ) : (
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                      <FontAwesome
+                        name="home"
+                        size={18}
+                        color={"white"}
+                        style={{ margin: 5 }}
+                      />
+
+                      <Text style={{ color: "white", fontSize: 20 }}>
+                        Facility
+                      </Text>
+                    </View>
+                  )}
+                  <TouchableOpacity
+                    onPress={() => {
+                      isSpecialist || isHost
+                        ? setSelectedEntity("client")
+                        : isClient
+                          ? setSelectedEntity("facility")
+                          : ToastAndroid.show(
+                            "Please Select a Valid Entity to Review",
+                            ToastAndroid.SHORT
+                          );
+                    }}
+                    style={{
+                      backgroundColor: "#fff",
+                      margin: 10,
+                      width: "80%",
+                      elevation: 2,
+                      height: 50,
+                      padding: 5,
+                      borderRadius: 5,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={{ uri: order.facility?.coverImage }}
+                      style={{ height: 30, width: 30, marginHorizontal: 10 }}
+                    />
                     <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                        marginBottom: 10,
-                      }}
+                      style={{ color: "#000", fontSize: 15, fontWeight: "600" }}
                     >
-                      Your Review for
-                      {selectedEntity == "specialist"
-                        ? ` ${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
-                        : selectedEntity == "facility"
-                          ? ` ${order.facility?.name}`
-                          : ` ${order?.client?.firstName}`}
+                      {isSpecialist || isHost
+                        ? `${order.client?.firstName} ${order.client?.lastName}`
+                        : isClient
+                          ? `${order.facility?.name}`
+                          : ``}
                     </Text>
-                    {isClient && selectedEntity == "specialist" ? (
-                      <>
-                        <Text
-                          style={{
-                            color: "black",
-                            fontSize: 18,
-                            fontWeight: "700",
-                            marginBottom: 5,
-                          }}
-                        >
-                          Services
-                        </Text>
-                        {order?.services.map((item) => {
-                          return (
-                            <View
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <></>
+              )}
+              {selectedEntity !== "" ? (
+                <>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                    }}
+                  >
+                    Your Review for
+                    {selectedEntity == "specialist"
+                      ? ` ${order.specialist?.user?.firstName} ${order.specialist?.user?.lastName}`
+                      : selectedEntity == "facility"
+                        ? ` ${order.facility?.name}`
+                        : ` ${order?.client?.firstName}`}
+                  </Text>
+                  {isClient && selectedEntity == "specialist" ? (
+                    <>
+                      <Text
+                        style={{
+                          color: "black",
+                          fontSize: 18,
+                          fontWeight: "700",
+                          marginBottom: 5,
+                        }}
+                      >
+                        Services
+                      </Text>
+                      {order?.services.map((item) => {
+                        return (
+                          <View
+                            style={{
+                              backgroundColor: "#fff",
+                              marginTop: 10,
+                              width: "80%",
+                              elevation: 2,
+                              height: 50,
+                              alignItems: "center",
+                              padding: 5,
+                              borderRadius: 5,
+                              flexDirection: "row",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: item.photo }}
                               style={{
-                                backgroundColor: "#fff",
-                                marginTop: 10,
-                                width: "80%",
-                                elevation: 2,
-                                height: 50,
-                                alignItems: "center",
-                                padding: 5,
-                                borderRadius: 5,
-                                flexDirection: "row",
+                                height: 30,
+                                width: 30,
+                                marginHorizontal: 10,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                color: "#000",
+                                fontSize: 15,
+                                fontWeight: "400",
                               }}
                             >
-                              <Image
-                                source={{ uri: item.photo }}
-                                style={{
-                                  height: 30,
-                                  width: 30,
-                                  marginHorizontal: 10,
-                                }}
-                              />
-                              <Text
-                                style={{
-                                  color: "#000",
-                                  fontSize: 15,
-                                  fontWeight: "400",
-                                }}
-                              >
-                                {item.serviceType.name}
-                              </Text>
-                            </View>
-                          );
-                        })}
-                      </>
-                    ) : (
-                      <></>
-                    )}
-    
-                    <TouchableOpacity
-                      style={{
-                        width: 20,
-                        height: 20,
-                        backgroundColor: "white",
-                        borderRadius: 30,
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() => {
-                        setReviewModal(false);
-                        onGetOrders()
+                              {item.serviceType.name}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  <TouchableOpacity
+                    style={{
+                      width: 20,
+                      height: 20,
+                      backgroundColor: "white",
+                      borderRadius: 30,
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onPress={() => {
+                      setReviewModal(false);
+                      onGetOrders()
+                      if (orderCompleted) {
+                        completeOrder(order.id, code);
+                        setOrderCompleted(false);
+                      }
+                      setSelectedEntity("");
+                      setReviewDescription("");
+                      setReviewRatings(0);
+                      // onClose ? onClose:null
+                    }}
+                  >
+                    <Entypo name="cross" size={20} color={"black"} />
+                  </TouchableOpacity>
+                  <TextInput
+                    placeholder="Write Your Review Here"
+                    value={reviewDescription}
+                    onChangeText={(t) => setReviewDescription(t)}
+                    style={{
+                      backgroundColor: "#fff",
+                      marginTop: 10,
+                      width: "80%",
+                      elevation: 2,
+                      height: "10%",
+                      padding: 5,
+                      borderRadius: 5,
+                    }}
+                  />
+                  <Rating
+                    type="star"
+                    ratingColor={theme.colors.brand.primary}
+                    ratingBackgroundColor={"red"}
+                    fractions={0}
+                    startingValue={reviewRatings}
+                    showrating
+                    style={{ marginTop: 10 }}
+                    onFinishRating={(rt) => setReviewRatings(rt)}
+                    imageSize={22}
+                  />
+                  <TouchableOpacity
+                    style={{
+                      width: "60%",
+                      height: "13%",
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: 20,
+                      elevation: 2,
+                      shadowColor: "#000",
+                    }}
+                    onPress={() => {
+                      if (reviewRatings > 0.99) {
+                        //CHANGE HOWEVER YOU NEED TO CHANGE THE REVIEW FORMAT
+                        if (isClient) {
+                          selectedEntity == "specialist"
+                            ? updateReviews({
+                              service: order?.services.map((item) => item._id),
+                              specialist: order?.specialist?._id,
+                              reviewType: "client",
+                              rating: reviewRatings,
+                              description: reviewDescription,
+                            })
+                            : selectedEntity == "facility"
+                              ? updateReviews({
+                                facility: order?.facility?._id,
+                                rating: reviewRatings,
+                                reviewType: "client",
+                                description: reviewDescription,
+                              })
+                              : null;
+                        } else if (isSpecialist) {
+                          console.log("this is NOtt happening");
+                          selectedEntity == "client"
+                            ? updateReviews({
+                              service: order?.services.map((item) => item._id),
+                              specialist: order?.specialist?._id,
+                              rating: reviewRatings,
+                              reviewType: "specialist",
+                              description: reviewDescription,
+                            })
+                            : selectedEntity == "facility"
+                              ? updateReviews({
+                                facility: order?.facility?._id,
+                                rating: reviewRatings,
+                                reviewType: "specialist",
+                                description: reviewDescription,
+                              })
+                              : null;
+                          // updateReviews({ facility: order?.facility?._id, rating: reviewRatings, description: reviewDescription })
+                        } else if (isHost) {
+                          selectedEntity == "specialist"
+                            ? updateReviews({
+                              service: order?.services.map((item) => item._id),
+                              facility: order?.facility?._id,
+                              specialist: order?.specialist?._id,
+                              reviewType: "facility",
+                              rating: reviewRatings,
+                              description: reviewDescription,
+                            })
+                            : selectedEntity == "client"
+                              ? updateReviews({
+                                facility: order?.facility?._id,
+                                facility: order?.facility?._id,
+                                rating: reviewRatings,
+                                reviewType: "facility",
+                                description: reviewDescription,
+                              })
+                              : null;
+                        }
                         if (orderCompleted) {
                           completeOrder(order.id, code);
                           setOrderCompleted(false);
@@ -1439,155 +1592,47 @@ export const OrderCard = ({
                         setSelectedEntity("");
                         setReviewDescription("");
                         setReviewRatings(0);
-                        // onClose ? onClose:null
-                      }}
-                    >
-                      <Entypo name="cross" size={20} color={"black"} />
-                    </TouchableOpacity>
-                    <TextInput
-                      placeholder="Write Your Review Here"
-                      value={reviewDescription}
-                      onChangeText={(t) => setReviewDescription(t)}
-                      style={{
-                        backgroundColor: "#fff",
-                        marginTop: 10,
-                        width: "80%",
-                        elevation: 2,
-                        height: "10%",
-                        padding: 5,
-                        borderRadius: 5,
-                      }}
-                    />
-                    <Rating
-                      type="star"
-                      ratingColor={theme.colors.brand.primary}
-                      ratingBackgroundColor={"red"}
-                      fractions={0}
-                      startingValue={reviewRatings}
-                      showrating
-                      style={{ marginTop: 10 }}
-                      onFinishRating={(rt) => setReviewRatings(rt)}
-                      imageSize={22}
-                    />
-                    <TouchableOpacity
-                      style={{
-                        width: "60%",
-                        height: "13%",
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: 20,
-                        elevation: 2,
-                        shadowColor: "#000",
-                      }}
-                      onPress={() => {
-                        if (reviewRatings > 0.99) {
-                          //CHANGE HOWEVER YOU NEED TO CHANGE THE REVIEW FORMAT
-                          if (isClient) {
-                            selectedEntity == "specialist"
-                              ? updateReviews({
-                                service: order?.services.map((item) => item._id),
-                                specialist: order?.specialist?._id,
-                                reviewType: "client",
-                                rating: reviewRatings,
-                                description: reviewDescription,
-                              })
-                              : selectedEntity == "facility"
-                                ? updateReviews({
-                                  facility: order?.facility?._id,
-                                  rating: reviewRatings,
-                                  reviewType: "client",
-                                  description: reviewDescription,
-                                })
-                                : null;
-                          } else if (isSpecialist) {
-                            console.log("this is NOtt happening");
-                            selectedEntity == "client"
-                              ? updateReviews({
-                                service: order?.services.map((item) => item._id),
-                                specialist: order?.specialist?._id,
-                                rating: reviewRatings,
-                                reviewType: "specialist",
-                                description: reviewDescription,
-                              })
-                              : selectedEntity == "facility"
-                                ? updateReviews({
-                                  facility: order?.facility?._id,
-                                  rating: reviewRatings,
-                                  reviewType: "specialist",
-                                  description: reviewDescription,
-                                })
-                                : null;
-                            // updateReviews({ facility: order?.facility?._id, rating: reviewRatings, description: reviewDescription })
-                          } else if (isHost) {
-                            selectedEntity == "specialist"
-                              ? updateReviews({
-                                service: order?.services.map((item) => item._id),
-                                facility: order?.facility?._id,
-                                specialist: order?.specialist?._id,
-                                reviewType: "facility",
-                                rating: reviewRatings,
-                                description: reviewDescription,
-                              })
-                              : selectedEntity == "client"
-                                ? updateReviews({
-                                  facility: order?.facility?._id,
-                                  facility: order?.facility?._id,
-                                  rating: reviewRatings,
-                                  reviewType: "facility",
-                                  description: reviewDescription,
-                                })
-                                : null;
-                          }
-                          if (orderCompleted) {
-                            completeOrder(order.id, code);
-                            setOrderCompleted(false);
-                          }
-                          setSelectedEntity("");
-                          setReviewDescription("");
-                          setReviewRatings(0);
-                          // setReviewModal(false)
-                        } else {
-                          if (reviewRatings < 1 || reviewRatings == undefined) {
-                            console.log("check------", reviewRatings);
-                            sendMessage(
-                              "Rating should be 1 star or more",
-                              "Minimum Rating to be given is 1 star",
-                              "error",
-                              2000,
-                              theme.colors.ui.warning
-                            );
-                          }
-                          // else if(reviewDescription == ''){
-                          //   sendMessage(
-                          //     "Please write a review",
-                          //     2000,
-                          //     theme.colors.ui.warning
-                          //   );
-                          // }
-                          onGetOrders()
+                        // setReviewModal(false)
+                      } else {
+                        if (reviewRatings < 1 || reviewRatings == undefined) {
+                          console.log("check------", reviewRatings);
+                          sendMessage(
+                            "Rating should be 1 star or more",
+                            "Minimum Rating to be given is 1 star",
+                            "error",
+                            2000,
+                            theme.colors.ui.warning
+                          );
                         }
+                        // else if(reviewDescription == ''){
+                        //   sendMessage(
+                        //     "Please write a review",
+                        //     2000,
+                        //     theme.colors.ui.warning
+                        //   );
+                        // }
+                        onGetOrders()
+                      }
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: theme.colors.brand.primary,
+                        fontSize: 20,
+                        fontWeight: "bold",
                       }}
                     >
-                      <Text
-                        style={{
-                          color: theme.colors.brand.primary,
-                          fontSize: 20,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Submit
-                      </Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </View>
-            </Modal>
-            }
-            {/* 
+                      Submit
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <></>
+              )}
+            </View>
+          </Modal>
+        }
+        {/* 
       { rejectmodal && isClient &&
 
         // <View style={{backgroundColor:'red',height:200}}>
@@ -1635,7 +1680,7 @@ rejectSpecialist.map((item, index)=>{
         // </View>
       
       } */}
-          </Container>
-        </>
-        );
+      </Container>
+    </>
+  );
 };

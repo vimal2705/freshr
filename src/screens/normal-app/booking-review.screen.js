@@ -508,6 +508,8 @@ const [showPaymentsheet, setshowPaymentsheet] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [address,setAddress] = useState(SyncStorage.get('locationAddress'))
   const [selectedLocation,setSelectedLocation] = useState([])
+  const [datee,setDatee]=useState(null);
+  const [distancee,setDistancee]=useState(null);
   // const [selectedLocation,setSelectedLocation] = useState(SyncStorage.get('userLocation'))
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const paym="payment done";
@@ -522,7 +524,12 @@ const [showPaymentsheet, setshowPaymentsheet] = useState(false);
   }
   
   const currentDate = getCurrentDate();
+
   // console.log("curentdateeeeeeeeeeeeeeeeeeeee",currentDate);
+
+  useEffect(()=>{
+      setDistancee(route.params.specialistTravelDistance)
+  },[route.params])
   useEffect(() => {
     const findLoc = async () => {
       console.log("startt");
@@ -743,13 +750,15 @@ useEffect(()=>{
   if (loading) {
     return <LoadingScreen/>
   }
+  // setDatee(currentDate);
+
   return (
     <SafeArea>
       <NavBar title={"Booking review"} white={true}/>
       <Container showsVerticalScrollIndicator={false}>
         <View style={{flex: 1}}>
           {/*<BookingStepper pageStep={2} />*/}
-          {(booking.specialist && booking.services.length > 0) && <OrderCard date={currentDate} distance={route.params.clientTravelDistance} isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => initializePaymentSheet()} navigation={navigation} />}
+          {(booking.specialist && booking.services.length > 0) && <OrderCard  bookingg={true} distance={distancee} isClient={true} order={{ ...newOrder, ...booking, price: totalPrice * 100 }} showSpecialist={true} isCheckout={true} checkout={() => initializePaymentSheet()} navigation={navigation} />}
           {/*<ButtonContainer*/}
           {/*  style={{*/}
           {/*    shadowColor: "#000",*/}
