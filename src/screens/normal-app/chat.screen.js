@@ -289,6 +289,7 @@ const ChatScreen = ({ route,state,navigation }) => {
   }, []);
 
   return (
+  
   <View style={{flex: 1}}>
     <View style={{height:50 ,marginTop:20, flexDirection:"row"}}>
     <MaterialIcons
@@ -309,15 +310,17 @@ const ChatScreen = ({ route,state,navigation }) => {
         // renderBubble={renderBubble}
         alwaysShowSend
         style={{backgroundColor: 'black'}}
-        messagesContainerStyle={{backgroundColor: 'black', padding: 10, paddingBottom: 25}}
+        messagesContainerStyle={{backgroundColor: 'black',marginBottom:-20}}
         scrollToBottom
         scrollToBottomComponent={scrollToBottomComponent}
         renderSend={renderSend}
         renderActions={renderActions}
-        textInputProps={{style: {color: "white", flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 8, marginLeft: 8}}}
-        containerStyle={{ paddingVertical:8, height: 60, justifyContent:'center', backgroundColor: '#25282b', color: "white"}}
+        
+        textInputProps={{style: {color: "white", flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom:20, marginLeft: 8}}}
+        containerStyle={{ height: 60, justifyContent:'center', backgroundColor: '#25282b', color: "white"}}
       />
-      
+     
+      {/* 25282b */}
        <ImageUploadModal
         showModal={showImageUploadModal}
         toggleShowModal={() => setShowImageUploadModal(false)}

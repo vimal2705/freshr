@@ -144,7 +144,7 @@ export const CompleteScreen = (name, app, nav) =>  ({  ...restProps}) => {
     goBack = "Host's side"
 
   } else if (currentApp === 'specialist') {
-    goBack = "Specialist's side"
+    goBack = "Professional's side"
   }
 
   return <SafeArea style={{position: "relative"}}>

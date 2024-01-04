@@ -215,7 +215,7 @@ const ProfileScreen = (props) => {
               // })
             }
             }
-            label="Switch to service provider account"
+            label="Switch to Professional's account"
           />}
           {user && !user.isSpecialist && <ProfileButton
             icon={

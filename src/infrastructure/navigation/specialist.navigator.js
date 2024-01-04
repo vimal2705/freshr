@@ -56,7 +56,7 @@ export const ProAppServiceTabNavigator = () => {
         component={HistorySpecialistScreen}
       />
        <ProTabService.Screen
-        name="Reserved"
+        name="Reseve"
         component={ReservedSpecialist}
       />
       <ProTabService.Screen name="Inbox" component={InboxSpecialistScreen} />
