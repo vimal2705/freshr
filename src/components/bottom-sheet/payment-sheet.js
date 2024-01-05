@@ -1,6 +1,6 @@
 import { useTheme } from 'styled-components/native';
 import React, { useContext, useEffect, useState } from "react";
-import { View } from "react-native";
+import { AppState, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { Spacer } from "../spacer/spacer.component";
@@ -9,6 +9,7 @@ import Rheostat, { AreaRheostat } from "react-native-rheostat";
 import { Row, Separator } from "../helpers/helpers.component";
 import { ModalButton, ModalButton1 } from "../button/button.component";
 import { FilterModal } from "./bottom-sheet.component";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   setCurrentPriceRange,
 } from "../../redux/booking/booking.actions";
@@ -25,6 +26,34 @@ const Paymentsheetcomponent = ({
   const theme = useTheme();
   const [timer, setTimer] = useState(5* 60);
   const [showTimer, setShowTimer] = useState(true);
+  const [appState, setAppState] = useState(AppState.currentState);
+ 
+  useEffect(() => {
+    const handleAppStateChange = async (nextAppState) => {
+      if (nextAppState === 'inactive' || nextAppState === 'background') {
+        try {
+          await AsyncStorage.setItem('timer', timer.toString());
+        } catch (error) {
+          console.error('Error saving timer to AsyncStorage', error);
+        }
+        setShowTimer(false);
+      } else {
+        setShowTimer(true);
+      }
+      setAppState(nextAppState);
+    };
+
+    AppState.addEventListener('change', handleAppStateChange);
+
+    // const cleanup = () => {
+    //   AppState.removeEventListener('change', handleAppStateChange);
+    // };
+  
+    // return cleanup;
+  }, [timer]);
+
+  
+
 
   const { ongoingOrder, paydata, payOrder,setOngoingOrder } = useContext(AppContext);
 console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
@@ -32,11 +61,51 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
 
 // console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
 
+  // useEffect(() => {
+  //   socketServices.initializeSocket();
+  //   setCurValue(restProps.priceRange);
+  //   console.log("Ssad", restProps);
+  // }, []);
   useEffect(() => {
+    const loadTimerFromStorage = async () => {
+      try {
+        const storedTimer = await AsyncStorage.getItem('timer');
+        if (storedTimer !== null) {
+          setTimer(parseInt(storedTimer, 10));
+        }
+      } catch (error) {
+        console.error('Error loading timer from AsyncStorage', error);
+      }
+    };
+  
+    loadTimerFromStorage();
+  
     socketServices.initializeSocket();
     setCurValue(restProps.priceRange);
     console.log("Ssad", restProps);
   }, []);
+
+  // useEffect(() => {
+  //   const handleAppStateChange = async (nextAppState) => {
+  //     if (nextAppState === 'inactive' || nextAppState === 'background') {
+  //       try {
+  //         await AsyncStorage.setItem('timer', timer.toString());
+  //       } catch (error) {
+  //         console.error('Error saving timer to AsyncStorage', error);
+  //       }
+  //       setShowTimer(false);
+  //     } else {
+  //       setShowTimer(true);
+  //     }
+  //     setAppState(nextAppState);
+  //   };
+  
+  //   AppState.addEventListener('change', handleAppStateChange);
+  
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   };
+  // }, [timer]);
 
   // console.log("ongoingorderrr",ongoingOrder);
   // console.log("orderrrrrspecialistttttdataaaaaa",ongoingOrder?.specialist?._id);
@@ -63,6 +132,30 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     else {
       console.log("initializedddddddddddddddddddddd");
     }
+  }
+
+  const newRejectt= async()=>{
+    console.log("heyyyyyyyyyyyyyyyyyy", "hii");
+    toggleShowModal();
+    showModal = false // Assuming you have a state variable to control the modal
+    const orderr = ongoingOrder?.specialist?._id;
+    await rejectOrder(ongoingOrder?._id);
+    setOngoingOrder(null)
+    try {
+      socketServices.emit("payment_rejected", {
+        orderr,
+      });
+      console.log("yessssssssss");
+    } catch {
+      console.log("nooooooooo");
+    }
+    try{
+      await AsyncStorage.removeItem('timer');
+      console.log('AsyncStorage cleared successfully.');
+    } catch {
+      console.log("nooooooooo");
+    }
+    setShowTimer(false);
   }
 
 
@@ -96,8 +189,29 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
       initialize();
       console.log("donee");
 
+      // const countdown = setInterval(() => {
+      //   setTimer((prevTimer) => prevTimer - 1);
+
+      //   if (prevTimer === 0) {
+      //     console.log("hii");
+      //     // You can add additional logic or actions here
+      //   }
+      // }, 1000);
+
       const countdown = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1);
+        setTimer((prevTime) => {
+          const newTime = prevTime - 1;
+  
+          // Check if the timer has reached 0 minutes and 0 seconds
+          if (newTime === 0) {
+            newRejectt();
+            console.log("hii-----------------------------------------------------------------------------------------------------");
+
+            // You can add additional logic or actions here
+          }
+  
+          return newTime;
+        });
       }, 1000);
 
       const logHiiTimer = setTimeout( async() => {
@@ -111,6 +225,12 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
             orderr,
           });
           console.log("yessssssssss");
+        } catch {
+          console.log("nooooooooo");
+        }
+        try{
+          await AsyncStorage.removeItem('timer');
+          console.log('AsyncStorage cleared successfully.');
         } catch {
           console.log("nooooooooo");
         }
@@ -152,6 +272,12 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
   //   }
   // }, [showModal]);
   const applyFilter = async () => {
+    try{
+      await AsyncStorage.removeItem('timer');
+      console.log('AsyncStorage cleared successfully.');
+    } catch {
+      console.log("nooooooooo");
+    }
     console.log("commimnggggggg");
     const { error, paymentOption } = await presentPaymentSheet();
     console.log("payyyoptionssssssssss", paymentOption);
@@ -187,6 +313,12 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
     } catch {
       console.log("nooooooooo");
     }
+    try{
+    await AsyncStorage.removeItem('timer');
+    console.log('AsyncStorage cleared successfully.');
+  } catch {
+    console.log("nooooooooo");
+  }
     setShowTimer(false);
   }
   // console.log("ongoingggggggggg", ongoingOrder?.price);

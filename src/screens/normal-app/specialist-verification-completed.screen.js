@@ -111,8 +111,8 @@ import { NavButton } from "../../components/button/button.component";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { AppContext } from "../../providers/app-provider";
 import { ContainerGradient } from "../../components/background/glass-background";
-import Logo from "../../assets/Logo_C_FB.svg";
-import { View } from "react-native";
+import Logo from "../../assets/Logo_C_FB.png";
+import { View,Image } from "react-native";
 import { LogoContainer } from "../../components/logo/logo";
 import { useNavigation } from "@react-navigation/native";
 
@@ -120,12 +120,13 @@ const Container = styled.View`
   padding: 30px;
   flex: 1;
   justify-content: space-between;
-  background-color: transparent;
+  background-color: white;
   position: relative;
 `
 
 const NavButtonContainer = styled.View`
   padding: 32px 16px;
+  background-color: white;
 `
 
 
@@ -159,7 +160,10 @@ export const CompleteScreen = (name, app, nav) =>  ({  ...restProps}) => {
     <Container>
       <Text variant="caption" style={{fontSize: 32, color: "white"}}>Where to?</Text>
       <LogoContainer>
-        <Logo width={300} height={250} fill={theme.colors.brand.secondary}/>
+      <Image
+style={{height:500,width:500}}
+        source={require('../../assets/Logo_C_FB.png')}
+      />
         <View style={{ marginBottom: -20 }} />
       </LogoContainer>
     </Container>

@@ -334,7 +334,7 @@ const{user,setUser}=useContext(AuthContext);
         setUser(res.data.data.specialist.user);
       setError(null);
       setSpecialist(res.data.data.specialist);
-      setTotalProfit((res.data.data.profitPerOrderStatus.filter(el => el._id === "COMPLETED")[0].total || 0) / 100)
+      setTotalProfit((res.data.data.profitPerOrderStatus.filter(el => el._id === "COMPLETED")[0].total || 0) )
       setTodayProfit((res.data.data.profitPerDay.filter(el => el.status === "COMPLETED" && el._id.day === dayOfYear && el._id.year === (new Date()).getFullYear())[0].total || 0) / 100)
       setProfitPerDay(buildGraphData(res.data.data.profitPerDay))
       // handleSuccess(res, setIsLoading, theme);

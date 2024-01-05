@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { SafeArea } from "../../components/utils/safearea.component";
 import { Gradient } from "./components/helpers.component";
 import React, { useContext, useEffect, useRef } from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { PaddedContainer } from "../components/details-screen.component";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { Text } from "../../components/typography/typography.component";
 import { AuthContext } from "../../providers/auth/auth.context";
-import Logo from "../../assets/Logo_C_FB.svg";
+import Logo from "../../assets/Logo_C_FB.png";
 import { NavButton } from "../../components/button/button.component";
 import { LogoContainer } from "../../components/logo/logo";
 import { facilityCreationSetName } from "../../redux/facilityCreation/facilityCreation.actions";
@@ -41,7 +41,11 @@ const WelcomeScreen = (props) => {
           }}
         >
           <LogoContainer>
-            <Logo width={300} height={200} fill={theme.colors.brand.secondary}/>
+          <Image
+style={{height:500,width:500}}
+        source={require('../../assets/Logo_C_FB.png')}
+      />
+            {/* <Logo width={300} height={200} fill={theme.colors.brand.secondary}/> */}
             <View style={{ marginBottom: 50 }} />
           </LogoContainer>
           <PaddedContainer>

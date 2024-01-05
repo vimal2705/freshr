@@ -130,7 +130,7 @@ export const PRO_TAB_ICON = {
   ),
   Facilities: (size, color) => <MaterialCommunityIcons name="home-group" size={size} color={color} />,
   History: (size, color) => <FontAwesome name="history" size={size} color={color} />,
-  Reseve: (size, color) => (<FontAwesome5 name="chair" size={size} color={color} />),
+  Reserve: (size, color) => (<FontAwesome5 name="chair" size={size} color={color} />),
 };
 
 export const getStyledScreenOptions = (icons, theme, num) => {
