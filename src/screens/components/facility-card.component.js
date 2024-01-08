@@ -14,6 +14,7 @@ import { Text } from "../../components/typography/typography.component";
 import { rgba } from "polished";
 import { Dimensions,Share,Linking, View } from "react-native";
 import { ReviewContext } from "../../providers/review.provider";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 const { width } = Dimensions.get("window");
 
 
@@ -156,6 +157,25 @@ const FacilityCard = ({
       setSelected(false);
     }
   }, [selectedFacility]);
+  const generateLink= async()=>{
+    try {
+      const link = await dynamicLinks().buildLink({
+          link: `https://freshr.ca/Home/specialist=${share}/data=${false}/facility=${specialist}`,
+          domainUriPrefix: 'https://freshr.page.link',
+          android: {
+              packageName: 'com.freshr.freshrapp',
+          },
+          // ios: {
+          //     appStoreId: '123456789',
+          //     bundleId: 'com.deepLinkingProjectBundleId',
+          // },
+      })
+      console.log('link:', link)
+      return link
+  } catch (error) {
+      console.log('Generating Link Error:', error)
+  }
+  }
   
 
   return (
@@ -233,19 +253,32 @@ const FacilityCard = ({
       {
         share && (
           <ShareIcon onPress={async () => {
+
+            // try {
+            //   await Share.share({message:`freshr://Home/${share}/${false}/${specialist}`,url:`freshr://Home/${share}/${false}/${specialist}`})
+            //     .then((res) => {
+            //       console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
+            //     })
+            //     .catch((err) => {
+            //       err && console.log(err);
+            //     });
+            // }
+            // catch (e) {
+            //   console.log(e.message)
+            // }
+
+            const getLink = await generateLink()
             try {
-              await Share.share({message:`freshr://Home/${share}/${false}/${specialist}`,url:`freshr://Home/${share}/${false}/${specialist}`})
-                .then((res) => {
-                  console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
-                })
-                .catch((err) => {
-                  err && console.log(err);
+               await Share.share({
+                    message: getLink,
                 });
+            } catch (error) {
+                console.log('Sharing Error:', error)
             }
-            catch (e) {
-              console.log(e.message)
-            }
-          }} >
+    
+          }}
+          
+          >
             <Entypo name='share' size={20} color='#000' />
           </ShareIcon>
         )

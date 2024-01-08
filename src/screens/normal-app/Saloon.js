@@ -363,7 +363,7 @@ const Saloon = (props) => {
       props.setUser(user);
       props.setSearchLocation(user.searchLocation.coordinates);
       pubnub.setUUID(`${user.id}`);
-      console.log("pubnub", pubnub.getUUID());
+
     };
     loadAndSetFilters();
     return () => {
@@ -467,7 +467,7 @@ const Saloon = (props) => {
       }
       dispatch(setSearchRadius(data.searchRadius));
     }
-    console.log("oooooooo", data);
+
     getDeliveryStorage()
   }, [props]);
 

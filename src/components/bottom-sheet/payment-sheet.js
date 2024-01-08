@@ -145,7 +145,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
       socketServices.emit("payment_rejected", {
         orderr,
       });
-      console.log("yessssssssss");
+
     } catch {
       console.log("nooooooooo");
     }

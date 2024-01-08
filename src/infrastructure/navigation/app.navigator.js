@@ -19,6 +19,8 @@ import specialiststories from "../../screens/normal-app/specialiststories";
 import SpecialistStoryScreen from "../../screens/pro-specialist/specialist-story.screen";
 import { getStyledScreenOptions, TAB_ICON } from "./utils";
 import { SpecialistVerificationScreen } from "../../screens/normal-app/specialist-verification.screen";
+import { FirebaseDynamicLinksTypes} from "@react-native-firebase/dynamic-links";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import {
   HostVerificationCompletedScreen,
@@ -70,6 +72,7 @@ export const AppNavigator = (props) => {
   const {fetchMessages}=useContext(AppContext)
  
   useEffect(()=>{
+    console.log("asdasd---------",props)
     fetchMessages()
   },[])
  
@@ -188,7 +191,7 @@ export const AppNavigator = (props) => {
         component={HostVerificationCompletedScreen}
       />
       <Stack.Screen
-       name="Home" component={HomeScreen}
+       name="newHome" component={HomeScreen} 
       />
       <Stack.Screen
        name="saloon" component={Saloon}

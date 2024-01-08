@@ -12,6 +12,7 @@ import { ReviewButtonText } from "../components/details-screen.component";
 import { RatingContainer } from "../../components/rating/rating.component";
 import { NavButton, TopNavContainer } from "./components/top-nav.component";
 import { Dimensions, TouchableOpacity, View,Share } from "react-native";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {
   AntDesign,
   Entypo,
@@ -196,6 +197,26 @@ const SpecialistProfileSocialScreen = (props) => {
 
 
   },[])
+
+  const generateLink= async()=>{
+    try {
+      const link = await dynamicLinks().buildLink({
+          link: `https://freshr.ca/Home/specialist=${specialist._id}/data=${true}/facility=${null}`,
+          domainUriPrefix: 'https://freshr.page.link',
+          android: {
+              packageName: 'com.freshr.freshrapp',
+          },
+          // ios: {
+          //     appStoreId: '123456789',
+          //     bundleId: 'com.deepLinkingProjectBundleId',
+          // },
+      })
+      console.log('link:', link)
+      return link
+  } catch (error) {
+      console.log('Generating Link Error:', error)
+  }
+  }
   
   const deleteThisService = async () => {
     await deleteService(selectedService?.id)
@@ -430,18 +451,29 @@ const SpecialistProfileSocialScreen = (props) => {
             <ShareIcon
             style={{left:10}}
             onPress={async () => {
-            try {
-              await Share.share({message:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`,url:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`})
-                .then((res) => {
-                  console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
-                })
-                .catch((err) => {
-                  err && console.log(err);
-                });
-            }
-            catch (e) {
-              console.log(e.message)
-            }
+            // try {
+              // await Share.share({message:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`,url:`https://wan.qps.mybluehost.me/Home/${specialist._id}/${true}/${null}`})
+            //     .then((res) => {
+            //       console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
+            //     })
+            //     .catch((err) => {
+            //       err && console.log(err);
+            //     });
+            // }
+            // catch (e) {
+            //   console.log(e.message)
+            // }
+        
+            const getLink = await generateLink()
+        try {
+           await Share.share({
+                message: getLink,
+            });
+        } catch (error) {
+            console.log('Sharing Error:', error)
+        }
+
+
           }} >
             <Entypo name='share' size={20} color='#fff' />
           </ShareIcon>

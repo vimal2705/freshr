@@ -151,7 +151,7 @@ const SpecialistDetailsScreen = ({
   const [shownServices, setShownServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [sendingService, setsendingService] = useState(null);
-
+  const [servicecat,setServicecat]= useState([{"catchPhrase": "", "name": "Haircut"}, {"catchPhrase": "Coming Soon", "name": "Wax Services"}, {"catchPhrase": "Coming Soon", "name": "Tattoo"}])
   const [isFav, setIsFav] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [cntPerCategory, setCntPerCategory] = useState(null);
@@ -165,7 +165,7 @@ if(user1?.firstName == "Guest"){
   setpam(true)
 }
   }, user1)
-console.log("yourrrr userrrrr", user1?.firstName == "Guest", pam);
+console.log("yourrrr userrrrr", restProps.serviceCategories);
 const {setSpecialistidd} =useContext(SpecialistContext)
 
   
@@ -184,7 +184,9 @@ const {setSpecialistidd} =useContext(SpecialistContext)
     return <ServiceItemIcon source={{ uri: icon }} />;
   };
   const getServiceCategory = (service) => {
-    return service.serviceType.category
+    console.log("aaaaaaaa===========",service?.serviceType);
+    // return service.serviceType.category
+    return "Haircut"
   }
 
 
@@ -313,7 +315,8 @@ loadFav()
 
   useEffect(() => {
     const cnt = {};
-    restProps.serviceCategories.forEach((item) => {
+    servicecat.forEach((item) => {
+    // restProps.serviceCategories.forEach((item) => { chnage afeter added in backeend
       cnt[`${item}`] = cart.filter(
         (service) => getServiceCategory(service) === item.name
       ).length;
@@ -337,7 +340,8 @@ onGetReviews(specialist?.id,'specialist')
     if (restProps.currentCategory) {
       setSelectedCategory(restProps.currentCategory);
     }
-    setSelectedCategory(restProps.serviceCategories.filter(cat => specialist?.services.filter((service) => getServiceCategory(service) === cat.name).length > 0)[0])
+    // setSelectedCategory(restProps.serviceCategories.filter(cat => specialist?.services.filter((service) => getServiceCategory(service) === cat.name).length > 0)[0]) //chnage added in backend
+    setSelectedCategory(servicecat.filter(cat => specialist?.services.filter((service) => getServiceCategory(service) === cat.name).length > 0)[0])
     return () => {
       resetCart();
     };
@@ -516,10 +520,11 @@ onGetReviews(specialist?.id,'specialist')
               showsHorizontalScrollIndicator={false}
               ref={ref}
             >
-              {restProps.serviceCategories?.map(
+              {servicecat?.map(
                 (category, index) =>
                   specialist?.services.filter((service) => getServiceCategory(service) === category.name)
-                    .length > 0 && (
+                    .length > 0 && 
+                    (
                     <Row key={`${specialist.id}-category-${category.id}`}>
                       <CustomTabSeparator />
                       <CustomTabButton

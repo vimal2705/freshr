@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "152293939069",
-    "project_id": "freshr-c7154",
-    "storage_bucket": "freshr-c7154.appspot.com"
+    "project_number": "1095248180434",
+    "project_id": "freshr-44d1a",
+    "storage_bucket": "freshr-44d1a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:152293939069:android:bdef0ff8a4ca1aa0635e14",
+        "mobilesdk_app_id": "1:1095248180434:android:451e618f50b1405e0a290b",
         "android_client_info": {
           "package_name": "com.freshr.freshrapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "152293939069-a5ci4he5t4nvkmlkt2od9qfa4d12jugq.apps.googleusercontent.com",
+          "client_id": "1095248180434-7nm9l8ntjsb8ajmgi2hg1c1kgv4e83d1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsAfApZheDedXIrv237UN9amdyR7tYNs4"
+          "current_key": "AIzaSyBlDxdip_BI7CSUbM09TcSqrbq1qEUuIJQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "152293939069-a5ci4he5t4nvkmlkt2od9qfa4d12jugq.apps.googleusercontent.com",
+              "client_id": "1095248180434-7nm9l8ntjsb8ajmgi2hg1c1kgv4e83d1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

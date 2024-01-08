@@ -49,6 +49,7 @@ import {
   EditFacilityDescriptionModal,
   renderDescription,
 } from "../components/pro/pro-details-screen.component";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import { ImageSelectionModal } from "../../components/bottom-sheet/ImageSelectionModal";
 import { FacilityBookingList } from "../../components/bottom-sheet/FacilityBookingListModal";
@@ -535,6 +536,25 @@ const navigation=useNavigation();
       </>
     );
   };
+  const generateLink= async()=>{
+    try {
+      const link = await dynamicLinks().buildLink({
+          link: `https://freshr.ca/Home/specialist=${props.route.params.facility._id}//data=${false}/facility=${null}`,
+          domainUriPrefix: 'https://freshr.page.link',
+          android: {
+              packageName: 'com.freshr.freshrapp',
+          },
+          // ios: {
+          //     appStoreId: '123456789',
+          //     bundleId: 'com.deepLinkingProjectBundleId',
+          // },
+      })
+      console.log('link:', link)
+      return link
+  } catch (error) {
+      console.log('Generating Link Error:', error)
+  }
+}
 
   const renderRating = () => {
  
@@ -704,20 +724,32 @@ const navigation=useNavigation();
         <ShareIcon
             style={{left:10}}
             onPress={async () => {
+
+              
+            // try {
+            //   const data = false
+            //   const spid = null
+            //   await Share.share({message:`freshr://Home/${props.route.params.facility._id}/${data}/${spid}`,url:`freshr://Home/${props.route.params.facility._id}/${data}/${spid}`})
+            //     .then((res) => {
+            //       console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
+            //     })
+            //     .catch((err) => {
+            //       err && console.log(err);
+            //     });
+            // }
+            // catch (e) {
+            //   console.log(e.message)
+            // }
+            const getLink = await generateLink()
             try {
-              const data = false
-              const spid = null
-              await Share.share({message:`freshr://Home/${props.route.params.facility._id}/${data}/${spid}`,url:`freshr://Home/${props.route.params.facility._id}/${data}/${spid}`})
-                .then((res) => {
-                  console.log("responseeeeeeeeeeeeeeeeeeeeeeeeeeeee",res);
-                })
-                .catch((err) => {
-                  err && console.log(err);
+               await Share.share({
+                    message: getLink,
                 });
+            } catch (error) {
+                console.log('Sharing Error:', error)
             }
-            catch (e) {
-              console.log(e.message)
-            }
+    
+    
           }} >
             <Entypo name='share' size={20} color='#fff' />
           </ShareIcon>

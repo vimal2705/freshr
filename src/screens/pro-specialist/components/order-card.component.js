@@ -209,7 +209,6 @@ export const OrderCard = ({
   const copyToClipboard = (text) => {
     Clipboard.setStringAsync(text);
   };
-  console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", order.servicingTotalTime);
 
   const [userloc, setUserloc] = useState({});
   useEffect(() => {
@@ -219,7 +218,7 @@ export const OrderCard = ({
       console.log("endd", status);
       if (status !== "granted") {
         // setErrorMsg('Permission to access location was denied');
-        console.log("noooooooooooooooooooo");
+     
         return;
       }
       const isAndroid = Platform.OS == "android";
@@ -928,7 +927,7 @@ export const OrderCard = ({
                   });
                   console.log("yessssssssss");
                 } catch {
-                  console.log("nooooooooo");
+       
                 }
                 console.log(values.code);
               }}

@@ -985,6 +985,7 @@ const { onGetSpecialistidd, specialistidd, setSpecialistidd } = useContext(Speci
   const [showLocationFilter, setShowLocationFilter] = useState(false);
   const[specialist,setSpecialist]= useState('')
   const[location,setLocation] = useState()
+
   const [locationData, setlocationData] = useState(null);
   const [Coordinates, setCoordinates] = useState(null);
   const [data,setData] = useState([]);
@@ -1011,7 +1012,7 @@ const { onGetSpecialistidd, specialistidd, setSpecialistidd } = useContext(Speci
 
   useEffect(() => {
     if (specialistidd && props.newspecid) {
-      console.log("yoooooooiddddddd", specialistidd);
+      console.log("yoooooooiddddddd-------------------------------------------------------->", specialistidd);
       // setSpecialist(specialistidd)
       // dispatch(setSpecialist(specialistidd))
       props.setSpecialist(specialistidd)

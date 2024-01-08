@@ -36,6 +36,8 @@ import { setMatchingFacilities } from "../../redux/facilities/facilities.actions
 import { setMatchingSpecialists } from "../../redux/specialists/specialists.action";
 import * as Location1 from 'expo-location'
 import { rgba } from "polished";
+import { FirebaseDynamicLinksTypes} from "@react-native-firebase/dynamic-links";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {
   Dimensions,
   ScrollView,
@@ -168,6 +170,7 @@ const [user1, setUser1] = useState()
   const [specid,setspecid]=useState(null);
   const[newspecid,setnewspecid]=useState(null);
   const[saloonspec,setsaloonspec]=useState(null)
+  const [linkdataa,setLinkdataa]=useState([]);
 
 
   const [rejectSpecialist, setRejectSpecialist] = useState([])
@@ -178,7 +181,82 @@ const [user1, setUser1] = useState()
 
   // console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",user);
 
+  const handleDynamicLink = link => {
+    // Handle dynamic link inside your own application
+    if (link.url === 'https://www.freshr.ca') {
+      // ...navigate to your offers screen
+      // navigation.navigate('Offer');
+      alert('matchedSSSSSSS  ');
+    } else {
+      // alert(link.url);
+      console.log("WE HAVE DONE--------------------------------------------------->",link.url);
+      const url = link.url;
+      var parts = url.split('/');
 
+// Use reduce to extract values after '=' and store in an array
+var valuesArray = parts.reduce((result, part) => {
+  if (part !== '') {
+    var [key, value] = part.split('=');
+    result.push(value);
+  }
+  return result;
+}, []);
+
+var linkdata=valuesArray.filter((item)=>item!=undefined);
+setLinkdataa(linkdata);
+
+console.log("link dataaaa------------------------------------------->>>>>>>>>",valuesArray.filter((item) => item != undefined))
+console.log("link dataaaa------------------------------------------->>>>>>>>>12232122333",linkdata[0]);
+     
+
+// Log the result
+// console.log(result);
+  // const params = getParamsFromUrl(url);
+  // if(params){
+  //   console.log("paramsssssssssssss--------------------",params);
+  // }
+    }
+   
+
+  };
+
+  useEffect(() => {
+    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+    // When the component is unmounted, remove the listener
+    return () => unsubscribe();
+  }, []);
+
+  // const getParamsFromUrl = (url) => {
+  //   try {
+  //     console.log("Original URL:", url);
+  
+  //     const urlParts = url.split('/');
+  //     const params = {};
+  
+  //     // Assuming the format is "/Home/specialist=someValue/data=someValue/facility=someValue"
+  //     for (let i = 0; i < urlParts.length; i += 2) {
+  //       const key = urlParts[i];
+  //       const value = urlParts[i + 1];
+  
+  //       if (key && value) {
+  //         const formattedKey = key.replace('=', '');
+  //         params[formattedKey] = value;
+  //       }
+  //     }
+  
+  //     return params;
+  //   } catch (error) {
+  //     console.error("Error parsing dynamic link:", error);
+  //     return null;
+  //   }
+  // };
+  
+  
+  
+  
+  
+  
+ 
 useEffect(async ()=>{
 
 
@@ -191,7 +269,7 @@ useEffect(async ()=>{
 
   // const { user } = await getUser();
 },[])
-
+console.log("link dataaaa------------------------------------------->>>>>>>>>12232122333",linkdataa[0]);
 useEffect(()=>{
   console.log("checkkkkkkkk",route?.params);
   if(route?.params?.data == "true"){
@@ -212,6 +290,30 @@ useEffect(()=>{
     }
     
 },[route.params])
+
+useEffect(()=>{
+  console.log("checkkkkkkkk",route?.params);
+  if(linkdataa[1] == "true"){
+    // console.log("oggggggspceeeeeeiddddddddddd",route?.params);
+    setCurrentScreen("Delivery");
+    // setnewspecid(route?.params?.id)
+    setnewspecid(linkdataa[0])
+    
+  }
+  else if(linkdataa[0]){
+    // // console.log("++try",route?.params?.data);
+    // // const { id } = route.params;
+    setCurrentScreen('SalonScreen')
+    setfacid(linkdataa[0]);
+    // console.log("idddddfrommmmlinkkkkkkkk",linkdataa[0]);
+    if(linkdataa[2] != "null"){
+      setsaloonspec(linkdataa[2]);
+    }
+
+    console.log("linkdataaaaaa-===========================",linkdataa[0]);
+    }
+    
+},[linkdataa])
 useFocusEffect(useCallback(()=>{
   socketServices.initializeSocket(); 
   socketServices.on('recived_message',(msg)=>{

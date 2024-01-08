@@ -150,7 +150,7 @@ const Map = ({
 
   const getcurrentlocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log("unka afterr", status);
+   
       if (status !== 'granted') {
         sendMessage(
           "Failure",
@@ -163,7 +163,7 @@ const Map = ({
       }
       let location = await Location.getCurrentPositionAsync({});
       setCurrentloc(location.coords)
-      console.log("locationnnnnnnnnnnnnnnn", location.coords);
+
   }
 
   useEffect(()=>{

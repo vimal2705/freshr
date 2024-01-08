@@ -14,14 +14,16 @@ import socketServices from "../../screens/normal-app/components/Socket";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 const Navigation = (props) => {
   const navigationRef = useRef();
   const { isAuthenticated, hasOnboarded, skipAuth,setuserfromstorage } = useContext(AuthContext);
   const[authdata,setauthdata]=useState();
   const {currentApp} = useContext(AppContext);
+  // const [linking,setLinking] = useState("")
   //  const {getInitialState}=useLinking(navigationRef)
   const linking = {
-    prefixes: ['freshr://','https://wan.qps.mybluehost.me'],
+    prefixes: ['freshr://','https://freshr.ca'],
     // https://wan.qps.mybluehost.me/
     config: {
       initialRouteName: 'normalApp',
@@ -59,13 +61,16 @@ const Navigation = (props) => {
   const _pickApp = () => {
     switch(currentApp) {
       case 'normal' :
-        return <AppNavigator linking={linking} />
+        return <AppNavigator />
       case 'host':
         return <FacilityNavigator/>
       case 'specialist':
         return <SpecialistNavigator/>
     }
   }
+
+
+
 
   // useEffect(() => {
   //   const handleDeepLink = (event) => {
