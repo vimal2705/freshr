@@ -330,7 +330,6 @@ const{user,setUser}=useContext(AuthContext);
         `${BASE_API_URL}/specialists/specialist`,
         config,
       );
-      console.log("SSSssddddasaa=======-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-",res.data.data.specialist);
         setUser(res.data.data.specialist.user);
       setError(null);
       setSpecialist(res.data.data.specialist);

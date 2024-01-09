@@ -17,6 +17,7 @@ import { useStripe } from '@stripe/stripe-react-native';
 import { AppContext } from '../../providers/app-provider';
 import { SpecialistContext } from '../../providers/specialist.provider';
 import socketServices from '../../screens/normal-app/components/Socket';
+import BackgroundTimer from 'react-native-background-timer';
 const Paymentsheetcomponent = ({
   showModal,
   toggleShowModal,
@@ -198,7 +199,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
       //   }
       // }, 1000);
 
-      const countdown = setInterval(() => {
+      const countdown = BackgroundTimer.setInterval(() => {
         setTimer((prevTime) => {
           const newTime = prevTime - 1;
   
@@ -238,7 +239,7 @@ console.log("paydataaaaaaaaaaaaaaaaaaaaaaaa", paydata);
       }, 5 * 60 * 1000);
 
       return () => {
-        clearInterval(countdown);
+        BackgroundTimer.clearInterval(countdown);
         clearTimeout(logHiiTimer);
       };
     }

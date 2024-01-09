@@ -123,7 +123,8 @@ useEffect(()=>{
       const res = await axios.get(
         `${BASE_API_URL}/users/conversations`, config
       );
-      console.log("RESSSS--MMMM",res.data.data.conversations);
+  
+
       setChatRooms(res.data.data.conversations)
       await getUnreadMessage(res.data.data.conversations)
       setLoading(false) 
@@ -322,9 +323,9 @@ setPaydata(data)
         searchURL,configHeader
       );
       // console.log("resssposnsessss s wjwnjhuhsjjsjbshjbsjj",res.data.data.specialists);
-      console.log("response ---------------------",res.data.data);
+      // console.log("response ---------------------",res.data.data);
       const tempData = res.data.data.facilities
-      console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
+      // console.log("fining facilities-=-=-=0009988765567890989",res.data.data.facilities);
 
       if(config.targetGender=='male' || config.targetGender=='female'){
         const filteredData = tempData.filter((item)=>item?.user?.searchStylesFor == config.targetGender)

@@ -13,7 +13,24 @@ export const IconButton = styled.TouchableOpacity`
     active ? activeColor : inactiveColor};
 `;
 
+export const IconButton1  = styled.TouchableOpacity`
+position: absolute;
+bottom: 490px;
+right: 55px;
+  height: 44px;
+  width: 44px;
+  border-radius: 100px;
+  overflow: hidden;
+  // border: 1px solid ${({ theme }) => theme.colors.brand.quaternary};
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ active, activeColor, inactiveColor }) =>
+    active ? activeColor : inactiveColor};
+`;
+
+
 export const FilterButton = styled.TouchableOpacity`
+
   flex-direction: row;
   align-items: center;
   height: 35px;

@@ -149,7 +149,7 @@ const HomeScreen = (props) => {
 
   const theme = useTheme();
   const [searchIsLoading, setSearchIsLoading] = useState(false);
-  const { loadFilters, getUser, refreshSearch, isLoading, search,  onGetOrders , refreshing, onRefresh} = useContext(AppContext);
+  const { loadFilters, getUser, refreshSearch, isLoading, search,  onGetOrders , refreshing, onRefresh,urldata} = useContext(AppContext);
   const [fullMap, setFullMap] = useState(false)
   const [showSortFacilityFilter, setShowSortFacilityFilter] = useState(false);
   const [showSearchRadiusFilter, setShowSearchRadiusFilter] = useState(false);
@@ -205,9 +205,6 @@ var valuesArray = parts.reduce((result, part) => {
 var linkdata=valuesArray.filter((item)=>item!=undefined);
 setLinkdataa(linkdata);
 
-console.log("link dataaaa------------------------------------------->>>>>>>>>",valuesArray.filter((item) => item != undefined))
-console.log("link dataaaa------------------------------------------->>>>>>>>>12232122333",linkdata[0]);
-     
 
 // Log the result
 // console.log(result);
@@ -219,11 +216,16 @@ console.log("link dataaaa------------------------------------------->>>>>>>>>122
    
 
   };
-
   useEffect(() => {
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
     return () => unsubscribe();
+  }, []);
+
+  useEffect(async() => {
+ urldata();
+// console.log("99999999999",dataoflink);
+//  setLinkdataa(dataoflink)
   }, []);
 
   // const getParamsFromUrl = (url) => {
@@ -269,7 +271,7 @@ useEffect(async ()=>{
 
   // const { user } = await getUser();
 },[])
-console.log("link dataaaa------------------------------------------->>>>>>>>>12232122333",linkdataa[0]);
+
 useEffect(()=>{
   console.log("checkkkkkkkk",route?.params);
   if(route?.params?.data == "true"){

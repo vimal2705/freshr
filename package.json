@@ -72,6 +72,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.71.14",
     "react-native-autocomplete-dropdown": "^1.1.6",
+    "react-native-background-timer": "^2.4.1",
     "react-native-calendar-strip": "^2.2.5",
     "react-native-calendars": "^1.1282.0",
     "react-native-chart-kit": "^6.12.0",

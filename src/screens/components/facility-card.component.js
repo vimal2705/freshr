@@ -50,26 +50,20 @@ const Button = styled.TouchableOpacity`
 const MoreButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
-  position: absolute;
+ 
   background-color: ${({ theme }) => theme.colors.brand.white};
   border-radius: 100px;
   height: 30px;
   width: 30px;
-
-  top: 4px;
-  right: 4px;
-  z-index: 10;
 `;
 
 const ShowResultsButton = styled.TouchableOpacity`
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
   border-radius: 15px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   height: 38px;
+  width:130px;
   padding: 0px ${({ theme }) => theme.space[3]};
   background-color: ${({ theme }) => theme.colors.brand.secondary};
 `;
@@ -105,6 +99,7 @@ const Title = styled(Text)`
   font-size: 13px;
   font-weight: bold;
   color: black;
+  bottom:10
 `;
 
 const RatingContainer = styled.View`
@@ -181,13 +176,7 @@ const FacilityCard = ({
   return (
     <SlideContainer style={{ ...theme.shadows.default }} active={facility.id === selectedFacility?.id}>
       <Container active={selected}>
-        <MoreButton onPress={handleMorePress}>
-          <MaterialIcons
-            name="more-horiz"
-            size={24}
-            color={theme.colors.brand.secondary}
-          />
-        </MoreButton>
+       
 
         {/*{selected && (*/}
         {/*  <Ionicons*/}
@@ -201,11 +190,17 @@ const FacilityCard = ({
           <CoverImage source={{ uri: coverImage }} />
           <Spacer position="left" size="medium" />
           <ContentContainer>
-            <View style={{bottom:10}}>
+            <View style={{justifyContent:'space-between',alignItems:'flex-end',flexDirection:'row',height:40,width:'95%',marginTop:5}}>
             <Title numberOfLines={1}>{name}</Title>
+            <MoreButton onPress={handleMorePress}>
+          <MaterialIcons
+            name="more-horiz"
+            size={24}
+            color={theme.colors.brand.secondary}
+          />
+        </MoreButton>
             </View>
-            <Spacer position="bottom" size="large" />
-            <Row>
+            
               {/* <Ionicons
                 name="location"
                 size={12}
@@ -215,10 +210,9 @@ const FacilityCard = ({
               {/* <Text variant="caption" style={{ fontWeight: "normal", fontSize: 10, color: "black" }}>
                 {[facility.postcode || '', facility.city || '', facility.country || ''].join('  ')}
               </Text> */}
-            </Row>
-            <Spacer position="bottom" size="large" />
+            
 
-            <Row style={{ flexWrap: "wrap" }}>
+            <Row style={{ flexWrap: "wrap" ,marginBottom:5}}>
               <RatingContainer>
                 <Text
                   style={{
@@ -237,10 +231,8 @@ const FacilityCard = ({
                 />
               </RatingContainer>
             </Row>
-          </ContentContainer>
-        </Button>
-      </Container>
-      {handleViewResultPress && (
+
+            {handleViewResultPress && (
         <ShowResultsButton onPress={handleViewResultPress}>
           <Text
             variant="caption"
@@ -250,6 +242,12 @@ const FacilityCard = ({
           </Text>
         </ShowResultsButton>
       )}
+            <Spacer position="bottom" size="large" />
+
+          </ContentContainer>
+        </Button>
+      </Container>
+      
       {
         share && (
           <ShareIcon onPress={async () => {
